@@ -3,15 +3,16 @@
 import StarRating from '@/components/StarRating'
 import { CookingPotIcon, ListChecksIcon } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import { RecipeType } from '@/types/types'
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
-    const [recipe, setRecipe] = useState<any>(null)
+    const [recipe, setRecipe] = useState<RecipeType | null>(null)
 
     useEffect(() => {
         const fetchRecipe = async () => {
             const response = await fetch(`/api/recipe/${params.recipeId}`)
-            const data: any  = await response.json()
+            const data: RecipeType = await response.json()
             setRecipe(data)
         }
 
@@ -39,7 +40,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         </div>
                         <div>
                             <ul className='pl-5 list-disc'>
-                            {recipe.compositions.map((composition: any) => (
+                            {recipe.compositions.map((composition) => (
                                 <li className='' key={composition.id}>{composition.quantity} {composition.measureUnity} {composition.ingredient.name}</li>
                             ))}
                             </ul>
