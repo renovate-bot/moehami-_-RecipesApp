@@ -1,7 +1,6 @@
 "use client"
 
 import RecipeCard from '@/components/RecipeCard'
-import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 const RecipesPage = () => {
@@ -28,7 +27,6 @@ const RecipesPage = () => {
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5'>
             {recipes.map((recipe: any) => (
                 <div key={recipe.id}>
-                    {/* <Link href={`/recipe/${recipe.id}`}>{recipe.title}</Link> */}
                     <RecipeCard recipe={recipe} />
                 </div>
             ))}
