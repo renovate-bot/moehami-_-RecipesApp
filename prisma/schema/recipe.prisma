@@ -1,0 +1,15 @@
+model Recipe {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    title String
+    preparationTime Int
+    instructions String?
+    difficulty Int
+    
+    categoryId String @db.ObjectId
+    category Category @relation(fields: [categoryId], references: [id])
+
+    createdAt DateTime @default(now())
+
+    compositions Composition[]
+    comments Comment[]
+}
