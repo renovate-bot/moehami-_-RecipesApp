@@ -1,8 +1,9 @@
 import { Clock11Icon } from 'lucide-react';
 import StarRating from './StarRating';
 import { useRouter } from 'next/navigation';
+import { RecipeType } from '@/types/types';
 
-const RecipeCard = ({ recipe }: { recipe: any }) => {
+const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
 
     const router = useRouter()
 
