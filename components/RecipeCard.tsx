@@ -4,23 +4,11 @@ import { useRouter } from 'next/navigation';
 import { RecipeType } from '@/types/types';
 import Image from 'next/image';
 import { cn } from '@/lib/utlis';
+import CategoryBadge from './CategoryBadge';
 
 const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
 
     const router = useRouter()
-
-    const getCategoryColor = (category: string) => {
-        switch (category.toLowerCase()) {
-            case 'starter':
-                return 'bg-green-600/60';  // green for starters
-            case 'main':
-                return 'bg-blue-600/60';  // blue for main course
-            case 'dessert':
-                return 'bg-pink-600/60';  // pink for dessert
-            default:
-                return 'bg-gray-600';  // fallback color
-        }
-    };
 
     const viewRecipe = () => {
         router.push(`/recipe/${recipe.id}`);
@@ -53,7 +41,7 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
                     <h2 className="text-2xl font-bold mb-2">{recipe.title}</h2>
 
                     {/* Category */}
-                    <p className={cn(`text-white rounded-full mb-2 inline-block px-3 py-1`, getCategoryColor(recipe.category.name))}>{recipe.category.name}</p>
+                    <CategoryBadge categoryName={recipe.category.name} />
 
                     {/* Preparation Time */}
                     <div className='flex space-x-2 items-center my-2'>

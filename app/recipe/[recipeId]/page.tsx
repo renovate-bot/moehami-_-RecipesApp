@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { RecipeType } from '@/types/types'
 import Image from 'next/image'
 import SectionHeader from '@/components/SectionHeader'
-import { getCategoryColor } from '@/lib/functions'
+import CategoryBadge from '@/components/CategoryBadge'
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
@@ -27,7 +27,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
             {recipe ? (
                 <div>
                     <h1 className='text-4xl font-bold mb-5'>{recipe.title}</h1>
-                    <p className={`text-sm font-semibold inline-block px-3 py-1 text-white rounded-full mb-2 ${getCategoryColor(recipe.category.name)}`}>{recipe.category.name}</p>
+                    <CategoryBadge categoryName={recipe.category.name} />
                     <p><span className='font-semibold'>Preparation time :</span> {recipe.preparationTime} min</p>
                     <StarRating rating={recipe.difficulty} />
                     

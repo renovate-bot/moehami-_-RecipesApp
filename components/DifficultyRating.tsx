@@ -1,17 +1,17 @@
 import { cn } from '@/lib/utlis';
-import { GaugeIcon, Star, StarHalf } from 'lucide-react';
+import { GaugeIcon, StarHalf } from 'lucide-react';
 
 const DifficultyRating = ({ rating }: { rating: number }) => {
 
     const getDifficultyColor = (level: number) => {
-        switch (true) {
-            case (level === 5):
-                return 'text-red-500'; 
-            case (level >= 3):
-                return 'text-orange-500';  
-            default:
-                return 'text-green-500'; 
-        }
+    switch (true) {
+        case (level === 5):
+            return 'text-red-500'; 
+        case (level >= 3):
+            return 'text-orange-500';  
+        default:
+            return 'text-green-500'; 
+    }
     };
 
     const totalStars = 5;
@@ -23,7 +23,7 @@ const DifficultyRating = ({ rating }: { rating: number }) => {
         <div className="flex items-center">
             {/* Render filled stars */}
             {[...Array(filledStars)].map((_, index) => (
-                <GaugeIcon key={index} className={cn(`w-6 h-6 text-red-500`, getDifficultyColor(rating))} />
+                <GaugeIcon key={index} className={`w-6 h-6 ${getDifficultyColor(rating)}`} />
             ))}
 
             {/* Render half star if applicable */}
