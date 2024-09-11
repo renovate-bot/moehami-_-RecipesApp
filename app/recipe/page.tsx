@@ -47,10 +47,10 @@ const RecipesPage = () => {
             <Swiper
                 modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay]}
                 effect={'coverflow'}
-                autoplay={{
-                    delay: 2500,
-                    pauseOnMouseEnter: true
-                }}
+                // autoplay={{
+                //     delay: 2500,
+                //     pauseOnMouseEnter: true
+                // }}
                 spaceBetween={50}
                 mousewheel={true}
                 // slidesPerView={'auto'}

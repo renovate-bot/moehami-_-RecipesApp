@@ -1,9 +1,12 @@
 "use client"
 
-import StarRating from '@/components/StarRating'
+import StarRating from '@/components/DifficultyRating'
 import { CookingPotIcon, ListChecksIcon } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { RecipeType } from '@/types/types'
+import Image from 'next/image'
+import SectionHeader from '@/components/SectionHeader'
+import { getCategoryColor } from '@/lib/functions'
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
@@ -24,26 +27,29 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
             {recipe ? (
                 <div>
                     <h1 className='text-4xl font-bold mb-5'>{recipe.title}</h1>
-                    <p className='font-bold'>{recipe.category.name}</p>
-                    <p>Preparation time : {recipe.preparationTime} min</p>
+                    <p className={`text-sm font-semibold inline-block px-3 py-1 text-white rounded-full mb-2 ${getCategoryColor(recipe.category.name)}`}>{recipe.category.name}</p>
+                    <p><span className='font-semibold'>Preparation time :</span> {recipe.preparationTime} min</p>
                     <StarRating rating={recipe.difficulty} />
                     
-                    <div className='flex space-x-4 items-center'>
-                        <ListChecksIcon />
-                        <h2 className='text-xl font-semibold my-3'>Instructions</h2>
-                    </div>
+                    <SectionHeader icon={ListChecksIcon} title="Instructions" />
                     <p>{recipe.instructions}</p>
                     <div>
-                        <div className='flex space-x-4 items-center my-3'>
-                            <CookingPotIcon />
-                            <h2 className='text-xl font-semibold'>Composition</h2>
-                        </div>
-                        <div>
-                            <ul className='pl-5 list-disc'>
+                        <SectionHeader icon={CookingPotIcon} title="Ingredients" />
+                        <div className='flex flex-wrap gap-3'>
                             {recipe.compositions.map((composition) => (
-                                <li className='' key={composition.id}>{composition.quantity} {composition.measureUnity} {composition.ingredient.name}</li>
+                                <div className='w-[100px] text-center' key={composition.id}>
+                                    <div className='h-[100px] overflow-hidden rounded-lg shadow-md'>
+                                        <Image 
+                                            src={composition.ingredient.image} 
+                                            alt={composition.ingredient.name} 
+                                            height={200}
+                                            width={200}
+                                            className='object-cover w-full h-full hover:scale-105 transition duration-300'
+                                        />
+                                    </div>
+                                    <p className='mt-2'><span className='font-semibold'>{composition.ingredient.name}</span><br/>{composition.quantity} {composition.measureUnity}</p>
+                                </div>
                             ))}
-                            </ul>
                         </div>
                     </div>
                 </div>

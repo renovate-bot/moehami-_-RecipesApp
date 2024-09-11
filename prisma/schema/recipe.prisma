@@ -4,6 +4,7 @@ model Recipe {
     preparationTime Int
     instructions String?
     difficulty Int
+    image String?
     
     categoryId String @db.ObjectId
     category Category @relation(fields: [categoryId], references: [id])

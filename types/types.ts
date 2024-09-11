@@ -1,6 +1,7 @@
 export interface IngredientType {
     id: string;
     name: string;
+    image: string;
 }
 
 export interface CompositionType {
@@ -17,5 +18,6 @@ export interface RecipeType {
     preparationTime: number;
     difficulty: number;
     instructions: string;
+    image: string;
     compositions: CompositionType[]
 }
