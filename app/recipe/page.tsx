@@ -12,6 +12,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/effect-coverflow';
 
+export const dynamic = 'force-dynamic' 
+
 const RecipesPage = () => {
 
     const [recipes, setRecipes] = useState<RecipeType[]>([])
