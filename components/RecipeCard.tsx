@@ -16,13 +16,6 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
 
     return (
         <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full w-full">
-        {/* Recipe Image */}
-        {/* <img
-            src={recipe.image}
-            alt={recipe.title}
-            className="w-full h-48 object-cover"
-        /> */}
-
             {/* Recipe Content */}
             <div className=''>
                 {/* Recipe picture */}
