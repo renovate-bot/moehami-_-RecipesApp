@@ -4,7 +4,7 @@ import RecipeCard from '@/components/RecipeCard'
 import { RecipeType } from '@/types/types'
 import React, { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { EffectCoverflow, Navigation, Pagination, Scrollbar, A11y, Mousewheel, Autoplay } from 'swiper/modules';
+import { EffectCoverflow, Pagination, Mousewheel, Autoplay } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -59,7 +59,7 @@ const RecipesPage = () => {
                     0: {
                         slidesPerView: 1
                     },
-                    524: {
+                    600: {
                         slidesPerView: 2
                     },
                     1028: {
