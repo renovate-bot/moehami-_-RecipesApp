@@ -48,7 +48,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                     </div>
                 </div>
             ) : (
-                <p>Recipe not found</p>
+                <p>Loading...</p>
             )}
         </div>
     )
