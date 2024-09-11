@@ -14,7 +14,7 @@ export interface CompositionType {
 export interface RecipeType {
     id: string;
     title: string;
-    category: { name: string };
+    category: { id: string, name: string };
     preparationTime: number;
     difficulty: number;
     instructions: string;
