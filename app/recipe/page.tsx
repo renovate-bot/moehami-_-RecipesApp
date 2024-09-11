@@ -31,17 +31,6 @@ const RecipesPage = () => {
     }, [])
 
     return (
-        // <div className=''>
-        //     <h1 className='text-4xl font-bold mb-5'>Recipes</h1>
-        //     <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5'>
-        //     {recipes.map((recipe) => (
-        //         <div key={recipe.id}>
-        //             <RecipeCard recipe={recipe} />
-        //         </div>
-        //     ))}
-        //     </div>
-        // </div>
-
         <div>
             <h1 className='text-4xl font-bold mb-5'>Last Recipes</h1>
             <Swiper
