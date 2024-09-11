@@ -45,6 +45,7 @@ const RecipesPage = () => {
         <div>
             <h1 className='text-4xl font-bold mb-5'>Last Recipes</h1>
             <Swiper
+                className=''
                 modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay]}
                 effect={'coverflow'}
                 // autoplay={{
@@ -73,7 +74,7 @@ const RecipesPage = () => {
                         slidesPerView: 2
                     },
                     1028: {
-                        slidesPerView: 3
+                        slidesPerView: 4
                     },
                 }}
             >
