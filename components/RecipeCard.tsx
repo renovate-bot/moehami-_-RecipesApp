@@ -31,7 +31,7 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
 
                 <div className='p-5'>
                     {/* Recipe Title */}
-                    <h2 className="text-2xl font-bold mb-2">{recipe.title}</h2>
+                    <h2 className="text-2xl font-semibold mb-2">{recipe.title}</h2>
 
                     {/* Category */}
                     <CategoryBadge categoryName={recipe.category.name} />
