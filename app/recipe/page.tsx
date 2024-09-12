@@ -2,11 +2,9 @@
 
 import RecipeCard from '@/components/RecipeCard'
 import { RecipeType } from '@/types/types'
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCoverflow, Pagination, Mousewheel, Autoplay } from 'swiper/modules';
-import { useRouter, useSearchParams } from 'next/navigation'
-import SearchBar from '@/components/SearchBar'
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -21,9 +19,6 @@ const RecipesPage = () => {
 
     const [recipes, setRecipes] = useState<RecipeType[]>([])
 
-    const searchParams = useSearchParams();
-    const router = useRouter();
-
     useEffect(() => {
         try {
             const fetchRecipes = async () => {
@@ -36,60 +31,25 @@ const RecipesPage = () => {
         } catch (error) {
             console.error(error)   
         }
-    }, [])
+    },[])
 
-    const searchRecipes = async (query: string = '') => {
-        try {
-            let url = '/api/recipe';
-            if (query.length >= 3) {
-                url = `/api/search?query=${query}`;
-            }
-
-            const response = await fetch(url);
-            const data = await response.json();
-            setRecipes(data);
-        } catch (error) {
-            console.error('Failed to fetch recipes', error);
-        }
-    };
-
-    // Fetch recipes on initial load or when the query changes
-    useEffect(() => {
-        const query = searchParams.get('query') || '';
-        if (query) {
-            searchRecipes(query);
-        } else {
-            searchRecipes(); 
-        }
-    }, [searchParams]);
-
-    
-    // Handle search from SearchBar and update URL query parameter
-    const handleSearch = (query: string) => {
-        // If query is empty, remove the query parameter
-        if (query.trim().length === 0) {
-            router.push(`/recipe`, undefined);
-            searchRecipes();
-        } else {
-            // Update the URL with the search query without navigating
-            router.push(`/recipe?query=${query}`, undefined);
-            searchRecipes(query);
-        }
-    };
-
+    // Memoize Swiper slides to prevent re-renders when recipes change
+    const swiperSlides = useMemo(() => {
+        return recipes.map((recipe) => (
+            <SwiperSlide className='' key={recipe.id}>
+                <RecipeCard recipe={recipe} />
+            </SwiperSlide>
+        ));
+    }, [recipes]);
 
     const shouldEnableLoop = recipes.length > 1;
 
     return (
-        <div>
+        <div className='pb-5'>
             <h1 className='text-4xl font-bold mb-5'>Last Recipes</h1>
 
-            <Suspense fallback={<div>Loading...</div>}>
-                <SearchBar onSearch={handleSearch} />
-            </Suspense>
-
             <Swiper
-                className=''
+                className='p-6'
                 modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay]}
                 effect={'coverflow'}
                 autoplay={{
@@ -101,7 +61,6 @@ const RecipesPage = () => {
                 mousewheel={true}
                 // slidesPerView={'auto'}
                 loop={shouldEnableLoop}
-                // pagination={{ clickable: true }}
                 pagination={{clickable: true}}
                 centeredSlides={true}
                 grabCursor={true}
@@ -126,17 +85,7 @@ const RecipesPage = () => {
                     },
                 }}
             >
-                <div>
-                    {recipes.length > 0 ? (
-                        recipes.map((recipe) => (
-                            <SwiperSlide className='' key={recipe.id}>
-                                <RecipeCard recipe={recipe} />
-                            </SwiperSlide>
-                        ))
-                    ) : (
-                        <p>No recipes found</p>
-                    )}
-                </div>
+                {recipes.length > 0 ? swiperSlides : <p>No recipes found</p>}
             </Swiper>            
         </div>
     )
