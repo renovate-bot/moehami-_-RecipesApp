@@ -14,11 +14,11 @@ const MiniRecipeCard = ({ recipe }: { recipe: RecipeType }) => {
     };
 
     return (
-        <div className="w-[200px] bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <div className="w-full sm:w-[200px] bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
             {/* Recipe Content */}
             <div className=''>
                 {/* Recipe picture */}
-                <div className='overflow-hidden h-[150px]'>
+                <div className='overflow-hidden h-[250px] sm:h-[150px]'>
                     <Image 
                         src={recipe.image}
                         width={500}

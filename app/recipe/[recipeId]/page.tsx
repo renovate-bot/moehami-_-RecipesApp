@@ -63,7 +63,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         <SectionHeader icon={CookingPotIcon} title="Ingredients" />
                         <div className='flex flex-wrap gap-3'>
                             {recipe.compositions.map((composition) => (
-                                <div className='w-[100px] text-center' key={composition.id}>
+                                <div className='w-full sm:w-[100px] text-center' key={composition.id}>
                                     <div className='h-[100px] overflow-hidden rounded-lg shadow-md'>
                                         <Image 
                                             src={composition.ingredient.image} 
