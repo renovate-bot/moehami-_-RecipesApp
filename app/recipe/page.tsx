@@ -2,7 +2,7 @@
 
 import RecipeCard from '@/components/RecipeCard'
 import { RecipeType } from '@/types/types'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCoverflow, Pagination, Mousewheel, Autoplay } from 'swiper/modules';
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -84,7 +84,9 @@ const RecipesPage = () => {
         <div>
             <h1 className='text-4xl font-bold mb-5'>Last Recipes</h1>
 
-            <SearchBar onSearch={handleSearch} />
+            <Suspense fallback={<div>Loading...</div>}>
+                <SearchBar onSearch={handleSearch} />
+            </Suspense>
 
             <Swiper
                 className=''
