@@ -2,7 +2,7 @@
 
 import RecipeCard from '@/components/RecipeCard'
 import { RecipeType } from '@/types/types'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCoverflow, Pagination, Mousewheel, Autoplay } from 'swiper/modules';
 
@@ -11,6 +11,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/effect-coverflow';
+import 'swiper/css/autoplay';
 
 export const dynamic = 'force-dynamic' 
 
@@ -30,7 +31,9 @@ const RecipesPage = () => {
         } catch (error) {
             console.error(error)   
         }
-    }, [])
+    }, [recipes])
+
+    const shouldEnableLoop = recipes.length > 1;
 
     return (
         <div>
@@ -41,12 +44,13 @@ const RecipesPage = () => {
                 effect={'coverflow'}
                 autoplay={{
                     delay: 2500,
-                    pauseOnMouseEnter: true
+                    pauseOnMouseEnter: true,
+                    disableOnInteraction: false
                 }}
                 spaceBetween={50}
                 mousewheel={true}
                 // slidesPerView={'auto'}
-                loop={true}
+                loop={shouldEnableLoop}
                 // pagination={{ clickable: true }}
                 pagination={{clickable: true}}
                 centeredSlides={true}
