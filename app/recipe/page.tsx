@@ -31,7 +31,7 @@ const RecipesPage = () => {
         } catch (error) {
             console.error(error)   
         }
-    }, [recipes])
+    }, [])
 
     const shouldEnableLoop = recipes.length > 1;
 
@@ -42,11 +42,11 @@ const RecipesPage = () => {
                 className=''
                 modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay]}
                 effect={'coverflow'}
-                autoplay={{
-                    delay: 2500,
-                    pauseOnMouseEnter: true,
-                    disableOnInteraction: false
-                }}
+                // autoplay={{
+                //     delay: 2500,
+                //     pauseOnMouseEnter: true,
+                //     disableOnInteraction: false
+                // }}
                 spaceBetween={50}
                 mousewheel={true}
                 // slidesPerView={'auto'}

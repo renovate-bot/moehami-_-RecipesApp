@@ -1,10 +1,11 @@
-import { ArrowRightIcon, Clock11Icon } from 'lucide-react';
+import { Activity, ArrowRightIcon, Clock11Icon, HeartPulseIcon, Leaf, LeafIcon, LeafyGreenIcon } from 'lucide-react';
 import StarRating from './DifficultyRating';
 import { useRouter } from 'next/navigation';
 import { RecipeType } from '@/types/types';
 import Image from 'next/image';
-import { cn } from '@/lib/utlis';
 import CategoryBadge from './CategoryBadge';
+
+export const dynamic = 'force-dynamic' 
 
 const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
 
@@ -31,7 +32,20 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
 
                 <div className='p-5'>
                     {/* Recipe Title */}
-                    <h2 className="text-2xl font-semibold mb-2">{recipe.title}</h2>
+                    <div className='flex flex-wrap items-center space-x-2 mb-2'>
+                        <h2 className="text-2xl font-semibold">{recipe.title}</h2>
+                        {recipe.isVegan && (
+                            <div className='flex items-center space-x-1' title='Vegan'>
+                                <LeafIcon className='w-6 h-6 text-green-700' />
+                            </div>
+                        )}
+
+                        {recipe.isHealthy && (
+                            <div className='flex items-center space-x-1' title='Healthy'>
+                                <Activity className='w-6 h-6 text-red-500' />
+                            </div>
+                        )}
+                    </div>
 
                     {/* Category */}
                     <CategoryBadge categoryName={recipe.category.name} />
