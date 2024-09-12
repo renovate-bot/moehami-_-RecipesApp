@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 
 interface SearchBarProps {
     onSearch: (query: string) => void;
@@ -31,13 +31,15 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
 
     return (
         <div className="search-bar">
-            <input
-                type="text"
-                value={query}
-                onChange={handleChange}
-                placeholder="Search for recipes..."
-                className="w-full px-5 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-slate-500 focus:border-slate-500 transition duration-300 shadow-sm text-lg mb-4"
-            />
+            <Suspense>
+                <input
+                    type="text"
+                    value={query}
+                    onChange={handleChange}
+                    placeholder="Search for recipes..."
+                    className="w-full px-5 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-slate-500 focus:border-slate-500 transition duration-300 shadow-sm text-lg mb-4"
+                />
+            </Suspense>
         </div>
     );
 };
