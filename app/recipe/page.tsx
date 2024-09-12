@@ -68,6 +68,9 @@ const RecipesPage = () => {
                     600: {
                         slidesPerView: 2
                     },
+                    850: {
+                        slidesPerView: 3
+                    },
                     1028: {
                         slidesPerView: 4
                     },

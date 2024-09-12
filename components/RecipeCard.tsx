@@ -36,14 +36,14 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
                         <h2 className="text-2xl font-semibold">{recipe.title}</h2>
                         {recipe.isVegan && (
                             <div className='flex items-center' title='Vegan'>
-                                <LeafIcon strokeWidth={1.5} fill='#056f25'  className='w-6 h-6 text-white' />
+                                <LeafIcon strokeWidth={1.5} fill='#45a864c3'  className='w-6 h-6 text-white' />
                                 {/* <LeafIcon className='w-6 h-6 text-green-700' /> */}
                             </div>
                         )}
 
                         {recipe.isHealthy && (
                             <div className='flex items-center' title='Healthy'>
-                                <HeartPulseIcon strokeWidth={1.5} fill='#ef074d'  className='w-6 h-6 text-white' />
+                                <HeartPulseIcon strokeWidth={1.5} fill='#ef074dbc'  className='w-6 h-6 text-white' />
                                 {/* <HeartPulseIcon strokeWidth={1.5}  className='w-6 h-6 text-red-500' /> */}
                             </div>
                         )}
@@ -52,23 +52,27 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
                     {/* Category */}
                     <CategoryBadge categoryName={recipe.category.name} />
 
-                    {/* Preparation Time */}
-                    <div className='flex space-x-2 items-center my-2'>
-                        <Clock11Icon size={15} className='text-slate-500' />
-                        <p className="text-gray-700"> {recipe.preparationTime} min</p>
+                    {/* Preparation Time + difficulty */}
+                    <div className='flex flex-col gap-2 mt-2'>
+                        <div className='flex space-x-2 items-center'>
+                            <Clock11Icon size={15} className='text-slate-500' />
+                            <p className="text-sm text-gray-700"> {recipe.preparationTime} min</p>
+                        </div>
+                        <div className='flex space-x-2 items-center'>
+                            {/* <p className="text-sm text-gray-700">Difficulty</p> */}
+                            <StarRating rating={recipe.difficulty} />
+                        </div>
                     </div>
 
                     {/* Difficulty with Star Rating */}
                     <div className="flex flex-wrap gap-2 sm:gap-0 items-center mb-4">
-                        <p className="mr-2 text-gray-700">Difficulty:</p>
-                        <StarRating rating={recipe.difficulty} />
                     </div>
 
                     {/* View Recipe Button */}
                     <button 
                         onClick={viewRecipe}
-                        className="text-slate-800 font-semibold hover:text-slate-600 py-2 rounded-mdtransition-colors duration-300 flex items-center space-x-2">
-                        <span>View Recipe</span> <ArrowRightIcon />
+                        className="border border-slate-100 px-3 py-2 shadow-md hover:shadow-lg text-slate-800 font-semibold hover:text-slate-600 rounded-md transition duration-300 flex items-center space-x-2">
+                        <span>View Recipe</span> <ArrowRightIcon size={15} />
                     </button>
                 </div>
             </div>
