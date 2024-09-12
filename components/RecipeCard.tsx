@@ -32,21 +32,25 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
 
                 <div className='p-5'>
                     {/* Recipe Title */}
-                    <div className='flex flex-wrap items-center space-x-2 mb-2'>
-                        <h2 className="text-2xl font-semibold">{recipe.title}</h2>
-                        {recipe.isVegan && (
-                            <div className='flex items-center' title='Vegan'>
-                                <LeafIcon strokeWidth={1.5} fill='#45a864c3'  className='w-6 h-6 text-white' />
-                                {/* <LeafIcon className='w-6 h-6 text-green-700' /> */}
-                            </div>
-                        )}
+                    <div className=''>
+                        <div className='flex flex-wrap justify-between items-center mb-2'>
+                            <h2 className="text-2xl font-semibold">{recipe.title}</h2>
+                            <div className='flex items-center space-x-2'>
+                                {recipe.isVegan && (
+                                    <div className='flex items-center' title='Vegan'>
+                                        <LeafIcon strokeWidth={1.5} fill='#45a864c3'  className='w-6 h-6 text-white' />
+                                        {/* <LeafIcon className='w-6 h-6 text-green-700' /> */}
+                                    </div>
+                                )}
 
-                        {recipe.isHealthy && (
-                            <div className='flex items-center' title='Healthy'>
-                                <HeartPulseIcon strokeWidth={1.5} fill='#ef074dbc'  className='w-6 h-6 text-white' />
-                                {/* <HeartPulseIcon strokeWidth={1.5}  className='w-6 h-6 text-red-500' /> */}
+                                {recipe.isHealthy && (
+                                    <div className='flex items-center' title='Healthy'>
+                                        <HeartPulseIcon strokeWidth={1.5} fill='#ef074dbc'  className='w-6 h-6 text-white' />
+                                        {/* <HeartPulseIcon strokeWidth={1.5}  className='w-6 h-6 text-red-500' /> */}
+                                    </div>
+                                )}
                             </div>
-                        )}
+                        </div>
                     </div>
 
                     {/* Category */}

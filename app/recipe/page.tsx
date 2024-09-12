@@ -71,7 +71,7 @@ const RecipesPage = () => {
                     850: {
                         slidesPerView: 3
                     },
-                    1028: {
+                    1285: {
                         slidesPerView: 4
                     },
                 }}
