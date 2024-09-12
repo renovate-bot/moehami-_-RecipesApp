@@ -36,13 +36,15 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
                         <h2 className="text-2xl font-semibold">{recipe.title}</h2>
                         {recipe.isVegan && (
                             <div className='flex items-center space-x-1' title='Vegan'>
-                                <LeafIcon className='w-6 h-6 text-green-700' />
+                                <LeafIcon strokeWidth={1.5} fill='#056f25'  className='w-6 h-6 text-white' />
+                                {/* <LeafIcon className='w-6 h-6 text-green-700' /> */}
                             </div>
                         )}
 
                         {recipe.isHealthy && (
                             <div className='flex items-center space-x-1' title='Healthy'>
-                                <Activity className='w-6 h-6 text-red-500' />
+                                <HeartPulseIcon strokeWidth={1.5} fill='#ef074d'  className='w-6 h-6 text-white' />
+                                {/* <HeartPulseIcon strokeWidth={1.5}  className='w-6 h-6 text-red-500' /> */}
                             </div>
                         )}
                     </div>
