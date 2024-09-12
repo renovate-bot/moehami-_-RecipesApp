@@ -5,6 +5,8 @@ model Recipe {
     instructions String?
     difficulty Int
     image String?
+    isHealthy Boolean @default(false)
+    isVegan Boolean @default(false)
     
     categoryId String @db.ObjectId
     category Category @relation(fields: [categoryId], references: [id])

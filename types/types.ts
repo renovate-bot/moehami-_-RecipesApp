@@ -20,4 +20,6 @@ export interface RecipeType {
     instructions: string;
     image: string;
     compositions: CompositionType[]
+    isHealthy: boolean;
+    isVegan: boolean;
 }

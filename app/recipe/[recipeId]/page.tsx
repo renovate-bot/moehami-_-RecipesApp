@@ -84,7 +84,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         <SectionHeader icon={LightbulbIcon} title="Suggestions" />
                         <div className='flex flex-wrap gap-3'>
                         {suggestions?.map((suggestion) => (
-                            <MiniRecipeCard recipe={suggestion} />
+                            <MiniRecipeCard key={suggestion.id} recipe={suggestion} />
                         ))}
                         </div>
                     </div>
