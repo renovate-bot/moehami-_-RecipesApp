@@ -38,13 +38,25 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
         <div className=''>
             {recipe ? (
                 <div>
+                    {/* Recipe title */}
                     <h1 className='text-4xl font-bold mb-5'>{recipe.title}</h1>
+                    {/* Recipe picture */}
+                    <Image 
+                        src={recipe.image} 
+                        alt={recipe.title} 
+                        width={200}
+                        height={200}
+                        className='sm:w-full md:w-[500px] rounded-lg my-5'
+                    />
+                    {/* Recipe category + preparation time + difficulty */}
                     <CategoryBadge categoryName={recipe.category.name} />
                     <p><span className='font-semibold'>Preparation time :</span> {recipe.preparationTime} min</p>
                     <DifficultyRating rating={recipe.difficulty} />
                     
+                    {/* Recipe instructions */}
                     <SectionHeader icon={ListChecksIcon} title="Instructions" />
                     <p>{recipe.instructions}</p>
+                    {/* Recipe ingredients */}
                     <div>
                         <SectionHeader icon={CookingPotIcon} title="Ingredients" />
                         <div className='flex flex-wrap gap-3'>
