@@ -7,7 +7,12 @@ import CategoryBadge from './CategoryBadge';
 
 export const dynamic = 'force-dynamic' 
 
-const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
+interface RecipeCardProps {
+    recipe: RecipeType;
+    className?: string;
+}
+
+const RecipeCard = ({ recipe, className }: RecipeCardProps) => {
 
     const router = useRouter()
 
@@ -16,7 +21,7 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
     };
 
     return (
-        <div className="relative bg-white dark:bg-slate-800 shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full w-full">
+        <div className={`relative bg-white dark:bg-slate-800 shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full w-full`}>
             {/* Recipe Content */}
             <div className=''>
                 {/* Recipe picture */}
