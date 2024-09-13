@@ -41,3 +41,34 @@ body {
 .dark .swiper-pagination-bullet {
   background: white;
 } 
+
+.swiper-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.swiper-container::before,
+.swiper-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 10%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(17, 24, 39, 1) 0%, rgba(17, 24, 39, 0.5) 50%, rgba(17, 24, 39, 0) 100%, transparent);
+  z-index: 10;
+}
+
+.swiper-container::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(17, 24, 39, 1) 0%, rgba(17, 24, 39, 0.5) 50%, rgba(17, 24, 39, 0) 100%, transparent);
+}
+
+.swiper-slide {
+  transition: all 0.3s ease;
+  opacity: 0.65;
+}
+
+.swiper-slide-active {
+  opacity: 1; /* Full opacity for the active slide */
+}
