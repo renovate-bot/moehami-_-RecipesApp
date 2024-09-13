@@ -38,7 +38,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
         <div className=''>
             {recipe ? (
                 <div>
-                    <div className='flex md:bg-slate-100/10 rounded-lg flex-col-reverse gap-5 md:flex-row items-center my-5'>
+                    <div className='flex md:bg-slate-100 dark:md:bg-slate-100/10 rounded-lg flex-col-reverse gap-5 md:flex-row items-center my-5'>
                         {/* Recipe title */}
                         <div className='w-full md:w-[50%] flex flex-col p-0 md:p-5 sm:justify-center sm:items-center'>
                             <div>
@@ -75,7 +75,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         <SectionHeader icon={CookingPotIcon} title="Ingredients" />
                         <div className='flex flex-col sm:flex-wrap sm:flex-row gap-3'>
                             {recipe.compositions.map((composition) => (
-                                <div className='flex sm:flex-col justify-between sm:justify-start text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-600 last:border-none sm:border-none pb-3' key={composition.id}>
+                                <div className='flex sm:flex-col justify-between sm:justify-start text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-300 dark:border-gray-600 last:border-none sm:border-none pb-3' key={composition.id}>
                                     <div className='h-full sm:h-[100px] sm:w-[100px] overflow-hidden rounded-lg shadow-md'>
                                         <Image 
                                             src={composition.ingredient.image} 
