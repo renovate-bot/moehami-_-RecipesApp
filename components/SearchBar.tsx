@@ -37,7 +37,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
                 type="text"
                 value={query}
                 onChange={handleChange}
-                placeholder="Search for recipes..."
+                placeholder="Search for recipes... (at least 3 characters)"
                 className="w-full px-5 py-3 rounded-lg border dark:bg-slate-800 border-gray-300 focus:outline-none focus:ring-1 focus:ring-slate-400 focus:border-slate-200 transition duration-300 shadow-sm text-lg mb-4"
             />
         </div>

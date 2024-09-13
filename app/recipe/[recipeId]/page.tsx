@@ -64,19 +64,19 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                     {/* Recipe ingredients */}
                     <div>
                         <SectionHeader icon={CookingPotIcon} title="Ingredients" />
-                        <div className='flex flex-wrap gap-3'>
+                        <div className='flex flex-col sm:flex-row gap-3'>
                             {recipe.compositions.map((composition) => (
-                                <div className='w-full sm:w-[100px] text-center' key={composition.id}>
-                                    <div className='h-[100px] overflow-hidden rounded-lg shadow-md'>
+                                <div className='flex sm:flex-col justify-between text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-600 last:border-none sm:border-none pb-3' key={composition.id}>
+                                    <div className='h-full sm:h-[100px] overflow-hidden rounded-lg shadow-md'>
                                         <Image 
                                             src={composition.ingredient.image} 
                                             alt={composition.ingredient.name} 
                                             height={200}
                                             width={200}
-                                            className='object-cover w-full h-full hover:scale-105 transition duration-300'
+                                            className='w-[100px] h-[100px] object-cover sm:w-full sm:h-full hover:scale-105 transition duration-300'
                                         />
                                     </div>
-                                    <p className='mt-2'><span className='font-semibold'>{composition.ingredient.name}</span><br/>{composition.quantity} {composition.measureUnity}</p>
+                                    <p className='sm:mt-2'><span className='font-semibold'>{composition.ingredient.name}</span><br/>{composition.quantity} {composition.measureUnity}</p>
                                 </div>
                             ))}
                         </div>
