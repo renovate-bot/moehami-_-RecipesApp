@@ -1,7 +1,7 @@
 "use client"
 
 import DifficultyRating from '@/components/DifficultyRating'
-import { CookingPotIcon, LightbulbIcon, ListChecksIcon } from 'lucide-react'
+import { Clock10Icon, CookingPotIcon, LightbulbIcon, ListChecksIcon } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { RecipeType } from '@/types/types'
 import Image from 'next/image'
@@ -54,10 +54,10 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         />
                     </div>
 
-                    <div className='flex flex-wrap items-center gap-3 text-center text-xl'>
+                    <div className='flex flex-wrap items-center gap-5 text-center text-xl'>
                         {/* Recipe category + preparation time + difficulty */}
                         <CategoryBadge categoryName={recipe.category.name} />
-                        <p className='px-0 sm:px-3'><span className='font-semibold'>Preparation time :</span> {recipe.preparationTime} min</p>
+                        <p className='flex gap-2 items-center'><Clock10Icon /> {recipe.preparationTime} min</p>
                         <DifficultyRating rating={recipe.difficulty} />
                     </div>
                     
