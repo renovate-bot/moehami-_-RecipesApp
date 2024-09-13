@@ -16,7 +16,7 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
     };
 
     return (
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full w-full">
+        <div className="relative bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full w-full">
             {/* Recipe Content */}
             <div className=''>
                 {/* Recipe picture */}
@@ -35,21 +35,23 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
                     <div className=''>
                         <div className='flex flex-wrap justify-between items-center mb-2'>
                             <h2 className="text-2xl font-semibold">{recipe.title}</h2>
-                            <div className='flex items-center space-x-2'>
-                                {recipe.isVegan && (
-                                    <div className='flex items-center' title='Vegan'>
-                                        <LeafIcon strokeWidth={1.5} fill='#45a864c3'  className='w-6 h-6 text-white' />
-                                        {/* <LeafIcon className='w-6 h-6 text-green-700' /> */}
-                                    </div>
-                                )}
+                            {(recipe.isVegan || recipe.isHealthy) && (
+                                <div className='absolute top-3 right-3 bg-white py-2 px-3 bg-opacity-60 rounded-full flex items-center space-x-2'>
+                                    {recipe.isVegan && (
+                                        <div className='flex items-center' title='Vegan'>
+                                            <LeafIcon strokeWidth={1} fill='#45a864c3'  className='w-6 h-6' />
+                                            {/* <LeafIcon className='w-6 h-6 text-green-700' /> */}
+                                        </div>
+                                    )}
 
-                                {recipe.isHealthy && (
-                                    <div className='flex items-center' title='Healthy'>
-                                        <HeartPulseIcon strokeWidth={1.5} fill='#ef074dbc'  className='w-6 h-6 text-white' />
-                                        {/* <HeartPulseIcon strokeWidth={1.5}  className='w-6 h-6 text-red-500' /> */}
-                                    </div>
-                                )}
-                            </div>
+                                    {recipe.isHealthy && (
+                                        <div className='flex items-center' title='Healthy'>
+                                            <HeartPulseIcon strokeWidth={1} fill='#ef074dbc'  className='w-6 h-6' />
+                                            {/* <HeartPulseIcon strokeWidth={1.5}  className='w-6 h-6 text-red-500' /> */}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
 
