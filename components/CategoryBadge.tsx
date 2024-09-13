@@ -20,7 +20,7 @@ const CategoryBadge = ({ categoryName }: CategoryBadgeProps) => {
     };
 
     return (
-        <p className={`text-white rounded-full mb-2 inline-block px-3 py-1 ${getCategoryColor(categoryName)}`}>{categoryName}</p>
+        <p className={`text-white rounded-lg inline-block px-3 py-1 ${getCategoryColor(categoryName)}`}>{categoryName}</p>
     )
 }
 

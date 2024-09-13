@@ -59,7 +59,9 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
                     </div>
 
                     {/* Category */}
-                    <CategoryBadge categoryName={recipe.category.name} />
+                    <div className='my-4'>
+                        <CategoryBadge categoryName={recipe.category.name} />
+                    </div>
 
                     {/* Preparation Time + difficulty */}
                     <div className='flex flex-col gap-2 mt-2'>

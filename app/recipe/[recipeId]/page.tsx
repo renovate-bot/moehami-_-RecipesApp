@@ -53,10 +53,13 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                             className='shadow-md hover:shadow-xl transition duration-300 w-full md:w-[500px] rounded-lg my-5'
                         />
                     </div>
-                    {/* Recipe category + preparation time + difficulty */}
-                    <CategoryBadge categoryName={recipe.category.name} />
-                    <p><span className='font-semibold'>Preparation time :</span> {recipe.preparationTime} min</p>
-                    <DifficultyRating rating={recipe.difficulty} />
+
+                    <div className='flex flex-wrap items-center gap-3 text-center text-xl'>
+                        {/* Recipe category + preparation time + difficulty */}
+                        <CategoryBadge categoryName={recipe.category.name} />
+                        <p className='px-0 sm:px-3'><span className='font-semibold'>Preparation time :</span> {recipe.preparationTime} min</p>
+                        <DifficultyRating rating={recipe.difficulty} />
+                    </div>
                     
                     {/* Recipe instructions */}
                     <SectionHeader icon={ListChecksIcon} title="Instructions" />
