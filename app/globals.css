@@ -34,3 +34,7 @@ body {
   position: relative !important;
   margin-top: 30px;
 }
+
+.dark .swiper-pagination-bullet {
+  background: white;
+} 
