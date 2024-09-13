@@ -76,7 +76,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         <div className='flex flex-col sm:flex-wrap sm:flex-row gap-3'>
                             {recipe.compositions.map((composition) => (
                                 <div className='flex sm:flex-col justify-between sm:justify-start text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-300 dark:border-gray-600 last:border-none sm:border-none pb-3' key={composition.id}>
-                                    <div className='h-[300px] sm:h-[100px] sm:w-[100px] overflow-hidden rounded-lg shadow-md'>
+                                    <div className='sm:h-[100px] sm:w-[100px] overflow-hidden rounded-lg shadow-md'>
                                         <Image 
                                             src={composition.ingredient.image} 
                                             alt={composition.ingredient.name} 
