@@ -80,8 +80,8 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
                     {/* View Recipe Button */}
                     <button 
                         onClick={viewRecipe}
-                        className="border border-slate-100 px-3 py-2 shadow-md hover:shadow-lg text-slate-800 dark:text-white font-semibold hover:text-slate-600 rounded-md transition duration-300 flex items-center space-x-2">
-                        <span>View Recipe</span> <ArrowRightIcon size={15} />
+                        className="group border border-slate-100 px-3 py-2 shadow-md hover:shadow-lg dark:hover:shadow-white/10 dark:hover:text-white/80 text-slate-800 dark:text-white font-semibold hover:text-slate-600 rounded-md transition duration-300 flex items-center space-x-2">
+                        <span>View Recipe</span> <ArrowRightIcon className='group-hover:animate-bounce-horizontal transition duration-300' size={15} />
                     </button>
                 </div>
             </div>
