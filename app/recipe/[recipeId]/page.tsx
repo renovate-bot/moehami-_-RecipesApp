@@ -52,7 +52,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                             </div>
                         </div>
                         {/* Recipe picture */}
-                        <div className='h-full overflow-hidden w-full md:w-[50%]'>
+                        <div className='h-full sm:h-[300px] overflow-hidden w-full md:w-[50%]'>
                             <Image 
                                 rel='eager'
                                 quality={100}
@@ -61,7 +61,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                 alt={recipe.title} 
                                 width={400}
                                 height={200}
-                                className='object-cover shadow-md hover:shadow-xl transition duration-300 w-full rounded-lg'
+                                className='h-full object-cover shadow-md hover:shadow-xl transition duration-300 w-full rounded-lg'
                             />
                         </div>
                     </div>
@@ -76,7 +76,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         <div className='flex flex-col sm:flex-wrap sm:flex-row gap-3'>
                             {recipe.compositions.map((composition) => (
                                 <div className='flex sm:flex-col justify-between sm:justify-start text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-300 dark:border-gray-600 last:border-none sm:border-none pb-3' key={composition.id}>
-                                    <div className='h-full sm:h-[100px] sm:w-[100px] overflow-hidden rounded-lg shadow-md'>
+                                    <div className='h-[300px] sm:h-[100px] sm:w-[100px] overflow-hidden rounded-lg shadow-md'>
                                         <Image 
                                             src={composition.ingredient.image} 
                                             alt={composition.ingredient.name} 
