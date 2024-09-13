@@ -48,7 +48,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                             priority={true}
                             src={recipe.image} 
                             alt={recipe.title} 
-                            width={200}
+                            width={400}
                             height={200}
                             className='shadow-md hover:shadow-xl transition duration-300 w-full md:w-[500px] rounded-lg my-5'
                         />
