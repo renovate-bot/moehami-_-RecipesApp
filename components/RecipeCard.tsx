@@ -42,14 +42,14 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
                                 <div className='absolute top-3 right-3 bg-white py-2 px-3 bg-opacity-60 rounded-full flex items-center space-x-2'>
                                     {recipe.isVegan && (
                                         <div className='flex items-center' title='Vegan'>
-                                            <LeafIcon strokeWidth={1} fill='#45a864c3'  className='w-6 h-6' />
+                                            <LeafIcon strokeWidth={1} fill='#45a864c3'  className='w-6 h-6 text-black' />
                                             {/* <LeafIcon className='w-6 h-6 text-green-700' /> */}
                                         </div>
                                     )}
 
                                     {recipe.isHealthy && (
                                         <div className='flex items-center' title='Healthy'>
-                                            <HeartPulseIcon strokeWidth={1} fill='#ef074dbc'  className='w-6 h-6' />
+                                            <HeartPulseIcon strokeWidth={1} fill='#ef074dbc'  className='w-6 h-6 text-black' />
                                             {/* <HeartPulseIcon strokeWidth={1.5}  className='w-6 h-6 text-red-500' /> */}
                                         </div>
                                     )}
