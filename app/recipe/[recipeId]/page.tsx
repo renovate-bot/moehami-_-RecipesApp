@@ -38,28 +38,34 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
         <div className=''>
             {recipe ? (
                 <div>
-                    {/* Recipe title */}
-                    <h1 className='text-4xl font-bold mb-5'>{recipe.title}</h1>
-                    {/* Recipe picture */}
-                    <div className=''>
-                        <Image 
-                            rel='eager'
-                            quality={100}
-                            priority={true}
-                            src={recipe.image} 
-                            alt={recipe.title} 
-                            width={400}
-                            height={200}
-                            className='shadow-md hover:shadow-xl transition duration-300 w-full md:w-[500px] rounded-lg my-5'
-                        />
+                    <div className='flex md:bg-slate-100/10 rounded-lg flex-col gap-5 md:flex-row items-center my-5'>
+                        {/* Recipe picture */}
+                        <div className='h-full'>
+                            <Image 
+                                rel='eager'
+                                quality={100}
+                                priority={true}
+                                src={recipe.image} 
+                                alt={recipe.title} 
+                                width={400}
+                                height={200}
+                                className='object-cover shadow-md hover:shadow-xl transition duration-300 w-full rounded-lg'
+                            />
+                        </div>
+                        {/* Recipe title */}
+                        <div className='flex flex-col p-0 md:p-5 sm:justify-center sm:items-center w-full'>
+                            <div>
+                                <h1 className='text-4xl font-bold mb-3'>{recipe.title}</h1>
+                            </div>
+                            <div className='flex h-full flex-wrap items-center gap-5 sm:justify-center text-center text-xl'>
+                                {/* Recipe category + preparation time + difficulty */}
+                                <CategoryBadge categoryName={recipe.category.name} />
+                                <p className='flex gap-2 items-center'><Clock10Icon /> {recipe.preparationTime} min</p>
+                                <DifficultyRating rating={recipe.difficulty} />
+                            </div>
+                        </div>
                     </div>
 
-                    <div className='flex flex-wrap items-center gap-5 text-center text-xl'>
-                        {/* Recipe category + preparation time + difficulty */}
-                        <CategoryBadge categoryName={recipe.category.name} />
-                        <p className='flex gap-2 items-center'><Clock10Icon /> {recipe.preparationTime} min</p>
-                        <DifficultyRating rating={recipe.difficulty} />
-                    </div>
                     
                     {/* Recipe instructions */}
                     <SectionHeader icon={ListChecksIcon} title="Instructions" />
