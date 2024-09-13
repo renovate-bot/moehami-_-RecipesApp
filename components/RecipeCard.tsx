@@ -22,9 +22,12 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
                 {/* Recipe picture */}
                 <div className='overflow-hidden h-[250px]'>
                     <Image 
+                        rel='preload'
+                        priority={true}
+                        quality={70}
                         src={recipe.image}
-                        width={500}
-                        height={200}
+                        width={300}
+                        height={100}
                         className='w-full h-full object-cover hover:scale-110 transition duration-300'
                         alt={recipe.title}
                     />

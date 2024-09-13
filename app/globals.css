@@ -35,6 +35,9 @@ body {
   margin-top: 30px;
 }
 
+.dark .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background: #f26b5a;
+} 
 .dark .swiper-pagination-bullet {
   background: white;
 } 

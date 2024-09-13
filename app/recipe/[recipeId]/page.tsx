@@ -43,6 +43,9 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                     {/* Recipe picture */}
                     <div className=''>
                         <Image 
+                            rel='eager'
+                            quality={100}
+                            priority={true}
                             src={recipe.image} 
                             alt={recipe.title} 
                             width={200}
