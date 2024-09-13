@@ -18,6 +18,7 @@ export const dynamic = 'force-dynamic'
 const RecipesPage = () => {
 
     const [recipes, setRecipes] = useState<RecipeType[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
         try {
@@ -30,6 +31,9 @@ const RecipesPage = () => {
             fetchRecipes()
         } catch (error) {
             console.error(error)   
+        }
+        finally {
+            setLoading(false)
         }
     },[])
 
@@ -49,45 +53,55 @@ const RecipesPage = () => {
             <h1 className='text-4xl font-bold mb-5'>Last Recipes</h1>
 
             <div className='swiper-container'>
-                <Swiper
-                    className='p-6'
-                    modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay]}
-                    effect={'coverflow'}
-                    autoplay={{
-                        delay: 2500,
-                        pauseOnMouseEnter: true,
-                        disableOnInteraction: false
-                    }}
-                    spaceBetween={50}
-                    mousewheel={true}
-                    // slidesPerView={'auto'}
-                    loop={shouldEnableLoop}
-                    pagination={{clickable: true}}
-                    centeredSlides={true}
-                    grabCursor={true}
-                    coverflowEffect={{
-                        rotate: 15,
-                        // stretch: 0,
-                        modifier: 1,
-                        slideShadows: false
-                    }}
-                    breakpoints={{
-                        0: {
-                            slidesPerView: 1
-                        },
-                        600: {
-                            slidesPerView: 2
-                        },
-                        850: {
-                            slidesPerView: 3
-                        },
-                        1285: {
-                            slidesPerView: 4
-                        },
-                    }}
-                >
-                    {recipes.length > 0 ? swiperSlides : <p>No recipes found</p>}
-                </Swiper>            
+                {loading ? (
+                    <div className='min-h-screen flex justify-center items-center'>
+                        <p>Loading...</p>
+                    </div>
+                ) : recipes.length > 0 ? (
+                    <Swiper
+                        className='p-6'
+                        modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay]}
+                        effect={'coverflow'}
+                        autoplay={{
+                            delay: 2500,
+                            pauseOnMouseEnter: true,
+                            disableOnInteraction: false
+                        }}
+                        spaceBetween={50}
+                        mousewheel={true}
+                        // slidesPerView={'auto'}
+                        loop={shouldEnableLoop}
+                        pagination={{clickable: true}}
+                        centeredSlides={true}
+                        grabCursor={true}
+                        coverflowEffect={{
+                            rotate: 15,
+                            // stretch: 0,
+                            modifier: 1,
+                            slideShadows: false
+                        }}
+                        breakpoints={{
+                            0: {
+                                slidesPerView: 1
+                            },
+                            600: {
+                                slidesPerView: 2
+                            },
+                            850: {
+                                slidesPerView: 3
+                            },
+                            1285: {
+                                slidesPerView: 4
+                            },
+                        }}
+                    >
+                        {swiperSlides}
+                    </Swiper>            
+                ) : (
+                    <div className='min-h-screen flex justify-center items-center'>
+                        <p>Loading...</p>
+                    </div>
+                )}
             </div>
         </div>
     )

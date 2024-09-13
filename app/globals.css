@@ -95,3 +95,12 @@ body {
 .swiper-slide-next {
   opacity: 0.7; 
 }
+
+@media(max-width: 600px) {
+  .swiper-container::before,
+  .swiper-container::after,
+  .dark .swiper-container::before,
+  .dark .swiper-container::after {
+    background: transparent;
+  }
+}
