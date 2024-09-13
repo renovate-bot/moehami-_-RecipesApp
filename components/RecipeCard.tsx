@@ -16,7 +16,7 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
     };
 
     return (
-        <div className="relative bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full w-full">
+        <div className="relative bg-white dark:bg-slate-800 shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full w-full">
             {/* Recipe Content */}
             <div className=''>
                 {/* Recipe picture */}
@@ -61,8 +61,8 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
                     {/* Preparation Time + difficulty */}
                     <div className='flex flex-col gap-2 mt-2'>
                         <div className='flex space-x-2 items-center'>
-                            <Clock11Icon size={15} className='text-slate-500' />
-                            <p className="text-sm text-gray-700"> {recipe.preparationTime} min</p>
+                            <Clock11Icon size={15} className='text-slate-500 dark:text-white' />
+                            <p className="text-sm text-gray-700 dark:text-white"> {recipe.preparationTime} min</p>
                         </div>
                         <div className='flex space-x-2 items-center'>
                             {/* <p className="text-sm text-gray-700">Difficulty</p> */}
@@ -77,7 +77,7 @@ const RecipeCard = ({ recipe }: { recipe: RecipeType }) => {
                     {/* View Recipe Button */}
                     <button 
                         onClick={viewRecipe}
-                        className="border border-slate-100 px-3 py-2 shadow-md hover:shadow-lg text-slate-800 font-semibold hover:text-slate-600 rounded-md transition duration-300 flex items-center space-x-2">
+                        className="border border-slate-100 px-3 py-2 shadow-md hover:shadow-lg text-slate-800 dark:text-white font-semibold hover:text-slate-600 rounded-md transition duration-300 flex items-center space-x-2">
                         <span>View Recipe</span> <ArrowRightIcon size={15} />
                     </button>
                 </div>

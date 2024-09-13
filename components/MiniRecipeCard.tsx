@@ -14,7 +14,7 @@ const MiniRecipeCard = ({ recipe }: { recipe: RecipeType }) => {
     };
 
     return (
-        <div className="w-full sm:w-[200px] bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <div className="w-full sm:w-[200px] bg-white dark:bg-slate-800 shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
             {/* Recipe Content */}
             <div className=''>
                 {/* Recipe picture */}
@@ -35,7 +35,7 @@ const MiniRecipeCard = ({ recipe }: { recipe: RecipeType }) => {
                     {/* View Recipe Button */}
                     <button 
                         onClick={viewRecipe}
-                        className="text-slate-800 font-semibold hover:text-slate-600 py-2 rounded-mdtransition-colors duration-300 flex items-center space-x-2">
+                        className="text-slate-800 dark:text-white font-semibold hover:text-slate-600 py-2 rounded-mdtransition-colors duration-300 flex items-center space-x-2">
                         <span>View Recipe</span> <ArrowRightIcon />
                     </button>
                 </div>

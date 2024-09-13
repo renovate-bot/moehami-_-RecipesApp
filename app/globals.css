@@ -26,6 +26,10 @@ body {
   }
 } */
 
+.dark body {
+  @apply bg-gray-900 text-white;
+}
+
 .swiper-pagination {
   position: relative !important;
   margin-top: 30px;
