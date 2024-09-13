@@ -1,7 +1,7 @@
 "use client"
 
 import DifficultyRating from '@/components/DifficultyRating'
-import { Clock10Icon, CookingPotIcon, LightbulbIcon, ListChecksIcon } from 'lucide-react'
+import { Clock10Icon, CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { RecipeType } from '@/types/types'
 import Image from 'next/image'
@@ -100,6 +100,25 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         ))}
                         </div>
                     </div>
+
+                    {/* Recipe comments */}
+                    <SectionHeader icon={MessageSquareQuoteIcon} title="Comments" />
+                    {recipe.comments.length > 0 ? (
+                        <div className='flex flex-col gap-3'>
+                            {recipe.comments.map((comment) => (
+                                <div key={comment.id} className='p-8 rounded-lg border border-slate-700'>
+                                    <p className='text-slate-400'>
+                                        {comment.userId} {new Date(comment.createdAt).toLocaleDateString()} {new Date(comment.createdAt).toLocaleTimeString()}
+                                    </p>
+                                    <p>
+                                        {comment.text}
+                                    </p> 
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p>No comments</p>
+                    )}
                 </div>
             ) : (
                 <p>Loading...</p>

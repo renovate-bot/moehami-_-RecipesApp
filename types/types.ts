@@ -11,6 +11,13 @@ export interface CompositionType {
     measureUnity: string;
 }
 
+export interface CommentType {
+    id: string;
+    text: string;
+    userId: string;
+    createdAt: Date;
+}
+
 export interface RecipeType {
     id: string;
     title: string;
@@ -19,7 +26,8 @@ export interface RecipeType {
     difficulty: number;
     instructions: string;
     image: string;
-    compositions: CompositionType[]
+    compositions: CompositionType[];
+    comments: CommentType[];
     isHealthy: boolean;
     isVegan: boolean;
 }

@@ -14,7 +14,11 @@ export async function GET(req: NextRequest, { params }: { params: { recipeId: st
                 id: recipeId
             },
             include: {
-                comments: true,
+                comments: {
+                    orderBy: {
+                        createdAt: 'desc'
+                    }
+                },
                 category: true,
                 compositions: {
                     include: {
