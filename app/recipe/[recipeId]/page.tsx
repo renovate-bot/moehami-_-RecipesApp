@@ -40,7 +40,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                 <div>
                     <div className='flex md:bg-slate-100 dark:md:bg-slate-100/10 rounded-lg flex-col-reverse gap-5 md:flex-row items-center my-5'>
                         {/* Recipe title */}
-                        <div className='w-full md:w-[50%] flex flex-col p-0 md:p-5 my-7 sm:justify-center sm:items-center'>
+                        <div className='w-full md:w-[50%] flex flex-col p-0 md:p-5 mt-4 mb-7 sm:justify-center sm:items-center'>
                             <div>
                                 <h1 className='text-4xl font-thin mb-3'>{recipe.title}</h1>
                             </div>
