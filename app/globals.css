@@ -48,6 +48,7 @@ body {
   overflow: hidden;
 }
 
+/* Adjust the gradient for dark mode */
 .swiper-container::before,
 .swiper-container::after {
   content: '';
@@ -55,13 +56,27 @@ body {
   top: 0;
   width: 10%;
   height: 100%;
-  background: linear-gradient(to right, rgba(17, 24, 39, 1) 0%, rgba(17, 24, 39, 0.5) 50%, rgba(17, 24, 39, 0) 100%, transparent);
   z-index: 10;
+}
+
+/* Dark mode gradient */
+.dark .swiper-container::before {
+  background: linear-gradient(to right, rgba(17, 24, 39, 1) 0%, rgba(17, 24, 39, 0.5) 50%, rgba(17, 24, 39, 0) 100%);
+}
+
+.dark .swiper-container::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(17, 24, 39, 1) 0%, rgba(17, 24, 39, 0.5) 50%, rgba(17, 24, 39, 0) 100%);
+}
+
+/* Light mode gradient */
+.swiper-container::before {
+  background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
 }
 
 .swiper-container::after {
   right: 0;
-  background: linear-gradient(to left, rgba(17, 24, 39, 1) 0%, rgba(17, 24, 39, 0.5) 50%, rgba(17, 24, 39, 0) 100%, transparent);
+  background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
 }
 
 .swiper-slide {
