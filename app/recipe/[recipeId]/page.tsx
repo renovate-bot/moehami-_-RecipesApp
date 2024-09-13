@@ -1,7 +1,7 @@
 "use client"
 
 import DifficultyRating from '@/components/DifficultyRating'
-import { Clock10Icon, CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon } from 'lucide-react'
+import { Clock10Icon, CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { RecipeType } from '@/types/types'
 import Image from 'next/image'
@@ -107,8 +107,14 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         <div className='flex flex-col gap-3'>
                             {recipe.comments.map((comment) => (
                                 <div key={comment.id} className='p-8 rounded-lg border border-slate-700'>
+                                    <div className='flex space-x-2 text-slate-400'> 
+                                        <UserCircleIcon />
+                                        <p>
+                                            {comment.userId} 
+                                        </p>
+                                    </div>
                                     <p className='text-slate-400'>
-                                        {comment.userId} {new Date(comment.createdAt).toLocaleDateString()} {new Date(comment.createdAt).toLocaleTimeString()}
+                                        {new Date(comment.createdAt).toLocaleDateString()} {new Date(comment.createdAt).toLocaleTimeString()}
                                     </p>
                                     <p>
                                         {comment.text}
