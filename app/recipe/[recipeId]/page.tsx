@@ -38,9 +38,21 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
         <div className=''>
             {recipe ? (
                 <div>
-                    <div className='flex md:bg-slate-100/10 rounded-lg flex-col gap-5 md:flex-row items-center my-5'>
+                    <div className='flex md:bg-slate-100/10 rounded-lg flex-col-reverse gap-5 md:flex-row items-center my-5'>
+                        {/* Recipe title */}
+                        <div className='w-full md:w-[50%] flex flex-col p-0 md:p-5 sm:justify-center sm:items-center'>
+                            <div>
+                                <h1 className='text-4xl font-thin mb-3'>{recipe.title}</h1>
+                            </div>
+                            <div className='flex h-full flex-wrap items-center gap-5 sm:justify-center text-center text-xl'>
+                                {/* Recipe category + preparation time + difficulty */}
+                                <CategoryBadge categoryName={recipe.category.name} />
+                                <p className='flex gap-2 items-center'><Clock10Icon /> {recipe.preparationTime} min</p>
+                                <DifficultyRating rating={recipe.difficulty} />
+                            </div>
+                        </div>
                         {/* Recipe picture */}
-                        <div className='h-full'>
+                        <div className='h-full overflow-hidden w-full md:w-[50%]'>
                             <Image 
                                 rel='eager'
                                 quality={100}
@@ -52,30 +64,18 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                 className='object-cover shadow-md hover:shadow-xl transition duration-300 w-full rounded-lg'
                             />
                         </div>
-                        {/* Recipe title */}
-                        <div className='flex flex-col p-0 md:p-5 sm:justify-center sm:items-center w-full'>
-                            <div>
-                                <h1 className='text-4xl font-bold mb-3'>{recipe.title}</h1>
-                            </div>
-                            <div className='flex h-full flex-wrap items-center gap-5 sm:justify-center text-center text-xl'>
-                                {/* Recipe category + preparation time + difficulty */}
-                                <CategoryBadge categoryName={recipe.category.name} />
-                                <p className='flex gap-2 items-center'><Clock10Icon /> {recipe.preparationTime} min</p>
-                                <DifficultyRating rating={recipe.difficulty} />
-                            </div>
-                        </div>
                     </div>
 
                     
                     {/* Recipe instructions */}
                     <SectionHeader icon={ListChecksIcon} title="Instructions" />
-                    <p>{recipe.instructions}</p>
+                    <p className='font-thin'>{recipe.instructions}</p>
                     {/* Recipe ingredients */}
                     <div>
                         <SectionHeader icon={CookingPotIcon} title="Ingredients" />
                         <div className='flex flex-col sm:flex-wrap sm:flex-row gap-3'>
                             {recipe.compositions.map((composition) => (
-                                <div className='flex sm:flex-col justify-between text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-600 last:border-none sm:border-none pb-3' key={composition.id}>
+                                <div className='flex sm:flex-col justify-between sm:justify-start text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-600 last:border-none sm:border-none pb-3' key={composition.id}>
                                     <div className='h-full sm:h-[100px] sm:w-[100px] overflow-hidden rounded-lg shadow-md'>
                                         <Image 
                                             src={composition.ingredient.image} 
@@ -85,7 +85,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                             className='w-[100px] h-[100px] object-cover sm:w-full sm:h-full hover:scale-105 transition duration-300'
                                         />
                                     </div>
-                                    <p className='sm:mt-2'><span className='font-semibold'>{composition.ingredient.name}</span><br/>{composition.quantity} {composition.measureUnity}</p>
+                                    <p className='sm:mt-2'><span className='font-bold'>{composition.ingredient.name}</span><br/><span className='font-thin text-sm'>{composition.quantity} {composition.measureUnity}</span></p>
                                 </div>
                             ))}
                         </div>
