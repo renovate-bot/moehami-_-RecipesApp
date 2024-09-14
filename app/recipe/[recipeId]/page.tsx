@@ -88,18 +88,19 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                             <div>
                                 <h1 className='text-4xl font-thin mb-3'>{recipe.title}</h1>
                             </div>
+
                             <div className='flex h-full flex-wrap items-center gap-5 sm:justify-center text-center text-xl'>
                                 {/* Recipe category + preparation time + difficulty */}
                                 <CategoryBadge categoryName={recipe.category.name} />
                                 <p className='flex gap-2 items-center'><Clock10Icon /> {recipe.preparationTime} min</p>
                                 <DifficultyRating rating={recipe.difficulty} />
 
-                            </div>
+                            MealPlanner</div>
                             <div className='mt-6'>
                                 <button 
                                     onClick={generatePDF}
                                     className='border border-slate-400 px-4 py-2 rounded-lg hover:bg-slate-600 hover:text-slate-200 dark:hover:text-slate-200 transition duration-300'>
-                                        Download PDF
+                                        Download Recipe
                                 </button>
                             </div>
                         </div>

@@ -11,6 +11,9 @@
     "seed": "ts-node scripts/seed.js"
   },
   "dependencies": {
+    "@fullcalendar/daygrid": "^6.1.15",
+    "@fullcalendar/interaction": "^6.1.15",
+    "@fullcalendar/react": "^6.1.15",
     "@prisma/client": "^5.19.1",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
@@ -25,12 +28,14 @@
     "next": "14.2.9",
     "prisma": "^5.19.1",
     "react": "^18",
+    "react-calendar": "^5.0.0",
     "react-dom": "^18",
     "swiper": "^11.1.12",
     "tailwind-merge": "^2.5.2",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
+    "@types/fullcalendar": "^3.8.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
