@@ -94,8 +94,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                 <CategoryBadge categoryName={recipe.category.name} />
                                 <p className='flex gap-2 items-center'><Clock10Icon /> {recipe.preparationTime} min</p>
                                 <DifficultyRating rating={recipe.difficulty} />
-
-                            MealPlanner</div>
+                            </div>
                             <div className='mt-6'>
                                 <button 
                                     onClick={generatePDF}
