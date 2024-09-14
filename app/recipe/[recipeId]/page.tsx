@@ -9,7 +9,7 @@ import SectionHeader from '@/components/SectionHeader'
 import CategoryBadge from '@/components/CategoryBadge'
 import MiniRecipeCard from '@/components/MiniRecipeCard'
 import DifficultyRating from '@/components/DifficultyRating'
-import { Clock10Icon, CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon } from 'lucide-react'
+import { Clock10Icon, HeartIcon, CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon } from 'lucide-react'
 
 import { jsPDF } from 'jspdf';
 
@@ -84,7 +84,10 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                 <div id='recipe-detail'>
                     <div className='flex md:bg-slate-100 dark:md:bg-slate-100/10 rounded-lg flex-col-reverse gap-5 md:flex-row items-center my-5'>
                         {/* Recipe title */}
-                        <div className='w-full md:w-[50%] flex flex-col p-0 md:p-5 mt-4 mb-7 sm:justify-center sm:items-center'>
+                        <div className='relative w-full md:w-[50%] flex flex-col p-0 md:p-5 mt-4 mb-7 sm:justify-center sm:items-center'>
+                            <div className='absolute top-0 right-5'>
+                                <button><HeartIcon className='stroke-red-500 fill-red-500 hover:fill-red-600 hover:stroke-red-600 transition duration-300' /></button>
+                            </div>
                             <div>
                                 <h1 className='text-4xl font-thin mb-3'>{recipe.title}</h1>
                             </div>
