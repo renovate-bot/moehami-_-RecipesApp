@@ -1,13 +1,17 @@
 "use client"
 
-import DifficultyRating from '@/components/DifficultyRating'
-import { Clock10Icon, CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import { RecipeType } from '@/types/types'
 import Image from 'next/image'
+
+import { RecipeType } from '@/types/types'
+
 import SectionHeader from '@/components/SectionHeader'
 import CategoryBadge from '@/components/CategoryBadge'
 import MiniRecipeCard from '@/components/MiniRecipeCard'
+import DifficultyRating from '@/components/DifficultyRating'
+import { Clock10Icon, CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon } from 'lucide-react'
+
+import { jsPDF } from 'jspdf';
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
@@ -34,10 +38,50 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
         fetchRecipe();
     }, [params.recipeId]);
 
+    const generatePDF = () => {
+        if (!recipe) return;
+
+        const pdf = new jsPDF();
+
+        // Ajout du titre de la recette
+        pdf.setFontSize(22);
+        pdf.text(recipe.title, 10, 20);
+
+        // Ajout du temps de préparation
+        pdf.setFontSize(12);
+        pdf.text(`Preparation time : ${recipe.preparationTime} min`, 10, 30);
+
+        // Ajout de la difficulté
+        pdf.text(`Difficulty : ${recipe.difficulty}/5`, 10, 35);
+
+        // Ajout des ingrédients
+        pdf.setFontSize(16);
+        pdf.text('Ingredients : ', 10, 50);
+
+        pdf.setFontSize(12);
+        let yPosition = 60;
+        recipe.compositions.forEach((composition) => {
+            pdf.text(`${composition.ingredient.name} - ${composition.quantity} ${composition.measureUnity}`, 10, yPosition);
+            yPosition += 5;
+        });
+
+        // Ajout des instructions
+        pdf.setFontSize(16);
+        pdf.text('Instructions :', 10, yPosition + 10);
+
+        pdf.setFontSize(12);
+        let instructionsYPosition = yPosition + 20;
+        const instructions = pdf.splitTextToSize(recipe.instructions, 180);
+        pdf.text(instructions, 10, instructionsYPosition);
+
+        // Sauvegarder le PDF
+        pdf.save(`${recipe.title}.pdf`);
+    };
+
     return (
         <div className=''>
             {recipe ? (
-                <div>
+                <div id='recipe-detail'>
                     <div className='flex md:bg-slate-100 dark:md:bg-slate-100/10 rounded-lg flex-col-reverse gap-5 md:flex-row items-center my-5'>
                         {/* Recipe title */}
                         <div className='w-full md:w-[50%] flex flex-col p-0 md:p-5 mt-4 mb-7 sm:justify-center sm:items-center'>
@@ -49,6 +93,14 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                 <CategoryBadge categoryName={recipe.category.name} />
                                 <p className='flex gap-2 items-center'><Clock10Icon /> {recipe.preparationTime} min</p>
                                 <DifficultyRating rating={recipe.difficulty} />
+
+                            </div>
+                            <div className='mt-6'>
+                                <button 
+                                    onClick={generatePDF}
+                                    className='border border-slate-400 px-4 py-2 rounded-lg hover:bg-slate-600 hover:text-slate-200 dark:hover:text-slate-200 transition duration-300'>
+                                        Download PDF
+                                </button>
                             </div>
                         </div>
                         {/* Recipe picture */}
