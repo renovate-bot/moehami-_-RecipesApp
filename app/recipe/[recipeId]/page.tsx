@@ -66,10 +66,6 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         </div>
                     </div>
 
-                    
-                    {/* Recipe instructions */}
-                    <SectionHeader icon={ListChecksIcon} title="Instructions" />
-                    <p className='font-thin'>{recipe.instructions}</p>
                     {/* Recipe ingredients */}
                     <div>
                         <SectionHeader icon={CookingPotIcon} title="Ingredients" />
@@ -91,22 +87,16 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         </div>
                     </div>
 
-                    {/* Suggestions */}
-                    <div>
-                        <SectionHeader icon={LightbulbIcon} title="Suggestions" />
-                        <div className='flex flex-wrap gap-3'>
-                        {suggestions?.map((suggestion) => (
-                            <MiniRecipeCard key={suggestion.id} recipe={suggestion} />
-                        ))}
-                        </div>
-                    </div>
+                    {/* Recipe instructions */}
+                    <SectionHeader icon={ListChecksIcon} title="Instructions" />
+                    <p className='font-thin'>{recipe.instructions}</p>
 
                     {/* Recipe comments */}
                     <SectionHeader icon={MessageSquareQuoteIcon} title="Comments" />
                     {recipe.comments.length > 0 ? (
                         <div className='flex flex-col gap-3'>
                             {recipe.comments.map((comment) => (
-                                <div key={comment.id} className='p-8 rounded-lg border border-slate-700'>
+                                <div key={comment.id} className='p-8 rounded-lg border border-slate-300 dark:border-slate-700'>
                                     <div className='flex space-x-2 text-slate-400'> 
                                         <UserCircleIcon />
                                         <p>
@@ -125,6 +115,16 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                     ) : (
                         <p>No comments</p>
                     )}
+
+                    {/* Suggestions */}
+                    <div>
+                        <SectionHeader icon={LightbulbIcon} title="Suggestions" />
+                        <div className='flex flex-wrap gap-3'>
+                        {suggestions?.map((suggestion) => (
+                            <MiniRecipeCard key={suggestion.id} recipe={suggestion} />
+                        ))}
+                        </div>
+                    </div>
                 </div>
             ) : (
                 <p>Loading...</p>
