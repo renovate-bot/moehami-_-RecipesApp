@@ -17,6 +17,8 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
     const [recipe, setRecipe] = useState<RecipeType | null>(null)
     const [suggestions, setSuggestions] = useState<RecipeType[] | null>([])
+    const [newComment, setNewComment] = useState('');
+    const [comments, setComments] = useState(recipe?.comments || []);
 
     useEffect(() => {
         const fetchRecipe = async () => {
@@ -80,6 +82,33 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
     const handleFavorite = () => {
         window.alert("Fav !")
+    }
+
+    const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setNewComment(e.target.value);
+    }
+
+    const handleCommentSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!recipe || !newComment.trim()) return;
+
+        try {
+            const response = await fetch(`/api/recipe/${params.recipeId}/comments`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: newComment }),
+            });
+
+            if (response.ok) {
+                const updatedComments = await response.json();
+                setRecipe(prev => prev ? { ...prev, comments: updatedComments } : null);
+                setNewComment('');
+            } else {
+                console.error("Failed to submit comment");
+            }
+        } catch (error) {
+            console.error("Error submitting comment:", error);
+        }
     }
 
     return (
@@ -174,6 +203,24 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                     ) : (
                         <p>No comments</p>
                     )}
+
+                    {/* Add new comment */}
+                    <SectionHeader icon={MessageSquareQuoteIcon} title="Add a Comment" />
+                    <form onSubmit={handleCommentSubmit} className='flex flex-col gap-4'>
+                        <textarea
+                            value={newComment}
+                            onChange={handleCommentChange}
+                            placeholder='Write your comment here...'
+                            rows={4}
+                            className='p-3 border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 transition duration-300'
+                        />
+                        <button
+                            type='submit'
+                            className='self-start bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300'
+                        >
+                            Post Comment
+                        </button>
+                    </form>
 
                     {/* Suggestions */}
                     <div>
