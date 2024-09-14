@@ -88,10 +88,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                 <div id='recipe-detail'>
                     <div className='flex md:bg-slate-100 dark:md:bg-slate-100/10 rounded-lg flex-col-reverse gap-5 md:flex-row items-center my-5'>
                         {/* Recipe title */}
-                        <div className='relative md:w-[50%] flex flex-col p-0 md:p-5 mt-4 mb-7 sm:justify-center sm:items-center'>
-                            <div className='absolute top-0 right-5'>
-                                <button onClick={handleFavorite}><BookmarkCheckIcon className='stroke-red-500 fill-red-500 hover:fill-red-600 hover:stroke-red-600 transition duration-300' /></button>
-                            </div>
+                        <div className='relative md:w-[50%] flex flex-col p-0 md:p-5 mt-4 mb-7 sm:justify-center sm:items-center sm:text-center'>
                             <div>
                                 <h1 className='text-4xl font-thin mb-3'>{recipe.title}</h1>
                             </div>
@@ -102,12 +99,15 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                 <p className='flex gap-2 items-center'><Clock10Icon /> {recipe.preparationTime} min</p>
                                 <DifficultyRating rating={recipe.difficulty} />
                             </div>
-                            <div className='mt-6'>
+                            <div className='flex items-center space-x-3 mt-6'>
                                 <button 
                                     onClick={generatePDF}
                                     className='border border-slate-400 px-4 py-2 rounded-lg hover:bg-slate-600 hover:text-slate-200 dark:hover:text-slate-200 transition duration-300'>
                                         Download Recipe
                                 </button>
+                                <div className='top-0 right-0'>
+                                    <button onClick={handleFavorite}><BookmarkCheckIcon className='stroke-red-500 fill-red-500 hover:fill-red-600 hover:stroke-red-600 transition duration-300' /></button>
+                                </div>
                             </div>
                         </div>
                         {/* Recipe picture */}
