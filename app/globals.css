@@ -26,6 +26,10 @@ body {
   }
 } */
 
+/* body {
+  @apply bg-slate-200;
+} */
+
 .dark body {
   @apply bg-gray-900 text-white;
 }
