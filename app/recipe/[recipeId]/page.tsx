@@ -9,7 +9,17 @@ import SectionHeader from '@/components/SectionHeader'
 import CategoryBadge from '@/components/CategoryBadge'
 import MiniRecipeCard from '@/components/MiniRecipeCard'
 import DifficultyRating from '@/components/DifficultyRating'
-import { Clock10Icon, HeartIcon, CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon, BookmarkCheckIcon, Trash2Icon } from 'lucide-react'
+import { Clock10Icon, CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon, BookmarkCheckIcon, Trash2Icon, WaypointsIcon } from 'lucide-react'
+
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { EffectCoverflow, Pagination, Mousewheel, Autoplay } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/autoplay';
 
 import { jsPDF } from 'jspdf';
 
@@ -178,6 +188,26 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                     {/* Recipe instructions */}
                     <SectionHeader icon={ListChecksIcon} title="Instructions" />
                     <p className='font-thin'>{recipe.instructions}</p>
+
+                    {/* Recipe steps */}
+                    <SectionHeader icon={WaypointsIcon} title="Steps" />
+                    <Swiper
+                        modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay]}
+                        grabCursor={true}
+                        mousewheel={true}
+                        slidesPerView={2}
+                        pagination={{clickable: true}}
+                        spaceBetween={20}
+                    >
+                    {recipe.steps.map((step) => (
+                        <SwiperSlide key={step.id}>
+                            <div className='px-8 py-10 flex flex-col items-center justify-center h-[250px] text-center border border-slate-700'>
+                                <h3 className='font-bold text-4xl mb-3'>{step.number}</h3>
+                                <p className='font-thin'>{step.description}</p>
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                    </Swiper>
 
                     {/* Recipe comments */}
                     <SectionHeader icon={MessageSquareQuoteIcon} title="Comments" count={recipe.comments.length} />

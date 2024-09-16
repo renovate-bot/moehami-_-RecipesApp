@@ -18,6 +18,12 @@ export interface CommentType {
     createdAt: Date;
 }
 
+export interface StepType {
+    id: string;
+    number: number;
+    description: string;
+}
+
 export interface RecipeType {
     id: string;
     title: string;
@@ -30,4 +36,5 @@ export interface RecipeType {
     comments: CommentType[];
     isHealthy: boolean;
     isVegan: boolean;
+    steps: StepType[];
 }
