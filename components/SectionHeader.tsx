@@ -3,13 +3,15 @@ import { LucideIcon } from 'lucide-react';
 interface SectionHeaderProps {
     icon: LucideIcon;
     title: string;
+    count?: number;
 }
 
-const SectionHeader = ({ icon: Icon, title }: SectionHeaderProps) => {
+const SectionHeader = ({ icon: Icon, title, count }: SectionHeaderProps) => {
     return (
-        <div className='flex space-x-4 items-center mt-8 mb-5'>
-            <Icon className="text-[#f26b5a]" />
-            <h2 className='text-xl font-semibold text-[#f26b5a]'>{title}</h2>
+        <div className='flex space-x-4 items-center mt-8 mb-5 text-[#f26b5a] font-semibold'>
+            <Icon className="" />
+            <h2 className='text-xl'>{title}</h2>
+            {count !== undefined && count !== null && <p className=''>({count})</p>}
         </div>
     );
 };

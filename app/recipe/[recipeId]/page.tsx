@@ -180,7 +180,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                     <p className='font-thin'>{recipe.instructions}</p>
 
                     {/* Recipe comments */}
-                    <SectionHeader icon={MessageSquareQuoteIcon} title="Comments" />
+                    <SectionHeader icon={MessageSquareQuoteIcon} title="Comments" count={recipe.comments.length} />
                     {recipe.comments.length > 0 ? (
                         <div className='flex flex-col gap-3'>
                             {recipe.comments.map((comment) => (
