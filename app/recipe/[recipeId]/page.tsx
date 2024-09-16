@@ -211,7 +211,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                                     <p key={toolRecipe.id}>{toolRecipe.quantity} {toolRecipe.tool.name}</p>
                                                 ))
                                             ) : (
-                                                <p>No tools</p>
+                                                <p className='text-xs text-slate-400'>No tools</p>
                                             )}
                                         </div>
                                     </TabPanel>
@@ -250,7 +250,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         ))}
                         </Swiper>
                     ) : (
-                        <p>No steps</p>
+                        <p className='text-xs text-slate-400'>No steps</p>
                     )}
 
                     {/* Recipe comments */}
@@ -280,7 +280,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                             ))}
                         </div>
                     ) : (
-                        <p>No comments</p>
+                        <p className='text-xs text-slate-400'>No comments</p>
                     )}
 
                     {/* Add new comment */}
