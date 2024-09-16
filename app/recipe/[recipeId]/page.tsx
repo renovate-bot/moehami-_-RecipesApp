@@ -12,7 +12,7 @@ import DifficultyRating from '@/components/DifficultyRating'
 import { Clock10Icon, CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon, BookmarkCheckIcon, Trash2Icon, WaypointsIcon } from 'lucide-react'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { EffectCoverflow, Pagination, Mousewheel, Autoplay } from 'swiper/modules';
+import { EffectCoverflow, Pagination, Mousewheel, Autoplay, Navigation } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -192,9 +192,10 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                     {/* Recipe steps */}
                     <SectionHeader icon={WaypointsIcon} title="Steps" count={recipe.steps.length} />
                     <Swiper
-                        modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay]}
+                        modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay, Navigation]}
                         grabCursor={true}
                         mousewheel={true}
+                        // navigation
                         slidesPerView={2}
                         pagination={{clickable: true}}
                         spaceBetween={20}
