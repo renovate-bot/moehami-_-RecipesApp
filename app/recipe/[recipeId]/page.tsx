@@ -126,9 +126,9 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
         <div className=''>
             {recipe ? (
                 <div id='recipe-detail'>
-                    <div className='flex md:bg-slate-100 dark:md:bg-slate-100/10 rounded-lg flex-col-reverse gap-5 md:flex-row items-center my-5'>
+                    <div className='flex md:bg-slate-100 dark:md:bg-slate-100/10 rounded-lg flex-col-reverse md:flex-row items-center my-5'>
                         {/* Recipe title */}
-                        <div className='relative md:w-[50%] w-full flex flex-col p-0 md:p-5 mt-4 mb-7 sm:justify-center sm:items-center sm:text-center'>
+                        <div className='relative md:w-[50%] w-full flex flex-col md:p-5 mt-4 mb-7 sm:justify-center sm:items-center sm:text-center'>
                             <div>
                                 <h1 className='text-4xl font-thin mb-3'>{recipe.title}</h1>
                             </div>
@@ -142,13 +142,13 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                             <div className='flex flex-col sm:flex-row items-center gap-2 mt-6'>
                                 <button
                                     onClick={generatePDF}
-                                    className='flex w-full sm:w-auto items-center gap-2 bg-gradient-to-r from-[#f26b5a] to-[#f78b6d] text-white px-6 py-3 p-2 rounded-full shadow-md hover:shadow-lg hover:from-[#e85c47] hover:to-[#f76f58] transition-all duration-300 ease-in-out transform'
+                                    className='flex text-sm w-full sm:w-auto items-center gap-2 bg-gradient-to-r from-[#f26b5a] to-[#f78b6d] text-white px-6 py-3 p-2 rounded-full shadow-md hover:shadow-lg hover:from-[#e85c47] hover:to-[#f76f58] transition-all duration-300 ease-in-out transform'
                                 >
                                     <DownloadIcon /> Download
                                 </button>
                                 <button 
                                     onClick={handleFavorite}
-                                    className='flex w-full sm:w-auto items-center gap-2 bg-gradient-to-r from-[#f26b5a] to-[#f78b6d] text-white px-6 py-3 p-2 rounded-full shadow-md hover:shadow-lg hover:from-[#e85c47] hover:to-[#f76f58] transition-all duration-300 ease-in-out transform'
+                                    className='flex text-sm w-full sm:w-auto items-center gap-2 bg-gradient-to-r from-[#f26b5a] to-[#f78b6d] text-white px-6 py-3 p-2 rounded-full shadow-md hover:shadow-lg hover:from-[#e85c47] hover:to-[#f76f58] transition-all duration-300 ease-in-out transform'
                                 >
                                     <HeartIcon /> Favorite
                                 </button>
@@ -201,7 +201,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                 <TabPanel className=''>
                                     <div className='px-9 py-6'>
                                         {recipe.toolsRecipe.map((toolRecipe) => (
-                                            <p>{toolRecipe.quantity} {toolRecipe.tool.name}</p>
+                                            <p key={toolRecipe.id}>{toolRecipe.quantity} {toolRecipe.tool.name}</p>
                                         ))}
                                     </div>
                                 </TabPanel>
