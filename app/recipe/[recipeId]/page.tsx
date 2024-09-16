@@ -190,7 +190,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                     <p className='font-thin'>{recipe.instructions}</p>
 
                     {/* Recipe steps */}
-                    <SectionHeader icon={WaypointsIcon} title="Steps" />
+                    <SectionHeader icon={WaypointsIcon} title="Steps" count={recipe.steps.length} />
                     <Swiper
                         modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay]}
                         grabCursor={true}
@@ -202,7 +202,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                             0: {
                                 slidesPerView: 1
                             },
-                            600: {
+                            900: {
                                 slidesPerView: 2
                             },
                         }}
