@@ -22,6 +22,7 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/autoplay';
 
 import { jsPDF } from 'jspdf';
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
@@ -166,23 +167,40 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
                     {/* Recipe ingredients */}
                     <div>
-                        <SectionHeader icon={CookingPotIcon} title="Ingredients" />
-                        <div className='flex flex-col sm:flex-wrap sm:flex-row gap-3'>
-                            {recipe.compositions.map((composition) => (
-                                <div className='flex sm:flex-col justify-between sm:justify-start text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-300 dark:border-gray-600 last:border-none sm:border-none pb-3' key={composition.id}>
-                                    <div className='sm:h-[100px] sm:w-[100px] overflow-hidden rounded-lg shadow-md'>
-                                        <Image 
-                                            src={composition.ingredient.image} 
-                                            alt={composition.ingredient.name} 
-                                            height={200}
-                                            width={200}
-                                            className='w-[100px] h-[100px] object-cover sm:w-full sm:h-full hover:scale-105 transition duration-300'
-                                        />
+                        <SectionHeader icon={CookingPotIcon} title="Ingredients and Tools" />
+
+                        <Tab.Group className='border border-slate-300 dark:border-slate-800 rounded-lg'>
+                            <TabList className="flex space-x-2 bg-slate-300 dark:bg-slate-800 p-6 rounded-lg">
+                                <Tab className={({ selected }) => `px-4 py-2 rounded-lg ${selected ? 'bg-slate-600 text-white focus:outline-none' : ''}`}>Ingredients</Tab>
+                                
+                                <Tab className={({ selected }) => `px-4 py-2 rounded-lg ${selected ? 'bg-slate-600 text-white focus:outline-none' : ''}`}>Tools</Tab>  
+                            </TabList>
+                            <TabPanels>
+                                <TabPanel className='p-6'>
+                                    <div className='flex flex-col sm:flex-wrap sm:flex-row gap-3'>
+                                        {recipe.compositions.map((composition) => (
+                                            <div className='flex sm:flex-col justify-between sm:justify-start text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-300 dark:border-gray-600 last:border-none sm:border-none pb-3' key={composition.id}>
+                                                <div className='sm:h-[100px] sm:w-[100px] overflow-hidden rounded-lg shadow-md'>
+                                                    <Image 
+                                                        src={composition.ingredient.image} 
+                                                        alt={composition.ingredient.name} 
+                                                        height={200}
+                                                        width={200}
+                                                        className='w-[100px] h-[100px] object-cover sm:w-full sm:h-full hover:scale-105 transition duration-300'
+                                                    />
+                                                </div>
+                                                <p className='sm:mt-2'><span className='font-bold'>{composition.ingredient.name}</span><br/><span className='font-thin text-sm'>{composition.quantity} {composition.measureUnity}</span></p>
+                                            </div>
+                                        ))}
                                     </div>
-                                    <p className='sm:mt-2'><span className='font-bold'>{composition.ingredient.name}</span><br/><span className='font-thin text-sm'>{composition.quantity} {composition.measureUnity}</span></p>
-                                </div>
-                            ))}
-                        </div>
+                                </TabPanel>
+                                <TabPanel className='p-6'>
+                                    <div>
+                                        <p>BBB</p>
+                                    </div>
+                                </TabPanel>
+                            </TabPanels>
+                        </Tab.Group>
                     </div>
 
                     {/* Recipe instructions */}
