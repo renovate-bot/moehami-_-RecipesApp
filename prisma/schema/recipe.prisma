@@ -17,4 +17,6 @@ model Recipe {
     comments            Comment[]
 
     steps               Step[]
+
+    toolsRecipe         ToolRecipe[]
 }
