@@ -1,0 +1,10 @@
+model Step {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    number      Int         
+    description String     
+    duration    Int?       
+    image       String?
+
+    recipeId    String @db.ObjectId
+    recipe      Recipe @relation(fields: [recipeId], references: [id])
+}

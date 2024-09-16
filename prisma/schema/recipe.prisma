@@ -1,18 +1,20 @@
 model Recipe {
-    id String @id @default(auto()) @map("_id") @db.ObjectId
-    title String
-    preparationTime Int
-    instructions String?
-    difficulty Int
-    image String?
-    isHealthy Boolean @default(false)
-    isVegan Boolean @default(false)
+    id                  String @id @default(auto()) @map("_id") @db.ObjectId
+    title               String
+    preparationTime     Int
+    instructions        String?
+    difficulty          Int
+    image               String?
+    isHealthy           Boolean @default(false)
+    isVegan             Boolean @default(false)
     
-    categoryId String @db.ObjectId
-    category Category @relation(fields: [categoryId], references: [id])
+    categoryId          String @db.ObjectId
+    category            Category @relation(fields: [categoryId], references: [id])
 
-    createdAt DateTime @default(now())
+    createdAt           DateTime @default(now())
 
-    compositions Composition[]
-    comments Comment[]
+    compositions        Composition[]
+    comments            Comment[]
+
+    steps               Step[]
 }

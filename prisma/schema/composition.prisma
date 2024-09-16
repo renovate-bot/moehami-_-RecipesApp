@@ -1,12 +1,12 @@
 model Composition {
-    id String @id @default(auto()) @map("_id") @db.ObjectId
+    id                  String @id @default(auto()) @map("_id") @db.ObjectId
     
-    recipeId String @db.ObjectId
-    recipe Recipe @relation(fields: [recipeId], references: [id])
+    recipeId            String @db.ObjectId
+    recipe              Recipe @relation(fields: [recipeId], references: [id])
     
-    ingredientId String @db.ObjectId
-    ingredient Ingredient @relation(fields: [ingredientId], references: [id])
+    ingredientId        String @db.ObjectId
+    ingredient          Ingredient @relation(fields: [ingredientId], references: [id])
 
-    quantity Float
-    measureUnity String
+    quantity            Float
+    measureUnity        String
 }
