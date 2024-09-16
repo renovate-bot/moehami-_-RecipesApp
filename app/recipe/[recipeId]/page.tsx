@@ -169,49 +169,52 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         </div>
                     </div>
 
-                    {/* Recipe ingredients */}
-                    <div>
-                        <SectionHeader icon={CookingPotIcon} title="Ingredients and Tools" />
+                    <div className='flex gap-7 flex-col lg:flex-row'>
+                        <div className='w-full lg:w-[50%]'>
+                            {/* Recipe instructions */}
+                            <SectionHeader icon={ListChecksIcon} title="Instructions" />
+                            <p className='font-thin'>{recipe.instructions}</p>
+                        </div>
+                        <div className='w-full lg:w-[50%]'>
+                            {/* Recipe ingredients */}
+                            <SectionHeader icon={CookingPotIcon} title="Ingredients and Tools" />
 
-                        <TabGroup className='border border-slate-200 dark:border-slate-800 rounded-lg'>
-                            <TabList className="flex flex-wrap space-x-2 bg-slate-200 dark:bg-slate-800 p-2 rounded-lg">
-                                <Tab className={({ selected }) => `w-full sm:w-auto px-4 py-2 rounded-lg ${selected ? 'bg-gradient-to-r from-[#f26b5a] to-[#f78b6d] text-white focus:outline-none' : ''}`}>Ingredients</Tab>
-                                
-                                <Tab className={({ selected }) => `w-full sm:w-auto px-4 py-2 rounded-lg ${selected ? 'bg-gradient-to-r from-[#f26b5a] to-[#f78b6d] text-white focus:outline-none' : ''}`}>Tools</Tab>  
-                            </TabList>
-                            <TabPanels>
-                                <TabPanel className='p-6'>
-                                    <div className='flex flex-col sm:flex-wrap sm:flex-row gap-3'>
-                                        {recipe.compositions.map((composition) => (
-                                            <div className='flex flex-wrap sm:flex-col justify-between sm:justify-start text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-300 dark:border-gray-600 last:border-none sm:border-none pb-3' key={composition.id}>
-                                                <div className='sm:h-[100px] sm:w-[100px] overflow-hidden rounded-lg shadow-md'>
-                                                    <Image 
-                                                        src={composition.ingredient.image} 
-                                                        alt={composition.ingredient.name} 
-                                                        height={200}
-                                                        width={200}
-                                                        className='w-[100px] h-[100px] object-cover sm:w-full sm:h-full hover:scale-105 transition duration-300'
-                                                    />
+                            <TabGroup className='border border-slate-200 dark:border-slate-800 rounded-lg'>
+                                <TabList className="flex flex-wrap space-x-2 bg-slate-200 dark:bg-slate-800 p-2 rounded-lg">
+                                    <Tab className={({ selected }) => `w-full sm:w-auto px-4 py-2 rounded-lg ${selected ? 'bg-gradient-to-r from-[#f26b5a] to-[#f78b6d] text-white focus:outline-none' : ''}`}>Ingredients</Tab>
+                                    
+                                    <Tab className={({ selected }) => `w-full sm:w-auto px-4 py-2 rounded-lg ${selected ? 'bg-gradient-to-r from-[#f26b5a] to-[#f78b6d] text-white focus:outline-none' : ''}`}>Tools</Tab>  
+                                </TabList>
+                                <TabPanels>
+                                    <TabPanel className='p-6'>
+                                        <div className='flex flex-col sm:flex-wrap sm:flex-row gap-3'>
+                                            {recipe.compositions.map((composition) => (
+                                                <div className='flex flex-wrap sm:flex-col justify-between sm:justify-start text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-300 dark:border-gray-600 last:border-none sm:border-none pb-3' key={composition.id}>
+                                                    <div className='sm:h-[100px] sm:w-[100px] overflow-hidden rounded-lg shadow-md'>
+                                                        <Image 
+                                                            src={composition.ingredient.image} 
+                                                            alt={composition.ingredient.name} 
+                                                            height={200}
+                                                            width={200}
+                                                            className='w-[100px] h-[100px] object-cover sm:w-full sm:h-full hover:scale-105 transition duration-300'
+                                                        />
+                                                    </div>
+                                                    <p className='sm:mt-2'><span className='font-bold'>{composition.ingredient.name}</span><br/><span className='font-thin text-sm'>{composition.quantity} {composition.measureUnity}</span></p>
                                                 </div>
-                                                <p className='sm:mt-2'><span className='font-bold'>{composition.ingredient.name}</span><br/><span className='font-thin text-sm'>{composition.quantity} {composition.measureUnity}</span></p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </TabPanel>
-                                <TabPanel className=''>
-                                    <div className='px-9 py-6'>
-                                        {recipe.toolsRecipe.map((toolRecipe) => (
-                                            <p key={toolRecipe.id}>{toolRecipe.quantity} {toolRecipe.tool.name}</p>
-                                        ))}
-                                    </div>
-                                </TabPanel>
-                            </TabPanels>
-                        </TabGroup>
+                                            ))}
+                                        </div>
+                                    </TabPanel>
+                                    <TabPanel className=''>
+                                        <div className='px-9 py-6'>
+                                            {recipe.toolsRecipe.map((toolRecipe) => (
+                                                <p key={toolRecipe.id}>{toolRecipe.quantity} {toolRecipe.tool.name}</p>
+                                            ))}
+                                        </div>
+                                    </TabPanel>
+                                </TabPanels>
+                            </TabGroup>
+                        </div>
                     </div>
-
-                    {/* Recipe instructions */}
-                    <SectionHeader icon={ListChecksIcon} title="Instructions" />
-                    <p className='font-thin'>{recipe.instructions}</p>
 
                     {/* Recipe steps */}
                     <SectionHeader icon={WaypointsIcon} title="Steps" count={recipe.steps.length} />
