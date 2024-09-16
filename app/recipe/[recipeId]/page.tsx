@@ -170,7 +170,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         <SectionHeader icon={CookingPotIcon} title="Ingredients and Tools" />
 
                         <Tab.Group className='border border-slate-300 dark:border-slate-800 rounded-lg'>
-                            <TabList className="flex space-x-2 bg-slate-300 dark:bg-slate-800 p-6 rounded-lg">
+                            <TabList className="flex flex-wrap space-x-2 bg-slate-300 dark:bg-slate-800 p-6 rounded-lg">
                                 <Tab className={({ selected }) => `px-4 py-2 rounded-lg ${selected ? 'bg-slate-600 text-white focus:outline-none' : ''}`}>Ingredients</Tab>
                                 
                                 <Tab className={({ selected }) => `px-4 py-2 rounded-lg ${selected ? 'bg-slate-600 text-white focus:outline-none' : ''}`}>Tools</Tab>  
@@ -179,7 +179,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                 <TabPanel className='p-6'>
                                     <div className='flex flex-col sm:flex-wrap sm:flex-row gap-3'>
                                         {recipe.compositions.map((composition) => (
-                                            <div className='flex sm:flex-col justify-between sm:justify-start text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-300 dark:border-gray-600 last:border-none sm:border-none pb-3' key={composition.id}>
+                                            <div className='flex flex-wrap sm:flex-col justify-between sm:justify-start text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-300 dark:border-gray-600 last:border-none sm:border-none pb-3' key={composition.id}>
                                                 <div className='sm:h-[100px] sm:w-[100px] overflow-hidden rounded-lg shadow-md'>
                                                     <Image 
                                                         src={composition.ingredient.image} 
@@ -229,7 +229,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                     {recipe.steps.map((step) => (
                         <SwiperSlide key={step.id}>
                             <div className='px-8 py-10 flex flex-col items-center justify-center h-[250px] text-center border border-slate-700'>
-                                <h3 className='font-bold text-4xl mb-3'>{step.number}</h3>
+                                <h3 className='font-bold text-4xl mb-3 text-[#f26b5a]'>{step.number}</h3>
                                 <p className='font-thin'>{step.description}</p>
                             </div>
                         </SwiperSlide>
