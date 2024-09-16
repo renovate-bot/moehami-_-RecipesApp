@@ -196,7 +196,9 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                 </TabPanel>
                                 <TabPanel className='p-6'>
                                     <div>
-                                        <p>BBB</p>
+                                        {recipe.toolsRecipe.map((toolRecipe) => (
+                                            <p>{toolRecipe.quantity} {toolRecipe.tool.name}</p>
+                                        ))}
                                     </div>
                                 </TabPanel>
                             </TabPanels>

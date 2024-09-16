@@ -24,6 +24,19 @@ export interface StepType {
     description: string;
 }
 
+export interface ToolType {
+    id: string;
+    name: string;
+    image: string;
+}
+
+export interface ToolRecipeType {
+    id: string;
+    tool: ToolType;
+    recipe: RecipeType;
+    quantity: number;
+}
+
 export interface RecipeType {
     id: string;
     title: string;
@@ -37,4 +50,5 @@ export interface RecipeType {
     isHealthy: boolean;
     isVegan: boolean;
     steps: StepType[];
+    toolsRecipe: ToolRecipeType[]
 }

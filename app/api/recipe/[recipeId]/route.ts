@@ -29,6 +29,11 @@ export async function GET(req: NextRequest, { params }: { params: { recipeId: st
                     orderBy: {
                         number: 'asc'
                     }
+                },
+                toolsRecipe: {
+                    include: {
+                        tool: true
+                    }
                 }
             }
         });
