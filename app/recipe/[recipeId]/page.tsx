@@ -206,9 +206,13 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                     </TabPanel>
                                     <TabPanel className=''>
                                         <div className='px-9 py-6'>
-                                            {recipe.toolsRecipe.map((toolRecipe) => (
-                                                <p key={toolRecipe.id}>{toolRecipe.quantity} {toolRecipe.tool.name}</p>
-                                            ))}
+                                            {recipe.toolsRecipe && recipe.toolsRecipe.length > 0 ? (
+                                                recipe.toolsRecipe.map((toolRecipe) => (
+                                                    <p key={toolRecipe.id}>{toolRecipe.quantity} {toolRecipe.tool.name}</p>
+                                                ))
+                                            ) : (
+                                                <p>No tools</p>
+                                            )}
                                         </div>
                                     </TabPanel>
                                 </TabPanels>
@@ -218,32 +222,36 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
                     {/* Recipe steps */}
                     <SectionHeader icon={WaypointsIcon} title="Steps" count={recipe.steps.length} />
-                    <Swiper
-                        modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay, Navigation]}
-                        grabCursor={true}
-                        mousewheel={true}
-                        // navigation
-                        slidesPerView={2}
-                        pagination={{clickable: true}}
-                        spaceBetween={20}
-                        breakpoints={{
-                            0: {
-                                slidesPerView: 1
-                            },
-                            900: {
-                                slidesPerView: 2
-                            },
-                        }}
-                    >
-                    {recipe.steps.map((step) => (
-                        <SwiperSlide key={step.id}>
-                            <div className='px-8 py-10 flex flex-col items-center justify-center h-[250px] rounded-md text-center bg-slate-100 dark:bg-slate-800 dark:border-slate-800'>
-                                <h3 className='font-bold text-4xl mb-3 text-[#f26b5a]'>{step.number}</h3>
-                                <p className='font-thin'>{step.description}</p>
-                            </div>
-                        </SwiperSlide>
-                    ))}
-                    </Swiper>
+                    {recipe.steps && recipe.steps.length > 0 ? (
+                        <Swiper
+                            modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay, Navigation]}
+                            grabCursor={true}
+                            mousewheel={true}
+                            // navigation
+                            slidesPerView={2}
+                            pagination={{clickable: true}}
+                            spaceBetween={20}
+                            breakpoints={{
+                                0: {
+                                    slidesPerView: 1
+                                },
+                                900: {
+                                    slidesPerView: 2
+                                },
+                            }}
+                        >
+                        {recipe.steps.map((step) => (
+                            <SwiperSlide key={step.id}>
+                                <div className='px-8 py-10 flex flex-col items-center justify-center h-[250px] rounded-md text-center bg-slate-100 dark:bg-slate-800 dark:border-slate-800'>
+                                    <h3 className='font-bold text-4xl mb-3 text-[#f26b5a]'>{step.number}</h3>
+                                    <p className='font-thin'>{step.description}</p>
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                        </Swiper>
+                    ) : (
+                        <p>No steps</p>
+                    )}
 
                     {/* Recipe comments */}
                     <SectionHeader icon={MessageSquareQuoteIcon} title="Comments" count={recipe.comments.length} />
