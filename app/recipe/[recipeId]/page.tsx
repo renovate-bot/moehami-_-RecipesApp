@@ -175,9 +175,9 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
                         <TabGroup className='border border-slate-200 dark:border-slate-800 rounded-lg'>
                             <TabList className="flex flex-wrap space-x-2 bg-slate-200 dark:bg-slate-800 p-2 rounded-lg">
-                                <Tab className={({ selected }) => `px-4 py-2 rounded-lg ${selected ? 'bg-[#f26b5a] text-white focus:outline-none' : ''}`}>Ingredients</Tab>
+                                <Tab className={({ selected }) => `w-full sm:w-auto px-4 py-2 rounded-lg ${selected ? 'bg-gradient-to-r from-[#f26b5a] to-[#f78b6d] text-white focus:outline-none' : ''}`}>Ingredients</Tab>
                                 
-                                <Tab className={({ selected }) => `px-4 py-2 rounded-lg ${selected ? 'bg-[#f26b5a] text-white focus:outline-none' : ''}`}>Tools</Tab>  
+                                <Tab className={({ selected }) => `w-full sm:w-auto px-4 py-2 rounded-lg ${selected ? 'bg-gradient-to-r from-[#f26b5a] to-[#f78b6d] text-white focus:outline-none' : ''}`}>Tools</Tab>  
                             </TabList>
                             <TabPanels>
                                 <TabPanel className='p-6'>
