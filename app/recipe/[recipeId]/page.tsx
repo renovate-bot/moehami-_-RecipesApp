@@ -9,7 +9,7 @@ import SectionHeader from '@/components/SectionHeader'
 import CategoryBadge from '@/components/CategoryBadge'
 import MiniRecipeCard from '@/components/MiniRecipeCard'
 import DifficultyRating from '@/components/DifficultyRating'
-import { Clock10Icon, CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon, BookmarkCheckIcon, Trash2Icon, WaypointsIcon } from 'lucide-react'
+import { Clock10Icon, CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon, BookmarkCheckIcon, Trash2Icon, WaypointsIcon, DownloadIcon, HeartIcon } from 'lucide-react'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCoverflow, Pagination, Mousewheel, Autoplay, Navigation } from 'swiper/modules';
@@ -139,15 +139,19 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                 <p className='flex gap-2 items-center'><Clock10Icon /> {recipe.preparationTime} min</p>
                                 <DifficultyRating rating={recipe.difficulty} />
                             </div>
-                            <div className='flex items-center space-x-3 mt-6'>
-                                <button 
+                            <div className='flex flex-col sm:flex-row items-center gap-2 mt-6'>
+                                <button
                                     onClick={generatePDF}
-                                    className='border border-slate-400 px-4 py-2 rounded-lg hover:bg-slate-600 hover:text-slate-200 dark:hover:text-slate-200 transition duration-300'>
-                                        Download Recipe
+                                    className='flex w-full sm:w-auto items-center gap-2 bg-gradient-to-r from-[#f26b5a] to-[#f78b6d] text-white px-6 py-3 p-2 rounded-full shadow-md hover:shadow-lg hover:from-[#e85c47] hover:to-[#f76f58] transition-all duration-300 ease-in-out transform'
+                                >
+                                    <DownloadIcon /> Download
                                 </button>
-                                <div className='top-0 right-0'>
-                                    <button onClick={handleFavorite}><BookmarkCheckIcon className='stroke-red-500 fill-red-500 hover:fill-red-600 hover:stroke-red-600 transition duration-300' /></button>
-                                </div>
+                                <button 
+                                    onClick={handleFavorite}
+                                    className='flex w-full sm:w-auto items-center gap-2 bg-gradient-to-r from-[#f26b5a] to-[#f78b6d] text-white px-6 py-3 p-2 rounded-full shadow-md hover:shadow-lg hover:from-[#e85c47] hover:to-[#f76f58] transition-all duration-300 ease-in-out transform'
+                                >
+                                    <HeartIcon /> Favorite
+                                </button>
                             </div>
                         </div>
                         {/* Recipe picture */}
