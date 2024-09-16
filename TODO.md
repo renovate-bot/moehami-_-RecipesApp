@@ -1,0 +1,2 @@
+-- sécuriser saisie commentaire (échappement)
+-- réduire espace à gauche du titre sur mobile (recipe page)
