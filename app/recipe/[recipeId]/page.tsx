@@ -198,6 +198,14 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         slidesPerView={2}
                         pagination={{clickable: true}}
                         spaceBetween={20}
+                        breakpoints={{
+                            0: {
+                                slidesPerView: 1
+                            },
+                            600: {
+                                slidesPerView: 2
+                            },
+                        }}
                     >
                     {recipe.steps.map((step) => (
                         <SwiperSlide key={step.id}>
