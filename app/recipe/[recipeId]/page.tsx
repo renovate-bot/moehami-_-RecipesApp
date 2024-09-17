@@ -36,7 +36,6 @@ const formSchema = z.object({
         .regex(/^[^<>]*$/, 'Comment does not contain HTML tags')
 })
 
-
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
     
     const { control, handleSubmit, formState: { errors }, reset } = useForm<z.infer<typeof formSchema>>({
