@@ -53,24 +53,24 @@ export interface RecipeType {
     toolsRecipe: ToolRecipeType[]
 }
 
-interface TagType {
+export interface TagType {
     id: string;
     name: string;
 }
 
-interface TagArticleType {
+export interface TagArticleType {
     id: string;
     tag: TagType;
 }
 
-interface ArticleCommentType {
+export interface ArticleCommentType {
     id: string;
     text: string;
     userId: string;
     createdAt: Date;
 }
 
-interface ArticleWithTagsAndComments {
+export interface ArticleWithTagsAndComments {
     id: string;
     title: string;
     text: string;
