@@ -1,0 +1,13 @@
+model ArticleComment {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    text String
+
+    articleId String @db.ObjectId
+    article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+    userId String
+
+    createdAt DateTime @default(now())
+
+    @@index([articleId])
+}

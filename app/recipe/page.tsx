@@ -50,7 +50,7 @@ const RecipesPage = () => {
 
     return (
         <div className='pb-5'>
-            <h1 className='text-4xl font-bold mb-5'>Last Recipes</h1>
+            <h1 className='text-4xl font-bold mb-5'>Latest Recipes</h1>
 
             <div className='swiper-container'>
                 {loading ? (

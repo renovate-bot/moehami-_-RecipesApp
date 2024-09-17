@@ -52,3 +52,30 @@ export interface RecipeType {
     steps: StepType[];
     toolsRecipe: ToolRecipeType[]
 }
+
+interface TagType {
+    id: string;
+    name: string;
+}
+
+interface TagArticleType {
+    id: string;
+    tag: TagType;
+}
+
+interface ArticleCommentType {
+    id: string;
+    text: string;
+    userId: string;
+    createdAt: Date;
+}
+
+interface ArticleWithTagsAndComments {
+    id: string;
+    title: string;
+    text: string;
+    slug: string;
+    createdAt: Date;
+    tags: TagArticleType[];
+    comments: ArticleCommentType[];
+}
