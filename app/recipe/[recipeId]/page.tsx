@@ -23,6 +23,7 @@ import 'swiper/css/autoplay';
 
 import { jsPDF } from 'jspdf';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
+import CommentCard from '@/components/ArticleComment'
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
@@ -93,6 +94,10 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
     const handleFavorite = () => {
         window.alert("Fav !")
+    }
+
+    const handleDelete = () => {
+        window.alert("Delete !")
     }
 
     const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -269,25 +274,26 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                     {recipe.comments.length > 0 ? (
                         <div className='flex flex-col gap-3'>
                             {recipe.comments.map((comment) => (
-                                <div key={comment.id} className='flex flex-col sm:flex-row sm:justify-between p-8 rounded-lg border border-slate-300 dark:border-slate-700'>
-                                    <div>
-                                        <div className='flex space-x-2 text-slate-400'> 
-                                            <UserCircleIcon />
-                                            <p>
-                                                {comment.userId} 
-                                            </p>
-                                        </div>
-                                        <p className='text-slate-400'>
-                                            {new Date(comment.createdAt).toLocaleDateString()} {new Date(comment.createdAt).toLocaleTimeString()}
-                                        </p>
-                                        <p>
-                                            {comment.text}
-                                        </p> 
-                                    </div>
-                                    <div>
-                                        <button className='mt-5 sm:my-0 px-3 py-2 text-white rounded-lg text-xs bg-red-500 hover:bg-red-600 transition duration-300 flex items-center gap-2'><Trash2Icon className='h-4 w-4' />Delete</button>
-                                    </div>
-                                </div>
+                                // <div key={comment.id} className='flex flex-col sm:flex-row sm:justify-between p-8 rounded-lg border border-slate-300 dark:border-slate-700'>
+                                //     <div>
+                                //         <div className='flex space-x-2 text-slate-400'> 
+                                //             <UserCircleIcon />
+                                //             <p>
+                                //                 {comment.userId} 
+                                //             </p>
+                                //         </div>
+                                //         <p className='text-slate-400'>
+                                //             {new Date(comment.createdAt).toLocaleDateString()} {new Date(comment.createdAt).toLocaleTimeString()}
+                                //         </p>
+                                //         <p>
+                                //             {comment.text}
+                                //         </p> 
+                                //     </div>
+                                //     <div>
+                                //         <button className='mt-5 sm:my-0 px-3 py-2 text-white rounded-lg text-xs bg-red-500 hover:bg-red-600 transition duration-300 flex items-center gap-2'><Trash2Icon className='h-4 w-4' />Delete</button>
+                                //     </div>
+                                // </div>
+                                <CommentCard comment={comment} onDelete={handleDelete} />
                             ))}
                         </div>
                     ) : (
