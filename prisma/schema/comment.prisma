@@ -3,7 +3,7 @@ model Comment {
     text        String
 
     recipeId    String @db.ObjectId
-    Recipe      Recipe @relation(fields: [recipeId], references: [id])
+    Recipe      Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
 
     userId      String
 

@@ -2,10 +2,10 @@ model ToolRecipe {
     id                  String @id @default(auto()) @map("_id") @db.ObjectId
     
     recipeId            String @db.ObjectId
-    recipe              Recipe @relation(fields: [recipeId], references: [id])
+    recipe              Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
     
     toolId              String @db.ObjectId
-    tool                Tool @relation(fields: [toolId], references: [id])
+    tool                Tool @relation(fields: [toolId], references: [id], onDelete: Cascade)
 
     quantity            Int
 }

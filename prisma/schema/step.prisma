@@ -6,5 +6,5 @@ model Step {
     image       String?
 
     recipeId    String @db.ObjectId
-    recipe      Recipe @relation(fields: [recipeId], references: [id])
+    recipe      Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
 }

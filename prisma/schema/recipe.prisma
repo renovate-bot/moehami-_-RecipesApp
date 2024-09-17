@@ -8,8 +8,8 @@ model Recipe {
     isHealthy           Boolean @default(false)
     isVegan             Boolean @default(false)
     
-    categoryId          String @db.ObjectId
-    category            Category @relation(fields: [categoryId], references: [id])
+    categoryId          String? @db.ObjectId
+    category            Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 
     createdAt           DateTime @default(now())
 
