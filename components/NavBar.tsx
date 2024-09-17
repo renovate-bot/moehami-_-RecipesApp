@@ -65,6 +65,13 @@ const NavBar = () => {
           >
             Search
           </Link>
+          <Link
+            href='/blog'
+            className={`block md:inline-block text-lg font-medium hover:text-[#f78b6d] transition duration-300 ${activeLink === '/blog' ? 'text-[#f78b6d]' : 'text-white'}`}
+            onClick={() => handleLinkClick('/blog')}
+          >
+            Blog
+          </Link>
 
           {/* Theme Switcher visible in mobile and desktop */}
           <div className='mt-4 md:mt-0'>
