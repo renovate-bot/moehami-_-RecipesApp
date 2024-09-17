@@ -124,6 +124,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
         } catch (error) {
             console.error("Error submitting comment:", error);
         }
+        // window.alert("T'as cru que tu pouvais commenter sur mon site ?")
     }
 
     return (
