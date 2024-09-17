@@ -7,7 +7,9 @@ import { RecipeType } from '@/types/types'
 
 import SectionHeader from '@/components/SectionHeader'
 import MiniRecipeCard from '@/components/MiniRecipeCard'
+import CommentCard from '@/components/CommentCard'
 import RecipeHeader from '@/components/RecipeHeader'
+
 import { CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon, BookmarkCheckIcon, Trash2Icon, WaypointsIcon, DownloadIcon, HeartIcon } from 'lucide-react'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -22,13 +24,30 @@ import 'swiper/css/autoplay';
 
 import { jsPDF } from 'jspdf';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
-import CommentCard from '@/components/CommentCard'
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm, Controller } from "react-hook-form"
+import { z } from "zod"
+
+const formSchema = z.object({
+    text: z
+        .string()
+        .min(10, {message: "Title must be at least 10 characters.",})
+        .regex(/^[^<>]*$/, 'Comment does not contain HTML tags')
+})
+
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
+    
+    const { control, handleSubmit, formState: { errors }, reset } = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            text: "",
+        },
+    });
 
     const [recipe, setRecipe] = useState<RecipeType | null>(null)
     const [suggestions, setSuggestions] = useState<RecipeType[] | null>([])
-    const [newComment, setNewComment] = useState('');
     const [comments, setComments] = useState(recipe?.comments || []);
 
     useEffect(() => {
@@ -99,32 +118,26 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
         window.alert("Delete !")
     }
 
-    const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setNewComment(e.target.value);
-    }
-
-    const handleCommentSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!recipe || !newComment.trim()) return;
+    const handleCommentSubmit = async (data: { text: string }) => {
+        if (!recipe || !data.text.trim()) return;
 
         try {
             const response = await fetch(`/api/recipe/${params.recipeId}/comments`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: newComment }),
+                body: JSON.stringify({ text: data.text }),
             });
 
             if (response.ok) {
                 const updatedComments = await response.json();
                 setRecipe(prev => prev ? { ...prev, comments: updatedComments } : null);
-                setNewComment('');
+                reset(); 
             } else {
-                console.error("Failed to submit comment");
+                console.error('Error post comment')
             }
         } catch (error) {
             console.error("Error submitting comment:", error);
         }
-        // window.alert("T'as cru que tu pouvais commenter sur mon site ?")
     }
 
     return (
@@ -242,14 +255,28 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
                     {/* Add new comment */}
                     <SectionHeader icon={MessageSquareQuoteIcon} title="Add a Comment" />
-                    <form onSubmit={handleCommentSubmit} className='flex flex-col gap-4'>
-                        <textarea
-                            value={newComment}
-                            onChange={handleCommentChange}
-                            placeholder='Write your comment here...'
-                            rows={4}
-                            className='p-3 border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 transition duration-300'
+                    <form onSubmit={handleSubmit(handleCommentSubmit)} className='flex flex-col gap-4'>
+                        <Controller
+                            name="text"
+                            control={control}
+                            render={({ field }) => (
+                                <textarea
+                                    {...field}
+                                    placeholder='Write your comment here...'
+                                    rows={4}
+                                    className='p-3 border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 transition duration-300'
+                                />
+                            )}
                         />
+                        {/* Display all error messages */}
+                        {errors.text && (
+                            <div className='text-red-500'>
+                                {errors.text.message && (
+                                    <p>{errors.text.message}</p>
+                                )}
+                            </div>
+                        )}
+
                         <button
                             type='submit'
                             className='self-start bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300'

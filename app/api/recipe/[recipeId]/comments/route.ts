@@ -1,4 +1,3 @@
-// Import necessary modules
 import { db } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 import sanitizeHtml from 'sanitize-html';
@@ -9,13 +8,7 @@ export async function POST(req: NextRequest, { params }: { params: { recipeId: s
     const { recipeId } = params;
 
     try {
-        // Parse JSON body from the request
         const { text } = await req.json();
-
-        // Validate input
-        if (!text || typeof text !== 'string' || text.trim().length === 0) {
-            return new NextResponse("Invalid comment text", { status: 400 });
-        }
 
         const sanitizedText = sanitizeHtml(text, {
             allowedTags: [], // Disable any HTML tags if don't want any HTML in the comments
@@ -30,6 +23,8 @@ export async function POST(req: NextRequest, { params }: { params: { recipeId: s
                 userId: 'user_add',
             },
         });
+
+        console.log(newComment);
 
         // Fetch updated list of comments for the recipe
         const updatedComments = await db.comment.findMany({
