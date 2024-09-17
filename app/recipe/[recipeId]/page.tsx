@@ -218,7 +218,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                                                 className='w-[100px] h-[100px] object-cover sm:w-full sm:h-full hover:scale-105 transition duration-300'
                                                             />
                                                         </div>
-                                                        <p className='sm:mt-2'><span className='font-bold'>{toolRecipe.tool.name}</span><br/><span className='font-thin text-sm'>{toolRecipe.quantity}</span></p>
+                                                        <p className='sm:mt-2'><span className='font-bold'>{toolRecipe.tool.name}</span></p>
                                                     </div>
                                                 ))
                                             ) : (
