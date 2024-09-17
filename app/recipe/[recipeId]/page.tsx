@@ -253,7 +253,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         >
                         {recipe.steps.map((step) => (
                             <SwiperSlide key={step.id}>
-                                <div className='px-8 py-10 flex flex-col items-center justify-center h-[250px] rounded-md text-center bg-slate-100 dark:bg-slate-800 dark:border-slate-800'>
+                                <div className='px-8 py-10 flex flex-col items-center justify-center h-[350px] rounded-md text-center bg-slate-100 dark:bg-slate-800 dark:border-slate-800'>
                                     <h3 className='font-bold text-4xl mb-3 text-[#f26b5a]'>{step.number}</h3>
                                     <p className='font-thin'>{step.description}</p>
                                 </div>
