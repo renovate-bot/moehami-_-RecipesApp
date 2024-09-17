@@ -204,11 +204,22 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                             ))}
                                         </div>
                                     </TabPanel>
-                                    <TabPanel className=''>
-                                        <div className='px-9 py-6'>
+                                    <TabPanel className='p-6'>
+                                        <div className='flex flex-col sm:flex-wrap sm:flex-row gap-3'>
                                             {recipe.toolsRecipe && recipe.toolsRecipe.length > 0 ? (
                                                 recipe.toolsRecipe.map((toolRecipe) => (
-                                                    <p key={toolRecipe.id}>{toolRecipe.quantity} {toolRecipe.tool.name}</p>
+                                                    <div className='flex flex-wrap sm:flex-col justify-between sm:justify-start text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-300 dark:border-gray-600 last:border-none sm:border-none pb-3' key={toolRecipe.id}>
+                                                        <div className='sm:h-[100px] sm:w-[100px] overflow-hidden rounded-lg shadow-md'>
+                                                            <Image 
+                                                                src={toolRecipe.tool.image} 
+                                                                alt={toolRecipe.tool.name} 
+                                                                height={200}
+                                                                width={200}
+                                                                className='w-[100px] h-[100px] object-cover sm:w-full sm:h-full hover:scale-105 transition duration-300'
+                                                            />
+                                                        </div>
+                                                        <p className='sm:mt-2'><span className='font-bold'>{toolRecipe.tool.name}</span><br/><span className='font-thin text-sm'>{toolRecipe.quantity}</span></p>
+                                                    </div>
                                                 ))
                                             ) : (
                                                 <p className='text-xs text-slate-400'>No tools</p>
