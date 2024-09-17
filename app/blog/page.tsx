@@ -66,7 +66,7 @@ const BlogPage = () => {
                                 <div className=''>
                                     <p className='dark:text-slate-300 text-sm line-clamp-5'>{article.text}</p>
                                 </div>
-                                <Link className='block my-4' href={`/article/${article.slug}`}>
+                                <Link className='block my-4' href={`/blog/${article.slug}`}>
                                     Read more...
                                 </Link>
                             </div>

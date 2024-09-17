@@ -23,7 +23,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className='flex z-50 justify-between items-center py-6 px-6 md:px-[50px] lg:px-[100px] bg-slate-800 w-full shadow-lg relative'>
+    <nav className='flex z-50 justify-between items-center py-6 px-6 md:px-[50px] lg:px-[100px] bg-slate-700 w-full shadow-lg relative'>
       {/* Logo/Branding */}
       <div className='text-2xl font-bold text-[#f26b5a]'>
         <Link 
