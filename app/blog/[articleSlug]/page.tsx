@@ -7,7 +7,7 @@ import SectionHeader from '@/components/SectionHeader'
 import { MessageSquareQuoteIcon, NotebookTextIcon, Trash2Icon, UserCircleIcon } from 'lucide-react'
 import Quote from '@/components/Quote'
 import ArticleAuthor from '@/components/ArticleAuthor'
-import CommentCard from '@/components/ArticleComment'
+import CommentCard from '@/components/CommentCard'
 
 const ArticlePage = ({ params } : { params: { articleSlug: string }}) => {
 

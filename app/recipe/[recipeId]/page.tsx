@@ -23,7 +23,7 @@ import 'swiper/css/autoplay';
 
 import { jsPDF } from 'jspdf';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
-import CommentCard from '@/components/ArticleComment'
+import CommentCard from '@/components/CommentCard'
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
