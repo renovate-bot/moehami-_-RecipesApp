@@ -144,9 +144,9 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
                             <TabGroup className='border border-slate-200 dark:border-slate-800 rounded-lg'>
                                 <TabList className="flex flex-wrap bg-slate-200 dark:bg-slate-800 p-2 rounded-lg">
-                                    <Tab className={({ selected }) => `w-full sm:w-auto px-4 py-2 rounded-lg ${selected ? 'bg-gradient-to-r from-[#f26b5a] to-[#f78b6d] text-white focus:outline-none' : ''}`}>Ingredients</Tab>
+                                    <Tab className={({ selected }) => `w-full sm:w-auto px-4 py-2 rounded-lg ${selected ? 'bg-gradient-to-r from-custom-orange to-[#f78b6d] text-white focus:outline-none' : ''}`}>Ingredients</Tab>
                                     
-                                    <Tab className={({ selected }) => `w-full sm:w-auto px-4 py-2 rounded-lg ${selected ? 'bg-gradient-to-r from-[#f26b5a] to-[#f78b6d] text-white focus:outline-none' : ''}`}>Tools</Tab>  
+                                    <Tab className={({ selected }) => `w-full sm:w-auto px-4 py-2 rounded-lg ${selected ? 'bg-gradient-to-r from-custom-orange to-[#f78b6d] text-white focus:outline-none' : ''}`}>Tools</Tab>  
                                 </TabList>
                                 <TabPanels>
                                     <TabPanel className='p-6'>
@@ -217,7 +217,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         {recipe.steps.map((step) => (
                             <SwiperSlide key={step.id}>
                                 <div className='px-8 py-10 flex flex-col items-center justify-center w-full h-[450px] sm:h-[350px] rounded-md text-center bg-slate-100 dark:bg-slate-800 dark:border-slate-800'>
-                                    <h3 className='font-bold text-4xl mb-3 text-[#f26b5a]'>{step.number}</h3>
+                                    <h3 className='font-bold text-4xl mb-3 text-custom-orange'>{step.number}</h3>
                                     <p className='font-thin'>{step.description}</p>
                                 </div>
                             </SwiperSlide>

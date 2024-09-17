@@ -17,7 +17,7 @@ const CommentCard = ({ comment, onDelete }: CommentCardProps) => {
         {/* User info and comment details */}
         <div className="flex-1">
             <div className="flex items-center space-x-3 mb-2 text-slate-500 dark:text-slate-400">
-                <UserCircleIcon className="h-8 w-8 text-[#f26b5a]/60" />
+                <UserCircleIcon className="h-8 w-8 text-custom-orange/60" />
                 <p className="font-semibold text-lg">{comment.userId}</p>
             </div>
             <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">

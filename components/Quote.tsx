@@ -8,11 +8,11 @@ interface QuoteProps {
 
 const Quote = ({ text, author }: QuoteProps) => {
     return (
-        <blockquote className="relative border-l-4 border-[#f26b5a] pl-6 italic my-8 bg-slate-100 dark:bg-slate-800 p-6 rounded-md shadow-md">
+        <blockquote className="relative border-l-4 border-custom-orange pl-6 italic my-8 bg-slate-100 dark:bg-slate-800 p-6 rounded-md shadow-md">
             {/* Opening quote icon */}
             <QuoteIcon 
                 size={40} 
-                className="absolute text-[#f26b5a] -top-4 -left-5"
+                className="absolute text-custom-orange -top-4 -left-5"
             />
             
             {/* Quote text */}
@@ -24,7 +24,7 @@ const Quote = ({ text, author }: QuoteProps) => {
             {/* Closing quote icon (rotated) */}
             <QuoteIcon 
                 size={40} 
-                className="absolute text-[#f26b5a] -bottom-4 -right-5 transform rotate-180"
+                className="absolute text-custom-orange -bottom-4 -right-5 transform rotate-180"
             />
         </blockquote>
     );
