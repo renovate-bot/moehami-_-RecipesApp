@@ -1,3 +1,31 @@
+export interface NutritionalInfoType {
+    calories: number; // Total calories
+    totalNutrients: {
+        [key: string]: Nutrient;
+    };
+    totalDaily: {
+        [key: string]: Nutrient;
+    };
+}
+
+export interface TotalNutrientType {
+    label: string;
+    quantity: number;
+    unit: string;
+}
+
+export interface TotalDailyType {
+    label: string;
+    quantity: number;
+    unit: string;
+}
+
+export interface Nutrient {
+    label: string;
+    quantity: number;
+    unit: string;
+}
+
 export interface IngredientType {
     id: string;
     name: string;
@@ -50,7 +78,8 @@ export interface RecipeType {
     isHealthy: boolean;
     isVegan: boolean;
     steps: StepType[];
-    toolsRecipe: ToolRecipeType[]
+    toolsRecipe: ToolRecipeType[];
+    nutritionalInfo?: NutritionalInfoType;
 }
 
 export interface TagType {

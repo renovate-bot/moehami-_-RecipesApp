@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 
-import { RecipeType } from '@/types/types'
+import { NutritionalInfoType, RecipeType } from '@/types/types'
 import { generatePDF } from '@/lib/functions'
 
 // components
@@ -25,6 +25,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/autoplay';
+import ShareRecipe from '@/components/ShareRecipe'
+import NutritionalInfo from '@/components/NutritionalInfo'
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
@@ -86,7 +88,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
             {recipe ? (
                 <div id='recipe-detail'>
                     {/* Recipe header */}
-                    <RecipeHeader recipe={recipe} generatePDF={() => generatePDF(recipe)} handleFavorite={handleFavorite} />
+                    <RecipeHeader recipe={recipe} generatePDF={() => generatePDF(recipe)} handleFavorite={handleFavorite} />    
 
                     <div className='flex gap-7 flex-col lg:flex-row'>
                         <div className='w-full lg:w-[50%]'>
@@ -148,6 +150,11 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                     {/* Add new comment */}
                     <SectionHeader icon={MessageSquareQuoteIcon} title="Add a Comment" />
                     <CommentForm onSubmit={handleCommentSubmit} />
+
+                    {/* Share social networks */}
+                    <ShareRecipe recipeTitle={recipe.title} />
+
+                    <NutritionalInfo compositions={recipe.compositions} />
 
                     {/* Suggestions */}
                     <div>
