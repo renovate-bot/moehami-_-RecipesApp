@@ -1,8 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
 import { Clock10Icon, Download as DownloadIcon, Heart as HeartIcon } from 'lucide-react';
-import CategoryBadge from '@/components/CategoryBadge'; // Ensure this component exists
-import DifficultyRating from '@/components/DifficultyRating'; // Ensure this component exists
+import CategoryBadge from '@/components/CategoryBadge';
+import DifficultyRating from '@/components/DifficultyRating'; 
+import Button from '@/components/Button'; 
 
 interface RecipeHeaderProps {
     recipe: {
@@ -31,19 +32,18 @@ const RecipeHeader = ({ recipe, generatePDF, handleFavorite }: RecipeHeaderProps
                     <p className='flex gap-2 items-center'><Clock10Icon /> {recipe.preparationTime} min</p>
                     <DifficultyRating rating={recipe.difficulty} />
                 </div>
+                {/* Buttons */}
                 <div className='flex flex-col sm:flex-row items-center gap-2 mt-6'>
-                    <button
+                    <Button
                         onClick={generatePDF}
-                        className='flex text-xs w-full sm:w-auto items-center gap-2 dark:border dark:border-slate-400 dark:md:border-none dark:hover:text-slate-400 dark:md:hover:text-slate-100 md:bg-gradient-to-r from-custom-orange to-[#f78b6d] text-slate-900 md:text-white dark:text-white px-5 py-2 p-2 rounded-full shadow-md hover:shadow-lg hover:from-[#e85c47] hover:to-[#f76f58] transition-all duration-300 ease-in-out transform'
-                    >
-                        <DownloadIcon /> Download
-                    </button>
-                    <button 
+                        icon={DownloadIcon}
+                        label="Download"
+                    />
+                    <Button
                         onClick={handleFavorite}
-                        className='flex text-xs w-full sm:w-auto items-center gap-2 dark:border dark:border-slate-400 dark:md:border-none dark:hover:text-slate-400 dark:md:hover:text-slate-100 md:bg-gradient-to-r from-custom-orange to-[#f78b6d] text-slate-900 md:text-white dark:text-white px-5 py-2 p-2 rounded-full shadow-md hover:shadow-lg hover:from-[#e85c47] hover:to-[#f76f58] transition-all duration-300 ease-in-out transform'
-                    >
-                        <HeartIcon /> Favorite
-                    </button>
+                        icon={HeartIcon}
+                        label="Favorite"
+                    />
                 </div>
             </div>
             {/* Recipe picture */}
