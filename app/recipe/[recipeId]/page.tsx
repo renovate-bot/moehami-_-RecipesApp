@@ -9,7 +9,7 @@ import { generatePDF } from '@/lib/functions'
 import SectionHeader from '@/components/SectionHeader'
 import MiniRecipeCard from '@/components/MiniRecipeCard'
 import CommentCard from '@/components/CommentCard'
-import RecipeHeader from '@/components/RecipeHeader'
+import RecipeHeader from '@/app/recipe/_components/RecipeHeader'
 import CommentForm from '@/components/CommentForm'
 import IngredientsToolsTabs from '@/components/IngredientsToolsTabs'
 
