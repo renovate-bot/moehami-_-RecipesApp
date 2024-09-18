@@ -1,4 +1,4 @@
-import { Activity, ArrowRightIcon, Clock11Icon, HeartPulseIcon, Leaf, LeafIcon, LeafyGreenIcon } from 'lucide-react';
+import { ArrowRightIcon, Clock11Icon, HeartPulseIcon, Leaf, LeafIcon, LeafyGreenIcon } from 'lucide-react';
 import StarRating from './DifficultyRating';
 import { useRouter } from 'next/navigation';
 import { RecipeType } from '@/types/types';

@@ -9,6 +9,8 @@ import Quote from '@/components/Quote'
 import ArticleAuthor from '@/components/ArticleAuthor'
 import CommentCard from '@/components/CommentCard'
 
+import Image from 'next/image';
+
 const ArticlePage = ({ params } : { params: { articleSlug: string }}) => {
 
     const [article, setArticle] = useState<ArticleWithTagsAndComments | null>(null)
@@ -31,23 +33,37 @@ const ArticlePage = ({ params } : { params: { articleSlug: string }}) => {
         <div>
         {article ? (
         <>
-            <div className='flex flex-col justify-center items-center p-6 h-[350px] w-full bg-slate-200 dark:bg-slate-800'>
-            <div className='flex flex-wrap my-6 gap-2'>
-                {article?.tags.map((tagArticle) => (
-                    <span 
-                        className='px-3 py-2 bg-custom-orange text-[0.7rem] text-white rounded-full'
-                        key={tagArticle.tag.name}
-                    >
-                        {tagArticle.tag.name}
-                    </span>    
-                ))}
-            </div>
-            <h1 className='text-4xl mb-5 text-center'>{article?.title}</h1>
-            <p className='text-sm'>{formatDate(article?.createdAt ? new Date(article.createdAt) : undefined)}</p>
+            <div className='flex flex-col justify-center items-center p-6 h-[350px] w-full bg-slate-200 dark:bg-slate-800 relative rounded-md overflow-hidden'>
+                
+                {/* Image background */}
+                <div className='absolute inset-0'>
+                    <Image 
+                        src='https://res.cloudinary.com/dr3qz5dk3/image/upload/v1726646901/lovepik-abstract-geometric-background-png-image_400542276_wh1200_yg7eui.webp'
+                        alt='Watermark Image'
+                        layout='fill'
+                        objectFit='cover'
+                        className='opacity-10'
+                    />
+                </div>
+                {/* Content */}
+                <div className='relative z-10'>
+                    <div className='flex flex-wrap my-6 gap-2'>
+                        {article?.tags.map((tagArticle) => (
+                            <span 
+                                className='px-3 py-2 bg-custom-orange text-[0.7rem] text-white rounded-full'
+                                key={tagArticle.tag.name}
+                            >
+                                {tagArticle.tag.name}
+                            </span>    
+                        ))}
+                    </div>
+                    <h1 className='text-4xl mb-5 text-center'>{article?.title}</h1>
+                    <p className='text-sm'>{formatDate(article?.createdAt ? new Date(article.createdAt) : undefined)}</p>
+                </div>
             </div>
 
             <div className='flex flex-col w-full p-6 md:px-[10%]'>
-            <SectionHeader icon={NotebookTextIcon} title="Introduction" />
+                <SectionHeader icon={NotebookTextIcon} title="Introduction" />
                 <div className='flex-col w-full'>
                     <p className='font-thin'>{article.text}</p>
                 </div>
