@@ -33,21 +33,21 @@ const ArticlePage = ({ params } : { params: { articleSlug: string }}) => {
         <div>
         {article ? (
         <>
-            <div className='flex flex-col justify-center items-center p-6 h-[350px] w-full bg-slate-200 dark:bg-slate-800 relative rounded-md overflow-hidden'>
+            <div className='flex flex-col justify-center items-center p-6 h-[350px] w-full  relative rounded-md overflow-hidden bg-slate-300 dark:bg-transparent'>
                 
                 {/* Image background */}
                 <div className='absolute inset-0'>
                     <Image 
-                        src='https://res.cloudinary.com/dr3qz5dk3/image/upload/v1726646901/lovepik-abstract-geometric-background-png-image_400542276_wh1200_yg7eui.webp'
+                        src='https://res.cloudinary.com/dr3qz5dk3/image/upload/v1726650634/abstract-wave-background-minimal-white-geometric-wallpaper-free-png_z3nwwo.webp'
                         alt='Watermark Image'
                         layout='fill'
                         objectFit='cover'
-                        className='opacity-10'
+                        className='opacity-50 dark:opacity-10'
                     />
                 </div>
                 {/* Content */}
-                <div className='relative z-10'>
-                    <div className='flex flex-wrap my-6 gap-2'>
+                <div className='relative z-10 text-center'>
+                    <div className='flex justify-center flex-wrap my-6 gap-2'>
                         {article?.tags.map((tagArticle) => (
                             <span 
                                 className='px-3 py-2 bg-custom-orange text-[0.7rem] text-white rounded-full'
