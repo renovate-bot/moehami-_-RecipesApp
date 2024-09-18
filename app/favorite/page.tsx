@@ -18,7 +18,7 @@ const FavoritePage = () => {
         <div>
             <h1 className='text-4xl font-bold mb-5'>Favorite Recipes</h1>
             {favoriteRecipes.length > 0 ? (
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5'>
                     {favoriteRecipes.map((recipe: RecipeType) => (
                         <RecipeCard key={recipe.id} recipe={recipe} />
                     ))}

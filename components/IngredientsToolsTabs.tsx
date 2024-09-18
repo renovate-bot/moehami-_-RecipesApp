@@ -34,7 +34,7 @@ interface IngredientsToolsTabsProps {
     toolsRecipe: ToolRecipe[];       // Array of tools required for the recipe
 }
 
-const IngredientsToolsTabs: React.FC<IngredientsToolsTabsProps> = ({ compositions, toolsRecipe }) => {
+const IngredientsToolsTabs = ({ compositions, toolsRecipe }: IngredientsToolsTabsProps) => {
     return (
         <TabGroup className="border border-slate-200 dark:border-slate-800 rounded-lg">
             <TabList className="flex flex-wrap bg-slate-200 dark:bg-slate-800 p-2 rounded-lg">
