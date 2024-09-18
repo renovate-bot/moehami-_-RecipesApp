@@ -85,6 +85,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
         <div className=''>
             {recipe ? (
                 <div id='recipe-detail'>
+                    {/* Recipe header */}
                     <RecipeHeader recipe={recipe} generatePDF={() => generatePDF(recipe)} handleFavorite={handleFavorite} />
 
                     <div className='flex gap-7 flex-col lg:flex-row'>
@@ -96,7 +97,6 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         <div className='w-full lg:w-[50%]'>
                             {/* Recipe ingredients */}
                             <SectionHeader icon={CookingPotIcon} title="Ingredients and Tools" />
-
                             <IngredientsToolsTabs compositions={recipe.compositions} toolsRecipe={recipe.toolsRecipe} />
                         </div>
                     </div>
@@ -108,7 +108,6 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                             modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay, Navigation]}
                             grabCursor={true}
                             mousewheel={true}
-                            // navigation
                             slidesPerView={2}
                             pagination={{clickable: true}}
                             spaceBetween={20}
