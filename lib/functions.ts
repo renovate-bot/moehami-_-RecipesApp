@@ -34,6 +34,19 @@ export const generatePDF = (recipe: RecipeType | null) => {
         yPosition += 5;
     });
 
+    // Add tools
+    pdf.setFontSize(16);
+    yPosition = yPosition + 20
+    pdf.text('Tools:', 10, yPosition);
+    
+    yPosition = yPosition + 10
+    pdf.setFontSize(12);
+    recipe.toolsRecipe.forEach((toolRecipe) => {
+        pdf.text(`${toolRecipe.tool.name}`, 10, yPosition);
+        yPosition += 5;
+    });
+    
+    yPosition = yPosition + 10
     // Add instructions
     pdf.setFontSize(16);
     pdf.text('Instructions:', 10, yPosition + 10);
