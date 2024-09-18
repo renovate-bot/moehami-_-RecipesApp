@@ -62,11 +62,11 @@ const RecipesPage = () => {
                         className='p-6'
                         modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay]}
                         effect={'coverflow'}
-                        autoplay={{
-                            delay: 2500,
-                            pauseOnMouseEnter: true,
-                            disableOnInteraction: false
-                        }}
+                        // autoplay={{
+                        //     delay: 2500,
+                        //     pauseOnMouseEnter: true,
+                        //     disableOnInteraction: false
+                        // }}
                         spaceBetween={50}
                         mousewheel={true}
                         // slidesPerView={'auto'}

@@ -5,16 +5,19 @@ import Image from 'next/image'
 
 import { RecipeType } from '@/types/types'
 
+// components
 import SectionHeader from '@/components/SectionHeader'
 import MiniRecipeCard from '@/components/MiniRecipeCard'
 import CommentCard from '@/components/CommentCard'
 import RecipeHeader from '@/components/RecipeHeader'
+import CommentForm from '@/components/CommentForm'
 
+// Lucide React
 import { CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon, BookmarkCheckIcon, Trash2Icon, WaypointsIcon, DownloadIcon, HeartIcon } from 'lucide-react'
 
+// Swiper
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCoverflow, Pagination, Mousewheel, Autoplay, Navigation } from 'swiper/modules';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -23,27 +26,11 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/autoplay';
 
 import { jsPDF } from 'jspdf';
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
+import IngredientsToolsTabs from '@/components/IngredientsToolsTabs'
+import { generatePDF } from '@/lib/functions'
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm, Controller } from "react-hook-form"
-import { z } from "zod"
-
-const formSchema = z.object({
-    text: z
-        .string()
-        .min(10, {message: "Title must be at least 10 characters.",})
-        .regex(/^[^<>]*$/, 'Comment does not contain HTML tags')
-})
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
-    
-    const { control, handleSubmit, formState: { errors }, reset } = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            text: "",
-        },
-    });
 
     const [recipe, setRecipe] = useState<RecipeType | null>(null)
     const [suggestions, setSuggestions] = useState<RecipeType[] | null>([])
@@ -69,46 +56,6 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
         fetchRecipe();
     }, [params.recipeId]);
 
-    const generatePDF = () => {
-        if (!recipe) return;
-
-        const pdf = new jsPDF();
-
-        // Ajout du titre de la recette
-        pdf.setFontSize(22);
-        pdf.text(recipe.title, 10, 20);
-
-        // Ajout du temps de préparation
-        pdf.setFontSize(12);
-        pdf.text(`Preparation time : ${recipe.preparationTime} min`, 10, 30);
-
-        // Ajout de la difficulté
-        pdf.text(`Difficulty : ${recipe.difficulty}/5`, 10, 35);
-
-        // Ajout des ingrédients
-        pdf.setFontSize(16);
-        pdf.text('Ingredients : ', 10, 50);
-
-        pdf.setFontSize(12);
-        let yPosition = 60;
-        recipe.compositions.forEach((composition) => {
-            pdf.text(`${composition.ingredient.name} - ${composition.quantity} ${composition.measureUnity}`, 10, yPosition);
-            yPosition += 5;
-        });
-
-        // Ajout des instructions
-        pdf.setFontSize(16);
-        pdf.text('Instructions :', 10, yPosition + 10);
-
-        pdf.setFontSize(12);
-        let instructionsYPosition = yPosition + 20;
-        const instructions = pdf.splitTextToSize(recipe.instructions, 180);
-        pdf.text(instructions, 10, instructionsYPosition);
-
-        // Sauvegarder le PDF
-        pdf.save(`${recipe.title}.pdf`);
-    };
-
     const handleFavorite = () => {
         window.alert("Fav !")
     }
@@ -129,8 +76,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
             if (response.ok) {
                 const updatedComments = await response.json();
-                setRecipe(prev => prev ? { ...prev, comments: updatedComments } : null);
-                reset(); 
+                setRecipe(prev => prev ? { ...prev, comments: updatedComments } : null); 
             } else {
                 console.error('Error post comment')
             }
@@ -143,7 +89,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
         <div className=''>
             {recipe ? (
                 <div id='recipe-detail'>
-                    <RecipeHeader recipe={recipe} generatePDF={generatePDF} handleFavorite={handleFavorite} />
+                    <RecipeHeader recipe={recipe} generatePDF={() => generatePDF(recipe)} handleFavorite={handleFavorite} />
 
                     <div className='flex gap-7 flex-col lg:flex-row'>
                         <div className='w-full lg:w-[50%]'>
@@ -155,55 +101,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                             {/* Recipe ingredients */}
                             <SectionHeader icon={CookingPotIcon} title="Ingredients and Tools" />
 
-                            <TabGroup className='border border-slate-200 dark:border-slate-800 rounded-lg'>
-                                <TabList className="flex flex-wrap bg-slate-200 dark:bg-slate-800 p-2 rounded-lg">
-                                    <Tab className={({ selected }) => `w-full sm:w-auto px-4 py-2 rounded-lg ${selected ? 'bg-gradient-to-r from-custom-orange to-[#f78b6d] text-white focus:outline-none' : ''}`}>Ingredients</Tab>
-                                    
-                                    <Tab className={({ selected }) => `w-full sm:w-auto px-4 py-2 rounded-lg ${selected ? 'bg-gradient-to-r from-custom-orange to-[#f78b6d] text-white focus:outline-none' : ''}`}>Tools</Tab>  
-                                </TabList>
-                                <TabPanels>
-                                    <TabPanel className='p-6'>
-                                        <div className='flex flex-col sm:flex-wrap sm:flex-row gap-3'>
-                                            {recipe.compositions.map((composition) => (
-                                                <div className='flex flex-wrap sm:flex-col justify-between sm:justify-start text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-300 dark:border-gray-600 last:border-none sm:border-none pb-3' key={composition.id}>
-                                                    <div className='sm:h-[100px] sm:w-[100px] overflow-hidden rounded-lg shadow-md'>
-                                                        <Image 
-                                                            src={composition.ingredient.image} 
-                                                            alt={composition.ingredient.name} 
-                                                            height={200}
-                                                            width={200}
-                                                            className='w-[100px] h-[100px] object-cover sm:w-full sm:h-full hover:scale-105 transition duration-300'
-                                                        />
-                                                    </div>
-                                                    <p className='sm:mt-2'><span className='font-bold'>{composition.ingredient.name}</span><br/><span className='font-thin text-sm'>{composition.quantity} {composition.measureUnity}</span></p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </TabPanel>
-                                    <TabPanel className='p-6'>
-                                        <div className='flex flex-col sm:flex-wrap sm:flex-row gap-3'>
-                                            {recipe.toolsRecipe && recipe.toolsRecipe.length > 0 ? (
-                                                recipe.toolsRecipe.map((toolRecipe) => (
-                                                    <div className='flex flex-wrap sm:flex-col justify-between sm:justify-start text-right sm:gap-0 items-center sm:w-[100px] sm:text-center border-b border-gray-300 dark:border-gray-600 last:border-none sm:border-none pb-3' key={toolRecipe.id}>
-                                                        <div className='sm:h-[100px] sm:w-[100px] overflow-hidden rounded-lg shadow-md'>
-                                                            <Image 
-                                                                src={toolRecipe.tool.image} 
-                                                                alt={toolRecipe.tool.name} 
-                                                                height={200}
-                                                                width={200}
-                                                                className='w-[100px] h-[100px] object-cover sm:w-full sm:h-full hover:scale-105 transition duration-300'
-                                                            />
-                                                        </div>
-                                                        <p className='sm:mt-2'><span className='font-bold'>{toolRecipe.tool.name}</span></p>
-                                                    </div>
-                                                ))
-                                            ) : (
-                                                <p className='text-xs text-slate-400'>No tools</p>
-                                            )}
-                                        </div>
-                                    </TabPanel>
-                                </TabPanels>
-                            </TabGroup>
+                            <IngredientsToolsTabs compositions={recipe.compositions} toolsRecipe={recipe.toolsRecipe} />
                         </div>
                     </div>
 
@@ -254,35 +152,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
                     {/* Add new comment */}
                     <SectionHeader icon={MessageSquareQuoteIcon} title="Add a Comment" />
-                    <form onSubmit={handleSubmit(handleCommentSubmit)} className='flex flex-col gap-4'>
-                        <Controller
-                            name="text"
-                            control={control}
-                            render={({ field }) => (
-                                <textarea
-                                    {...field}
-                                    placeholder='Write your comment here...'
-                                    rows={4}
-                                    className='p-3 border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 transition duration-300'
-                                />
-                            )}
-                        />
-                        {/* Display all error messages */}
-                        {errors.text && (
-                            <div className='text-red-500'>
-                                {errors.text.message && (
-                                    <p>{errors.text.message}</p>
-                                )}
-                            </div>
-                        )}
-
-                        <button
-                            type='submit'
-                            className='self-start bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300'
-                        >
-                            Post Comment
-                        </button>
-                    </form>
+                    <CommentForm onSubmit={handleCommentSubmit} />
 
                     {/* Suggestions */}
                     <div>
