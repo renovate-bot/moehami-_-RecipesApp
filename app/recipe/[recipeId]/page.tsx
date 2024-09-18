@@ -1,9 +1,9 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
 
 import { RecipeType } from '@/types/types'
+import { generatePDF } from '@/lib/functions'
 
 // components
 import SectionHeader from '@/components/SectionHeader'
@@ -11,6 +11,7 @@ import MiniRecipeCard from '@/components/MiniRecipeCard'
 import CommentCard from '@/components/CommentCard'
 import RecipeHeader from '@/components/RecipeHeader'
 import CommentForm from '@/components/CommentForm'
+import IngredientsToolsTabs from '@/components/IngredientsToolsTabs'
 
 // Lucide React
 import { CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon, BookmarkCheckIcon, Trash2Icon, WaypointsIcon, DownloadIcon, HeartIcon } from 'lucide-react'
@@ -24,11 +25,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/autoplay';
-
-import { jsPDF } from 'jspdf';
-import IngredientsToolsTabs from '@/components/IngredientsToolsTabs'
-import { generatePDF } from '@/lib/functions'
-
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
