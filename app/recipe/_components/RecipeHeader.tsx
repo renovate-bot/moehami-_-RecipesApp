@@ -73,7 +73,7 @@ const RecipeHeader = ({ recipe, generatePDF }: RecipeHeaderProps) => {
                         onClick={handleFavorite}
                         icon={HeartIcon}
                         label={isFavorite ? "Unfavorite" : "Favorite"}
-                        customStyles={isFavorite ? 'bg-red-500 hover:bg-red-600 border-none hover:text-white' : 'bg-green-700 hover:bg-green-800 border-none hover:text-white'}
+                        customStyles={isFavorite ? 'bg-red-500 hover:bg-red-600 border-none text-white hover:text-white' : 'bg-green-700 hover:bg-green-800 border-none text-white hover:text-white'}
                     />
                 </div>
             </div>

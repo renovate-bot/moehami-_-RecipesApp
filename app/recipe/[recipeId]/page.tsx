@@ -14,7 +14,7 @@ import CommentForm from '@/components/CommentForm'
 import IngredientsToolsTabs from '@/components/IngredientsToolsTabs'
 
 // Lucide React
-import { CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon, BookmarkCheckIcon, Trash2Icon, WaypointsIcon, DownloadIcon, HeartIcon } from 'lucide-react'
+import { CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon, BookmarkCheckIcon, Trash2Icon, WaypointsIcon, DownloadIcon, HeartIcon, LeafIcon } from 'lucide-react'
 
 // Swiper
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -154,6 +154,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                     {/* Share social networks */}
                     <ShareRecipe recipeTitle={recipe.title} />
 
+                    <SectionHeader icon={LeafIcon} title="Nutritional Infos" />
                     <NutritionalInfo compositions={recipe.compositions} />
 
                     {/* Suggestions */}
