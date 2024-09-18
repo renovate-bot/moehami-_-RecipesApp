@@ -1,4 +1,3 @@
-import { cn } from '@/lib/utlis';
 import { GaugeIcon, StarHalf } from 'lucide-react';
 
 const DifficultyRating = ({ rating }: { rating: number }) => {

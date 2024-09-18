@@ -1,5 +1,5 @@
 import React from 'react';
-import { LucideIcon } from 'lucide-react'; // For handling Lucide icons
+import { LucideIcon } from 'lucide-react';
 
 interface ButtonProps {
     onClick: () => void;

@@ -30,8 +30,8 @@ interface ToolRecipe {
 }
 
 interface IngredientsToolsTabsProps {
-  compositions: Composition[];    // Array of ingredients and their quantities
-  toolsRecipe: ToolRecipe[];       // Array of tools required for the recipe
+    compositions: Composition[];    // Array of ingredients and their quantities
+    toolsRecipe: ToolRecipe[];       // Array of tools required for the recipe
 }
 
 const IngredientsToolsTabs: React.FC<IngredientsToolsTabsProps> = ({ compositions, toolsRecipe }) => {

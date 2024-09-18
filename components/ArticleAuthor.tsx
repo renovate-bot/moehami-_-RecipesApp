@@ -1,4 +1,3 @@
-// components/AuthorCard.tsx
 import React from 'react';
 
 interface ArticleAuthorProps {
