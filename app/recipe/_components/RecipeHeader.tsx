@@ -1,4 +1,6 @@
-import React from 'react';
+"use client"
+
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Clock10Icon, Download as DownloadIcon, Heart as HeartIcon } from 'lucide-react';
 import CategoryBadge from '@/components/CategoryBadge';
@@ -7,6 +9,7 @@ import Button from '@/components/Button';
 
 interface RecipeHeaderProps {
     recipe: {
+        id: string,
         title: string;
         category: { name: string };
         preparationTime: number;
@@ -17,7 +20,34 @@ interface RecipeHeaderProps {
     handleFavorite: () => void;
 }
 
-const RecipeHeader = ({ recipe, generatePDF, handleFavorite }: RecipeHeaderProps) => {
+const RecipeHeader = ({ recipe, generatePDF }: RecipeHeaderProps) => {
+
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    // Check if recipe is already bookmarked
+    useEffect(() => {
+        const savedFavorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
+        const isAlreadyFavorite = savedFavorites.some((savedRecipe: { id: string }) => savedRecipe.id === recipe.id);
+        setIsFavorite(isAlreadyFavorite);
+    }, [recipe.id]);
+
+     // Handle bookmarking/unbookmarking
+    const handleFavorite = () => {
+        const savedFavorites = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
+
+        if (isFavorite) {
+            // Remove from favorites
+            const updatedFavorites = savedFavorites.filter((savedRecipe: { id: string }) => savedRecipe.id !== recipe.id);
+            localStorage.setItem('favoriteRecipes', JSON.stringify(updatedFavorites));
+            setIsFavorite(false);
+        } else {
+            // Add to favorites
+            savedFavorites.push(recipe);
+            localStorage.setItem('favoriteRecipes', JSON.stringify(savedFavorites));
+            setIsFavorite(true);
+        }
+    };
+
     return (
         <div className='flex md:bg-slate-100 dark:md:bg-slate-100/10 rounded-lg flex-col-reverse md:flex-row items-center my-5'>
             {/* Recipe title */}
@@ -42,7 +72,8 @@ const RecipeHeader = ({ recipe, generatePDF, handleFavorite }: RecipeHeaderProps
                     <Button
                         onClick={handleFavorite}
                         icon={HeartIcon}
-                        label="Favorite"
+                        label={isFavorite ? "Unfavorite" : "Favorite"}
+                        customStyles={isFavorite ? 'bg-red-500 hover:bg-red-600' : 'bg-green-700 hover:bg-green-800'}
                     />
                 </div>
             </div>

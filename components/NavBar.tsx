@@ -76,6 +76,13 @@ const NavBar = () => {
           >
             Blog
           </Link>
+          <Link
+            href='/favorite'
+            className={`block md:inline-block text-lg font-medium hover:text-[#f78b6d] transition duration-300 ${activeLink === '/favorite' ? 'text-[#f78b6d]' : 'text-white'}`}
+            onClick={() => handleLinkClick('/favorite')}
+          >
+            Favorites
+          </Link>
 
           {/* Theme Switcher visible in mobile and desktop */}
           <div className='mt-4 md:mt-0'>
