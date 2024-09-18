@@ -4,8 +4,12 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import ThemeSwitcher from './ThemeSwitcher';
 import { Menu, X } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 const NavBar = () => {
+
+  const pathname = usePathname();
+
   const [activeLink, setActiveLink] = useState<string>('/');
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
@@ -53,7 +57,7 @@ const NavBar = () => {
         <div className='flex items-center flex-col md:flex-row md:gap-8 p-4 md:p-0'>
           <Link
             href='/recipe'
-            className={`block md:inline-block text-lg font-medium hover:text-[#f78b6d] transition duration-300 ${activeLink === '/recipe' ? 'text-[#f78b6d]' : 'text-white'}`}
+            className={`block md:inline-block text-lg font-medium hover:text-[#f78b6d] transition duration-300 ${activeLink === '/recipe' || pathname.startsWith('/recipe/') ? 'text-[#f78b6d]' : 'text-white'}`}
             onClick={() => handleLinkClick('/recipe')}
           >
             Recipes
@@ -67,7 +71,7 @@ const NavBar = () => {
           </Link>
           <Link
             href='/blog'
-            className={`block md:inline-block text-lg font-medium hover:text-[#f78b6d] transition duration-300 ${activeLink === '/blog' ? 'text-[#f78b6d]' : 'text-white'}`}
+            className={`block md:inline-block text-lg font-medium hover:text-[#f78b6d] transition duration-300 ${activeLink === '/blog' || pathname.startsWith('/blog/') ? 'text-[#f78b6d]' : 'text-white'}`}
             onClick={() => handleLinkClick('/blog')}
           >
             Blog
