@@ -20,37 +20,26 @@ const NutritionalInfo = ({ compositions }: NutritionalInfoProps) => {
         .join(",");
     const ingredientsString = encodeURIComponent(ingredients);
 
-    const fetchNutritionalInfo = async () => {
-        const apiKey = process.env.NEXT_PUBLIC_EDAMAM_API_KEY;
-        const apiId = process.env.NEXT_PUBLIC_EDAMAM_API_ID;
-
+    const fetchNutritionalInfo = async (ingredientsString: string) => {
         try {
-        const response = await fetch(
-            `https://api.edamam.com/api/nutrition-data?app_id=${apiId}&app_key=${apiKey}&nutrition-type=cooking&ingr=${ingredientsString}`,
-            {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            const response = await fetch(`/api/nutrition?ingredientsString=${encodeURIComponent(ingredientsString)}`);
+    
+            if (!response.ok) {
+                throw new Error("Failed to fetch nutritional information");
             }
-        );
-
-        if (!response.ok) {
-            throw new Error("Failed to fetch nutritional information");
-        }
-
-        const data = await response.json();
-        setNutritionalInfo(data);
+    
+            const data = await response.json();
+            setNutritionalInfo(data);
         } catch (error) {
-        setError("Error fetching nutritional information.");
-        console.error("Error fetching nutritional information:", error);
+            setError("Error fetching nutritional information.");
+            console.error("Error fetching nutritional information:", error);
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchNutritionalInfo();
+        fetchNutritionalInfo(ingredientsString);
     }, [compositions]);
 
     if (loading) return <p className="text-center py-4">Loading nutritional information...</p>;
