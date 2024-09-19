@@ -111,7 +111,8 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                             grabCursor={true}
                             mousewheel={true}
                             slidesPerView={2}
-                            pagination={{clickable: true}}
+                            navigation
+                            // pagination={{clickable: true}}
                             spaceBetween={20}
                             breakpoints={{
                                 0: {
