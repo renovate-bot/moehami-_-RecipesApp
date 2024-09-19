@@ -13,7 +13,7 @@ interface CommentCardProps {
 
 const CommentCard = ({ comment, onDelete }: CommentCardProps) => {
     return (
-        <div className="relative flex flex-col sm:flex-row sm:justify-between p-6 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div className="relative flex flex-col sm:flex-row sm:justify-between p-6 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm hover:shadow-lg transition-shadow duration-300">
         {/* User info and comment details */}
         <div className="flex-1">
             <div className="flex items-center space-x-3 mb-2 text-slate-500 dark:text-slate-400">
