@@ -2,7 +2,7 @@
 
 import { CompositionType, NutritionalInfoType } from "@/types/types";
 import React, { useEffect, useState } from "react";
-import { Apple, Drumstick, Wheat, Droplet, Candy } from "lucide-react"; // Lucide icons
+import { Apple, Drumstick, Wheat, Droplet, Candy, Citrus } from "lucide-react"; // Lucide icons
 import NutritionalCard from "./NutritionalCard";
 
 interface NutritionalInfoProps {
@@ -78,7 +78,7 @@ const NutritionalInfo = ({ compositions }: NutritionalInfoProps) => {
                     <NutritionalCard
                         icon={Drumstick}
                         title={totalNutrients.PROCNT.label || "Protein"}
-                        value={totalNutrients.PROCNT.quantity ? `${totalNutrients.PROCNT.quantity.toFixed(1)} g` : "N/A"}
+                        value={totalNutrients.PROCNT.quantity ? `${totalNutrients.PROCNT.quantity.toFixed(1)} ${totalNutrients.PROCNT.unit}` : "N/A"}
                         bgColor="bg-blue-100 dark:bg-blue-900"
                         iconColor="text-blue-600 dark:text-blue-300"
                     />
@@ -89,7 +89,7 @@ const NutritionalInfo = ({ compositions }: NutritionalInfoProps) => {
                     <NutritionalCard
                         icon={Wheat}
                         title={totalNutrients.CHOCDF.label || "Carbs"}
-                        value={totalNutrients.CHOCDF.quantity ? `${totalNutrients.CHOCDF.quantity.toFixed(1)} g` : "N/A"}
+                        value={totalNutrients.CHOCDF.quantity ? `${totalNutrients.CHOCDF.quantity.toFixed(1)} ${totalNutrients.CHOCDF.unit}` : "N/A"}
                         bgColor="bg-yellow-100 dark:bg-yellow-900"
                         iconColor="text-yellow-600 dark:text-yellow-300"
                     />
@@ -100,7 +100,7 @@ const NutritionalInfo = ({ compositions }: NutritionalInfoProps) => {
                     <NutritionalCard
                         icon={Droplet}
                         title={totalNutrients.FAT.label || "Fats"}
-                        value={totalNutrients.FAT.quantity ? `${totalNutrients.FAT.quantity.toFixed(1)} g` : "N/A"}
+                        value={totalNutrients.FAT.quantity ? `${totalNutrients.FAT.quantity.toFixed(1)} ${totalNutrients.FAT.unit}` : "N/A"}
                         bgColor="bg-red-100 dark:bg-red-900"
                         iconColor="text-red-600 dark:text-red-300"
                     />
@@ -111,9 +111,20 @@ const NutritionalInfo = ({ compositions }: NutritionalInfoProps) => {
                     <NutritionalCard
                         icon={Candy}
                         title={totalNutrients.SUGAR.label || "Sugar"}
-                        value={totalNutrients.SUGAR.quantity ? `${totalNutrients.SUGAR.quantity.toFixed(1)} g` : "N/A"}
+                        value={totalNutrients.SUGAR.quantity ? `${totalNutrients.SUGAR.quantity.toFixed(1)} ${totalNutrients.SUGAR.unit}` : "N/A"}
                         bgColor="bg-pink-100 dark:bg-pink-900"
                         iconColor="text-pink-600 dark:text-pink-300"
+                    />
+                )}
+
+                {/* Vitamine C */}
+                {totalNutrients.VITC && (
+                    <NutritionalCard
+                        icon={Citrus}
+                        title={totalNutrients.VITC.label || "Vitamine C"}
+                        value={totalNutrients.VITC.quantity ? `${totalNutrients.VITC.quantity.toFixed(1)} ${totalNutrients.VITC.unit}` : "N/A"}
+                        bgColor="bg-orange-100 dark:bg-orange-900"
+                        iconColor="text-orange-600 dark:text-orange-300"
                     />
                 )}
             </div>
