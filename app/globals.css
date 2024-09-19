@@ -70,7 +70,6 @@ body {
 }
 
 .dark .swiper-container::after {
-  right: 0;
   background: linear-gradient(to left, rgba(17, 24, 39, 1) 0%, rgba(17, 24, 39, 0.5) 50%, rgba(17, 24, 39, 0) 100%);
 }
 
@@ -89,7 +88,6 @@ body {
   opacity: 0.50;
   filter: grayscale(0.5);
   pointer-events: auto; /* Ensure slides are interactive */
-
 }
 
 .swiper-slide-active {
@@ -103,9 +101,81 @@ body {
 }
 
 .swiper-slide-next {
-  /* opacity: 0.7;  */
+  /* opacity: 0.7;  */  
   filter: grayscale(0);
 }
+
+/* .swiper-button-prev,
+.swiper-button-next
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:#f26b5a !important;
+  z-index: 99 !important;
+  background: rgba(255, 255, 255, 0.532);
+  height: 50px !important;
+  width: 50px !important;
+  border-radius: 50%;
+}
+
+.swiper-button-prev {
+  position: absolute;
+  left: 120px !important;
+}
+.swiper-button-next {
+  position: absolute;
+  right: 120px !important;
+}
+.swiper-button-prev::after {
+  font-size: 1rem !important;
+}
+.swiper-button-next::after {
+  font-size: 1rem !important;
+} */
+
+.swiper-button-prev,
+.swiper-button-next {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f26b5a !important;
+  z-index: 99 !important;
+  background: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
+  height: 50px !important;
+  width: 50px !important;
+  border-radius: 50%;
+  transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease; /* Smooth transition */
+  opacity: 0.8; /* Start with reduced opacity */
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  background: rgba(255, 255, 255, 1); /* Fully opaque background on hover */
+  transform: scale(1.1); /* Slight zoom effect */
+  opacity: 1; /* Fully opaque on hover */
+}
+
+.swiper-button-prev:active,
+.swiper-button-next:active {
+  transform: scale(0.9); /* Shrink on click */
+}
+
+.swiper-button-prev {
+  position: absolute;
+  left: 120px !important;
+}
+
+.swiper-button-next {
+  position: absolute;
+  right: 120px !important;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 1.25rem !important; /* Increase icon size for a modern feel */
+}
+
 
 @media(max-width: 600px) {
   .swiper-container::before,
@@ -113,5 +183,19 @@ body {
   .dark .swiper-container::before,
   .dark .swiper-container::after {
     background: transparent;
+  }
+
+  /* .swiper-button-prev::after, .swiper-button-prev {
+    display: none !important;
+    background: none !important;
+  }
+  .swiper-button-next::after, .swiper-button-next {
+    display: none !important;
+    background: none !important;
+  } */
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none !important; /* Hide navigation buttons on mobile */
   }
 }

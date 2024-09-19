@@ -5,7 +5,7 @@ import ArticleCard from '@/components/ArticleCard'
 import { RecipeType, ArticleWithTagsAndComments } from '@/types/types'
 import React, { useEffect, useMemo, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { EffectCoverflow, Pagination, Mousewheel, Autoplay } from 'swiper/modules';
+import { Navigation, EffectCoverflow, Pagination, Mousewheel, Autoplay } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -69,7 +69,7 @@ const RecipesPage = () => {
                 ) : recipes.length > 0 ? (
                     <Swiper
                         className='p-6'
-                        modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay]}
+                        modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay, Navigation]}
                         effect={'coverflow'}
                         // autoplay={{
                         //     delay: 2500,
@@ -78,6 +78,7 @@ const RecipesPage = () => {
                         // }}
                         spaceBetween={50}
                         mousewheel={true}
+                        navigation
                         // slidesPerView={'auto'}
                         loop={shouldEnableLoop}
                         pagination={{clickable: true}}
