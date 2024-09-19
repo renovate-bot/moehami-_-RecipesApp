@@ -29,12 +29,12 @@ import 'swiper/css/autoplay';
 import ShareRecipe from '@/components/ShareRecipe'
 import NutritionalInfo from '@/components/NutritionalInfo'
 
-export async function generateMetadata({ params }: { params: { recipeId: string }}): Promise<Metadata> {
-    return {
-        title: 'Recipes Page',
-        description: 'Discover this delicious and easy-to-make recipe.',
-    };
-}
+// export async function generateMetadata({ params }: { params: { recipeId: string }}): Promise<Metadata> {
+//     return {
+//         title: 'Recipes Page',
+//         description: 'Discover this delicious and easy-to-make recipe.',
+//     };
+// }
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
