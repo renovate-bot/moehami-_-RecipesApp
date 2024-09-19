@@ -11,8 +11,9 @@ interface ButtonProps {
 const Button = ({ onClick, icon: Icon, label, customStyles }: ButtonProps) => {
     return (
         <button
+            aria-label='button'
             onClick={onClick}
-            className={`flex text-xs w-full sm:w-auto items-center gap-2 dark:border dark:border-slate-400 dark:md:border-none dark:hover:text-slate-100 dark:md:hover:text-slate-100 md:bg-gradient-to-r ${customStyles ? customStyles : 'from-custom-orange to-[#f78b6d] hover:from-[#e85c47] hover:to-[#f76f58]'} text-slate-900 md:text-white dark:text-white px-5 py-2 p-2 rounded-full shadow-md hover:shadow-lg  transition-all duration-300 ease-in-out transform ${customStyles}`}
+            className={`flex text-xs w-full sm:w-auto items-center gap-2 dark:md:border-none bg-gradient-to-r ${customStyles ? customStyles : 'from-custom-orange to-[#f78b6d] hover:from-[#e85c47] hover:to-[#f76f58]'} md:text-white dark:text-white px-5 py-2 rounded-full shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform`}
         >
             <Icon /> {label}
         </button>

@@ -27,14 +27,16 @@ const ShareRecipe = ({ recipeTitle }: ShareRecipeProps) => {
             <div className="flex gap-4">
                 {/* Facebook Share Button */}
                 <button
+                    aria-label='Facebook'
                     onClick={shareOnFacebook}
                     className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all"
-                >
+                    >
                     <Facebook />
                 </button>
 
                 {/* Instagram Link Button (Copy Link) */}
                 <button
+                    aria-label='Instagram'
                     onClick={copyRecipeLink}
                     className="flex items-center gap-2 px-4 py-2 rounded-lg bg-pink-500 text-white hover:bg-pink-600 transition-all"
                 >

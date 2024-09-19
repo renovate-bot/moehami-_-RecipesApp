@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import type { Metadata } from 'next'
 
 import { RecipeType } from '@/types/types'
 import { generatePDF } from '@/lib/functions'
@@ -28,6 +27,8 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/autoplay';
 import ShareRecipe from '@/components/ShareRecipe'
 import NutritionalInfo from '@/components/NutritionalInfo'
+import Head from 'next/head'
+import { setSEOAttributes } from '@/lib/seo'
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
@@ -40,6 +41,14 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                 const response = await fetch(`/api/recipe/${params.recipeId}`);
                 const data: RecipeType = await response.json();
                 setRecipe(data);
+
+                // Set the title and meta description using the generic function
+                if (data.title) {
+                    setSEOAttributes(
+                        `Recipe Page - ${data.title}`,
+                        `Learn how to cook ${data.title} with detailed instructions and tips.`
+                    );
+                }
 
                 // Fetch suggestions after recipe is fetched
                 const suggestionsResponse = await fetch(`/api/suggestions/${data.category.id}/${params.recipeId}`);
@@ -84,94 +93,96 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
     }
 
     return (
-        <div className=''>
-            {recipe ? (
-                <div id='recipe-detail'>
-                    {/* Recipe header */}
-                    <RecipeHeader recipe={recipe} generatePDF={() => generatePDF(recipe)} handleFavorite={handleFavorite} />    
+        <>
+            <div className=''>
+                {recipe ? (
+                    <div id='recipe-detail'>
+                        {/* Recipe header */}
+                        <RecipeHeader recipe={recipe} generatePDF={() => generatePDF(recipe)} handleFavorite={handleFavorite} />    
 
-                    <div className='flex gap-7 flex-col lg:flex-row'>
-                        <div className='w-full lg:w-[50%]'>
-                            {/* Recipe instructions */}
-                            <SectionHeader icon={ListChecksIcon} title="Instructions" />
-                            <p className='font-thin'>{recipe.instructions}</p>
+                        <div className='flex gap-7 flex-col lg:flex-row'>
+                            <div className='w-full lg:w-[50%]'>
+                                {/* Recipe instructions */}
+                                <SectionHeader icon={ListChecksIcon} title="Instructions" />
+                                <p className='font-thin'>{recipe.instructions}</p>
+                            </div>
+                            <div className='w-full lg:w-[50%]'>
+                                {/* Recipe ingredients */}
+                                <SectionHeader icon={CookingPotIcon} title="Ingredients and Tools" />
+                                <IngredientsToolsTabs compositions={recipe.compositions} toolsRecipe={recipe.toolsRecipe} />
+                            </div>
                         </div>
-                        <div className='w-full lg:w-[50%]'>
-                            {/* Recipe ingredients */}
-                            <SectionHeader icon={CookingPotIcon} title="Ingredients and Tools" />
-                            <IngredientsToolsTabs compositions={recipe.compositions} toolsRecipe={recipe.toolsRecipe} />
-                        </div>
-                    </div>
 
-                    {/* Recipe steps */}
-                    <SectionHeader icon={WaypointsIcon} title="Steps" count={recipe.steps.length} />
-                    {recipe.steps && recipe.steps.length > 0 ? (
-                        <Swiper
-                            modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay, Navigation]}
-                            grabCursor={true}
-                            mousewheel={true}
-                            slidesPerView={2}
-                            navigation
-                            // pagination={{clickable: true}}
-                            spaceBetween={20}
-                            breakpoints={{
-                                0: {
-                                    slidesPerView: 1
-                                },
-                                900: {
-                                    slidesPerView: 2
-                                },
-                            }}
-                        >
-                        {recipe.steps.map((step) => (
-                            <SwiperSlide key={step.id}>
-                                <div className='px-8 py-10 flex flex-col items-center justify-center w-full h-[450px] sm:h-[350px] rounded-md text-center bg-slate-100 dark:bg-slate-800 dark:border-slate-800'>
-                                    <h3 className='font-bold text-4xl mb-3 text-custom-orange'>{step.number}</h3>
-                                    <p className='font-thin'>{step.description}</p>
-                                </div>
-                            </SwiperSlide>
-                        ))}
-                        </Swiper>
-                    ) : (
-                        <p className='text-xs text-slate-400'>No steps</p>
-                    )}
-
-                    {/* Recipe comments */}
-                    <SectionHeader icon={MessageSquareQuoteIcon} title="Comments" count={recipe.comments.length} />
-                    {recipe.comments.length > 0 ? (
-                        <div className='flex flex-col gap-3'>
-                            {recipe.comments.map((comment) => (
-                                <CommentCard key={comment.id} comment={comment} onDelete={handleDelete} />
+                        {/* Recipe steps */}
+                        <SectionHeader icon={WaypointsIcon} title="Steps" count={recipe.steps.length} />
+                        {recipe.steps && recipe.steps.length > 0 ? (
+                            <Swiper
+                                modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay, Navigation]}
+                                grabCursor={true}
+                                mousewheel={true}
+                                slidesPerView={2}
+                                navigation
+                                // pagination={{clickable: true}}
+                                spaceBetween={20}
+                                breakpoints={{
+                                    0: {
+                                        slidesPerView: 1
+                                    },
+                                    900: {
+                                        slidesPerView: 2
+                                    },
+                                }}
+                            >
+                            {recipe.steps.map((step) => (
+                                <SwiperSlide key={step.id}>
+                                    <div className='px-8 py-10 flex flex-col items-center justify-center w-full h-[450px] sm:h-[350px] rounded-md text-center bg-slate-100 dark:bg-slate-800 dark:border-slate-800'>
+                                        <h3 className='font-bold text-4xl mb-3 text-custom-orange'>{step.number}</h3>
+                                        <p className='font-thin'>{step.description}</p>
+                                    </div>
+                                </SwiperSlide>
                             ))}
-                        </div>
-                    ) : (
-                        <p className='text-xs text-slate-400'>No comments</p>
-                    )}
+                            </Swiper>
+                        ) : (
+                            <p className='text-xs text-slate-400'>No steps</p>
+                        )}
 
-                    {/* Add new comment */}
-                    <SectionHeader icon={MessageSquareQuoteIcon} title="Add a Comment" />
-                    <CommentForm onSubmit={handleCommentSubmit} />
+                        {/* Recipe comments */}
+                        <SectionHeader icon={MessageSquareQuoteIcon} title="Comments" count={recipe.comments.length} />
+                        {recipe.comments.length > 0 ? (
+                            <div className='flex flex-col gap-3'>
+                                {recipe.comments.map((comment) => (
+                                    <CommentCard key={comment.id} comment={comment} onDelete={handleDelete} />
+                                ))}
+                            </div>
+                        ) : (
+                            <p className='text-xs text-slate-400'>No comments</p>
+                        )}
 
-                    {/* Share social networks */}
-                    <ShareRecipe recipeTitle={recipe.title} />
+                        {/* Add new comment */}
+                        <SectionHeader icon={MessageSquareQuoteIcon} title="Add a Comment" />
+                        <CommentForm onSubmit={handleCommentSubmit} />
 
-                    <SectionHeader icon={LeafIcon} title="Nutritional Infos" />
-                    <NutritionalInfo compositions={recipe.compositions} />
+                        {/* Share social networks */}
+                        <ShareRecipe recipeTitle={recipe.title} />
 
-                    {/* Suggestions */}
-                    <div>
-                        <SectionHeader icon={LightbulbIcon} title="Suggestions" />
-                        <div className='flex flex-wrap gap-3'>
-                        {suggestions?.map((suggestion) => (
-                            <MiniRecipeCard key={suggestion.id} recipe={suggestion} />
-                        ))}
+                        <SectionHeader icon={LeafIcon} title="Nutritional Infos" />
+                        <NutritionalInfo compositions={recipe.compositions} />
+
+                        {/* Suggestions */}
+                        <div>
+                            <SectionHeader icon={LightbulbIcon} title="Suggestions" />
+                            <div className='flex flex-wrap gap-3'>
+                            {suggestions?.map((suggestion) => (
+                                <MiniRecipeCard key={suggestion.id} recipe={suggestion} />
+                            ))}
+                            </div>
                         </div>
                     </div>
-                </div>
-            ) : (
-                <p>Loading...</p>
-            )}
-        </div>
+                ) : (
+                    <p>Loading...</p>
+                )}
+            </div>
+        </>
     )
 }
 

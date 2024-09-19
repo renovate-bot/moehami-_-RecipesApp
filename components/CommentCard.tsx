@@ -31,7 +31,7 @@ const CommentCard = ({ comment, onDelete }: CommentCardProps) => {
         {/* Delete button */}
         <div className="flex items-center ml-0 sm:ml-4 mt-4 sm:mt-0">
             <button
-                className="flex items-center px-4 py-2 text-white bg-red-500 rounded-lg text-sm font-medium hover:bg-red-600 transition duration-300"
+                className="flex items-center px-4 py-2 text-white bg-red-600 rounded-lg text-sm font-medium hover:bg-red-700 transition duration-300"
                 onClick={() => onDelete(comment.id)}
             >
                 <TrashIcon className="h-5 w-5 mr-2" />
