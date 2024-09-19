@@ -26,7 +26,7 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/autoplay';
 import ShareRecipe from '@/components/ShareRecipe'
-import NutritionalInfo from '@/components/NutritionalInfo'
+import NutritionalInfo from '@/app/recipe/_components/NutritionalInfo'
 import { setSEOAttributes } from '@/lib/seo'
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
