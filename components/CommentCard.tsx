@@ -68,7 +68,7 @@ const CommentCard = ({ comment, onDelete }: CommentCardProps) => {
                 ) : (
                     <UserCircleIcon className="h-8 w-8 text-custom-orange/60" />
                 )}
-                    <p className="font-semibold text-lg">{comment?.username}</p>
+                    <p className="font-semibold text-sm">{comment?.username}</p>
                 </div>
                 <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">
                     {new Date(comment.createdAt).toLocaleDateString()} at {new Date(comment.createdAt).toLocaleTimeString()}
