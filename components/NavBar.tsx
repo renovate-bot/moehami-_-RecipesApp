@@ -43,77 +43,79 @@ const NavBar = () => {
         </Link>
       </div>
 
-      {/* Burger menu button (visible on small screens) */}
-      <div className='md:hidden flex items-center'>
-        <button onClick={toggleMenu} className='text-white focus:outline-none'>
-          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </div>
-
-      {/* Navigation Links with animation */}
-      <div
-        className={`md:flex gap-8 absolute md:static top-[75px] left-0 w-full md:w-auto bg-slate-800 md:bg-transparent transition-transform duration-300 ease-in-out ${
-          isMenuOpen
-            ? 'transform translate-x-0 opacity-100'
-            : 'transform -translate-x-full opacity-0 md:opacity-100 md:translate-x-0'
-        }`}
-      >
-        <div className='flex items-center flex-col md:flex-row md:gap-8 p-4 md:p-0'>
+      <div className='flex gap-5 items-center'>
+        <SignedOut>
           <Link
-            href='/recipe'
-            className={`block md:inline-block text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/recipe' || pathname.startsWith('/recipe/') ? 'text-custom-orange' : 'text-white'}`}
-            onClick={() => handleLinkClick('/recipe')}
+            href="/sign-in"
+            className="block md:inline-block text-lg font-medium text-white hover:text-custom-orange transition duration-300"
+            onClick={() => handleLinkClick("/sign-in")}
           >
-            Recipes
+            <LogIn size={24} />
           </Link>
           <Link
-            href='/search'
-            className={`block md:inline-block text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/search' ? 'text-custom-orange' : 'text-white'}`}
-            onClick={() => handleLinkClick('/search')}
-          >
-            Search
-          </Link>
-          <Link
-            href='/blog'
-            className={`block md:inline-block text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/blog' || pathname.startsWith('/blog/') ? 'text-custom-orange' : 'text-white'}`}
-            onClick={() => handleLinkClick('/blog')}
-          >
-            Blog
-          </Link>
-          <Link
-            href='/favorite'
-            className={`block md:inline-block text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/favorite' ? 'text-custom-orange' : 'text-white'}`}
-            onClick={() => handleLinkClick('/favorite')}
-          >
-            Favorites
-          </Link>
-
-          {/* Show Sign In / Sign Up if not signed in */}
-          <SignedOut>
-            <Link
-              href="/sign-in"
-              className="block md:inline-block text-lg font-medium text-white hover:text-custom-orange transition duration-300"
-              onClick={() => handleLinkClick("/sign-in")}
+            href="/sign-up"
+            className="block md:inline-block text-lg font-medium text-white hover:text-custom-orange transition duration-300"
+            onClick={() => handleLinkClick("/sign-up")}
             >
-              <LogIn size={24} />
+            <UserPlus size={24} />
+          </Link>
+        </SignedOut>
+
+        {/* Show User Button and Sign Out if signed in */}
+        <SignedIn>
+          <UserButton afterSignOutUrl="/" />
+        </SignedIn>
+
+        {/* Theme Switcher visible in mobile and desktop */}
+        <div className='md:mt-0'>
+          <ThemeSwitcher />
+        </div>
+      
+
+        {/* Burger menu button (visible on small screens) */}
+        <div className='md:hidden flex items-center'>
+          <button onClick={toggleMenu} className='text-white focus:outline-none'>
+            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
+
+        {/* Navigation Links with animation */}
+        <div
+          className={`md:flex gap-8 absolute md:static top-[75px] left-0 w-full md:w-auto bg-slate-800 md:bg-transparent transition-transform duration-300 ease-in-out ${
+            isMenuOpen
+              ? 'transform translate-x-0 opacity-100'
+              : 'transform -translate-x-full opacity-0 md:opacity-100 md:translate-x-0'
+          }`}
+        >
+          <div className='flex items-center flex-col md:flex-row md:gap-8 p-4 md:p-0'>
+            <Link
+              href='/recipe'
+              className={`block md:inline-block text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/recipe' || pathname.startsWith('/recipe/') ? 'text-custom-orange' : 'text-white'}`}
+              onClick={() => handleLinkClick('/recipe')}
+            >
+              Recipes
             </Link>
             <Link
-              href="/sign-up"
-              className="block md:inline-block text-lg font-medium text-white hover:text-custom-orange transition duration-300"
-              onClick={() => handleLinkClick("/sign-up")}
+              href='/search'
+              className={`block md:inline-block text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/search' ? 'text-custom-orange' : 'text-white'}`}
+              onClick={() => handleLinkClick('/search')}
             >
-              <UserPlus size={24} />
+              Search
             </Link>
-          </SignedOut>
-
-          {/* Show User Button and Sign Out if signed in */}
-          <SignedIn>
-            <UserButton afterSignOutUrl="/" />
-          </SignedIn>
-
-          {/* Theme Switcher visible in mobile and desktop */}
-          <div className='mt-4 md:mt-0'>
-            <ThemeSwitcher />
+            <Link
+              href='/blog'
+              className={`block md:inline-block text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/blog' || pathname.startsWith('/blog/') ? 'text-custom-orange' : 'text-white'}`}
+              onClick={() => handleLinkClick('/blog')}
+            >
+              Blog
+            </Link>
+            <Link
+              href='/favorite'
+              className={`block md:inline-block text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/favorite' ? 'text-custom-orange' : 'text-white'}`}
+              onClick={() => handleLinkClick('/favorite')}
+            >
+              Favorites
+            </Link>
           </div>
         </div>
       </div>
