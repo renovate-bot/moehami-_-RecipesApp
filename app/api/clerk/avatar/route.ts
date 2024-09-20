@@ -1,10 +1,7 @@
 import { clerkClient } from '@clerk/nextjs/server';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextApiRequest) {
-    
-    const baseUrl = `http://${req.headers.host ?? 'localhost'}`;
+export async function GET(req: NextRequest) {
 
     if (!req.url) {
         return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
