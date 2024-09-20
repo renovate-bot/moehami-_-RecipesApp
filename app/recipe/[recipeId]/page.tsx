@@ -28,11 +28,13 @@ import 'swiper/css/autoplay';
 import ShareRecipe from '@/components/ShareRecipe'
 import NutritionalInfo from '@/app/recipe/_components/NutritionalInfo'
 import { setSEOAttributes } from '@/lib/seo'
+import { useUser } from '@clerk/nextjs'
 
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
     const [recipe, setRecipe] = useState<RecipeType | null>(null)
     const [suggestions, setSuggestions] = useState<RecipeType[] | null>([])
+    const { user } = useUser(); // Récupérer l'utilisateur connecté
 
     useEffect(() => {
         const fetchRecipe = async () => {
@@ -159,7 +161,11 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
                         {/* Add new comment */}
                         <SectionHeader icon={MessageSquareQuoteIcon} title="Add a Comment" />
-                        <CommentForm onSubmit={handleCommentSubmit} />
+                        {user ? (
+                            <CommentForm onSubmit={handleCommentSubmit} />
+                        ) : (
+                            <p>You have to sign in or sign up to comment on this recipe.</p>
+                        )}
 
                         {/* Share social networks */}
                         <ShareRecipe recipeTitle={recipe.title} />

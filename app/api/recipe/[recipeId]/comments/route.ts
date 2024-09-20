@@ -1,4 +1,5 @@
 import { db } from '@/lib/db';
+import { clerkClient, getAuth } from '@clerk/nextjs/server';
 import { NextRequest, NextResponse } from 'next/server';
 import sanitizeHtml from 'sanitize-html';
 
@@ -6,6 +7,11 @@ import sanitizeHtml from 'sanitize-html';
 export async function POST(req: NextRequest, { params }: { params: { recipeId: string } }) {
     
     const { recipeId } = params;
+    const { userId } = getAuth(req);
+
+    if (!userId) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
     try {
         const { text } = await req.json();
@@ -15,16 +21,27 @@ export async function POST(req: NextRequest, { params }: { params: { recipeId: s
             allowedAttributes: {}
         });
 
+        // Get Clerk user informations
+        const user = await clerkClient().users.getUser(userId);
+        const username = user.firstName ? user.firstName : user.username;
+
+        // Vérifier que le nom d'utilisateur n'est pas null
+        if (!username) {
+            return NextResponse.json({
+                error: 'Please set a username to comment.',
+                instructions: 'You can set your username in your profile settings.'
+            }, { status: 400 });
+        }
+
         // Create a new comment in the database
         const newComment = await db.comment.create({
             data: {
                 text: sanitizedText,
                 recipeId: recipeId,
-                userId: 'user_add',
+                userId: userId,
+                username: username, 
             },
         });
-
-        console.log(newComment);
 
         // Fetch updated list of comments for the recipe
         const updatedComments = await db.comment.findMany({
