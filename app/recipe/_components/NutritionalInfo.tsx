@@ -78,14 +78,6 @@ const NutritionalInfo = ({ compositions }: NutritionalInfoProps) => {
                 bottom: 10, // Increase the space between the doughnut chart and the legend
             },
         },
-        plugins: {
-            legend: {
-                position: "bottom", // Position the legend below the doughnut chart
-                labels: {
-                    padding: 20  
-                },
-            },
-        },
     };
 
     return (
