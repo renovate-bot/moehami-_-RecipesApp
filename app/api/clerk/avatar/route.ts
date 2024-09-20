@@ -19,7 +19,6 @@ export async function GET(req: NextRequest) {
     try {
         // Fetch the user information from Clerk using the userId
         const user = await clerkClient().users.getUser(userId as string);
-        console.log(user); // Log the user data for debugging
         
         // Respond with the user's avatar URL
         return NextResponse.json({ avatarUrl: user.imageUrl }, { status: 200 });
