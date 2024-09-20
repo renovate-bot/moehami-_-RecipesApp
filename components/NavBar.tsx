@@ -6,9 +6,13 @@ import ThemeSwitcher from './ThemeSwitcher';
 import { Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
+import { useAuth, useUser, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+
 const NavBar = () => {
 
   const pathname = usePathname();
+  const { isLoaded, isSignedIn } = useAuth(); // Hook to check authentication status
+  const { user } = useUser(); // Get user data if signed in
 
   const [activeLink, setActiveLink] = useState<string>('/');
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -83,6 +87,29 @@ const NavBar = () => {
           >
             Favorites
           </Link>
+
+          {/* Show Sign In / Sign Up if not signed in */}
+          <SignedOut>
+            <Link
+              href="/sign-in"
+              className="block md:inline-block text-lg font-medium text-white hover:text-custom-orange transition duration-300"
+              onClick={() => handleLinkClick("/sign-in")}
+            >
+              Sign In
+            </Link>
+            <Link
+              href="/sign-up"
+              className="block md:inline-block text-lg font-medium text-white hover:text-custom-orange transition duration-300"
+              onClick={() => handleLinkClick("/sign-up")}
+            >
+              Sign Up
+            </Link>
+          </SignedOut>
+
+          {/* Show User Button and Sign Out if signed in */}
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
 
           {/* Theme Switcher visible in mobile and desktop */}
           <div className='mt-4 md:mt-0'>

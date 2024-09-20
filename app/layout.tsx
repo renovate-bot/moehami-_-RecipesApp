@@ -5,6 +5,14 @@ import "./globals.css";
 import NavBar from "@/components/NavBar";
 import { Suspense } from "react";
 
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -34,17 +42,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body
-        className={`${merriweather.className} antialiased`}
-      >
-        <NavBar />
-        <main className="min-h-screen py-6 px-6 md:px-[50px] lg:px-[100px]">
-          <Suspense fallback={null}>
-            {children}
-          </Suspense>
-        </main>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" className="dark">
+        <body
+          className={`${merriweather.className} antialiased`}
+        >
+          <NavBar />
+          <main className="min-h-screen py-6 px-6 md:px-[50px] lg:px-[100px]">
+            <Suspense fallback={null}>
+              {children}
+            </Suspense>
+          </main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
