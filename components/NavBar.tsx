@@ -21,6 +21,20 @@ const NavBar = () => {
     setActiveLink(window.location.pathname);
   }, []);
 
+  // Disable body scroll when the mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      // Cleanup the overflow style on unmount
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
   const handleLinkClick = (path: string) => {
     setActiveLink(path);
     setIsMenuOpen(false);
