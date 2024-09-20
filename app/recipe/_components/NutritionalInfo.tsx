@@ -2,8 +2,12 @@
 
 import { CompositionType, NutritionalInfoType } from "@/types/types";
 import React, { useEffect, useState } from "react";
+import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Apple, Drumstick, Wheat, Droplet, Candy, Citrus } from "lucide-react"; // Lucide icons
 import NutritionalCard from "./NutritionalCard";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface NutritionalInfoProps {
     compositions: CompositionType[];
@@ -47,6 +51,23 @@ const NutritionalInfo = ({ compositions }: NutritionalInfoProps) => {
     if (!nutritionalInfo) return <p className="text-center py-4">No nutritional information available.</p>;
 
     const totalNutrients = nutritionalInfo.totalNutrients || {};
+
+    const protein = totalNutrients.PROCNT?.quantity || 0;
+    const carbs = totalNutrients.CHOCDF?.quantity || 0;
+    const fats = totalNutrients.FAT?.quantity || 0;
+
+    const chartData = {
+        labels: ["Protein", "Carbs", "Fats"],
+        datasets: [
+            {
+                label: "Nutrients (g)",
+                data: [protein, carbs, fats],
+                backgroundColor: ["#4F46E5", "#eab308", "#EF4444"], // Colors for protein, carbs, and fats
+                hoverBackgroundColor: ["#6366F1", "#FCD34D", "#F87171"],
+                borderWidth: 0,
+            },
+        ],
+    };
 
     return (
         <div className="p-3 rounded-lg bg-slate-100 dark:bg-gray-800 border border-slate-300 dark:border-slate-700">
@@ -116,6 +137,14 @@ const NutritionalInfo = ({ compositions }: NutritionalInfoProps) => {
                         iconColor="text-orange-600 dark:text-orange-300"
                     />
                 )}
+            </div>
+
+            {/* Donut Chart for Protein, Carbs, and Fats */}
+            <div className="mt-6 w-full sm:w-[70%] md:w-[50%] lg:w-[40%] xl:w-[30%]">
+                <h3 className="text-center text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
+                    Macronutrients Breakdown
+                </h3>
+                <Doughnut data={chartData} />
             </div>
         </div>
     );
