@@ -61,7 +61,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ onSubmit }) => {
 
             <button
                 type="submit"
-                className="self-start bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300"
+                className="self-start bg-custom-orange/80 text-white px-4 py-2 rounded-lg hover:bg-custom-orange transition duration-300"
             >
                 Post Comment
             </button>
