@@ -38,6 +38,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
+    "react-paginate": "^8.2.0",
     "sanitize-html": "^2.13.0",
     "svix": "^1.35.0",
     "swiper": "^11.1.12",

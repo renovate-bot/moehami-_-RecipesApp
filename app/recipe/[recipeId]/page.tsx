@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from 'react';
+import ReactPaginate from "react-paginate";
 
 import { RecipeType } from '@/types/types'; // Import the RecipeType for type safety
 import { generatePDF } from '@/lib/functions'; // Import a utility function to generate PDFs
@@ -101,6 +102,13 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
         }
     };
 
+    const [currentPage, setCurrentPage] = useState(0);
+    const commentsPerPage = 3;
+
+    const handlePageClick = (event: { selected: number }) => {
+        setCurrentPage(event.selected);
+    };
+
     return (
         <>
             <div className=''>
@@ -158,9 +166,32 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         <SectionHeader icon={MessageSquareQuoteIcon} title="Comments" count={recipe.comments.length} />
                         {recipe.comments.length > 0 ? (
                             <div className='flex flex-col gap-3'>
-                                {recipe.comments.map((comment) => (
+                                {recipe.comments.slice(currentPage * commentsPerPage, (currentPage + 1) * commentsPerPage).map((comment) => (
                                     <CommentCard key={comment.id} comment={comment} onDelete={handleDelete} /> // Render each comment
                                 ))}
+                                {/* Add pagination for comments */}
+                                <div className='flex justify-center py-4'>
+                                    <ReactPaginate
+                                        previousLabel={"← Previous"}
+                                        nextLabel={"Next →"}
+                                        breakLabel={"..."}
+                                        pageCount={Math.ceil(recipe.comments.length / commentsPerPage)}
+                                        marginPagesDisplayed={2}
+                                        pageRangeDisplayed={3}
+                                        onPageChange={handlePageClick}
+                                        containerClassName={"flex justify-center items-center gap-2 mt-5"}
+                                        pageClassName={"pagination-item"}
+                                        pageLinkClassName={"pagination-link"}
+                                        previousClassName={`pagination-item ${currentPage === 0 ? 'opacity-50 cursor-not-allowed' : ''}`} // Opacity if no previous
+                                        previousLinkClassName={"pagination-link"}
+                                        nextClassName={`pagination-item ${currentPage === Math.ceil(recipe.comments.length / commentsPerPage) - 1 ? 'opacity-50 cursor-not-allowed' : ''}`} // Opacity if no next
+                                        nextLinkClassName={"pagination-link"}
+                                        breakClassName={"pagination-item"}
+                                        breakLinkClassName={"pagination-link"}
+                                        activeClassName={"pagination-active"} // Class for active page
+                                        disabledClassName={"pagination-disabled"} // Class for disabled buttons
+                                    />
+                                </div>
                             </div>
                         ) : (
                             <p className='text-xs text-slate-400'>No comments</p> // Message if no comments are available

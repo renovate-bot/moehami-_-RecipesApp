@@ -171,6 +171,39 @@
   font-size: 1.25rem !important;
 }
 
+/* Pagination styles */
+.pagination-item {
+  display: inline-block;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination-link {
+  text-decoration: none;
+}
+
+/* Hover effect */
+.pagination-item:hover:not(.pagination-disabled) {
+  color: #fff;
+}
+
+/* Active page styles */
+.pagination-active {
+  background-color: var(--color-swiper-button-hover-bg); /* Active page background color */
+  color: white; /* Active text color */
+  border-color: #ff6600; /* Active border color */
+}
+
+/* Disabled buttons */
+.pagination-disabled {
+  color: #999; /* Text color for disabled */
+  cursor: not-allowed;
+  opacity: 0.5; /* Lower opacity for disabled buttons */
+}
+
 /* Mobile Adjustments */
 @media (max-width: 600px) {
   .swiper-container::before,
