@@ -1,49 +1,53 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
-import { RecipeType } from '@/types/types'
-import { generatePDF } from '@/lib/functions'
+import { RecipeType } from '@/types/types'; // Import the RecipeType for type safety
+import { generatePDF } from '@/lib/functions'; // Import a utility function to generate PDFs
 
-// components
-import SectionHeader from '@/components/SectionHeader'
-import MiniRecipeCard from '@/components/MiniRecipeCard'
-import CommentCard from '@/components/CommentCard'
-import RecipeHeader from '@/app/recipe/_components/RecipeHeader'
-import CommentForm from '@/components/CommentForm'
-import IngredientsToolsTabs from '@/components/IngredientsToolsTabs'
+// Components for the recipe page
+import SectionHeader from '@/components/SectionHeader'; 
+import MiniRecipeCard from '@/components/MiniRecipeCard'; 
+import CommentCard from '@/components/CommentCard'; 
+import RecipeHeader from '@/app/recipe/_components/RecipeHeader'; 
+import CommentForm from '@/components/CommentForm'; 
+import IngredientsToolsTabs from '@/components/IngredientsToolsTabs'; 
+import NutritionalInfo from '@/app/recipe/_components/NutritionalInfo';
+import ShareRecipe from '@/components/ShareRecipe'; 
 
-// Lucide React
-import { CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, WaypointsIcon, LeafIcon, OctagonAlert } from 'lucide-react'
+// Icons from Lucide React
+import { CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, WaypointsIcon, LeafIcon, OctagonAlert } from 'lucide-react';
 
-// Swiper
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { EffectCoverflow, Pagination, Mousewheel, Autoplay, Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
+// Swiper for creating a carousel effect
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCoverflow, Pagination, Mousewheel, Autoplay, Navigation } from 'swiper/modules'; // Import necessary Swiper modules
+import 'swiper/css'; 
+import 'swiper/css/navigation'; 
 import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-import 'swiper/css/effect-coverflow';
-import 'swiper/css/autoplay';
-import ShareRecipe from '@/components/ShareRecipe'
-import NutritionalInfo from '@/app/recipe/_components/NutritionalInfo'
-import { setSEOAttributes } from '@/lib/seo'
-import { useUser } from '@clerk/nextjs'
+import 'swiper/css/scrollbar'; 
+import 'swiper/css/effect-coverflow'; 
+import 'swiper/css/autoplay'; 
+import { setSEOAttributes } from '@/lib/seo'; 
 
+import { useUser } from '@clerk/nextjs'; 
+
+// RecipePage component definition
 const RecipePage = ({ params }: { params: { recipeId: string }}) => {
+    // State for storing the recipe and suggestions
+    const [recipe, setRecipe] = useState<RecipeType | null>(null); // Recipe details
+    const [suggestions, setSuggestions] = useState<RecipeType[] | null>([]); // Suggested recipes
+    const { user } = useUser(); // Get the currently authenticated user
 
-    const [recipe, setRecipe] = useState<RecipeType | null>(null)
-    const [suggestions, setSuggestions] = useState<RecipeType[] | null>([])
-    const { user } = useUser(); // Récupérer l'utilisateur connecté
-
+    // Effect for fetching recipe data when the component mounts or recipeId changes
     useEffect(() => {
         const fetchRecipe = async () => {
             try {
+                // Fetch recipe data from the API
                 const response = await fetch(`/api/recipe/${params.recipeId}`);
                 const data: RecipeType = await response.json();
-                setRecipe(data);
+                setRecipe(data); // Update state with the fetched recipe
 
-                // Set the title and meta description using the generic function
+                // Set the SEO attributes for the page
                 if (data.title) {
                     setSEOAttributes(
                         `Recipe Page - ${data.title}`,
@@ -51,31 +55,35 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                     );
                 }
 
-                // Fetch suggestions after recipe is fetched
+                // Fetch recipe suggestions based on the recipe's category
                 const suggestionsResponse = await fetch(`/api/suggestions/${data.category.id}/${params.recipeId}`);
                 const suggestionsData: RecipeType[] = await suggestionsResponse.json();
-                setSuggestions(suggestionsData);
+                setSuggestions(suggestionsData); // Update state with suggestions
                 
             } catch (error) {
-                console.error("Error fetching data:", error);
+                console.error("Error fetching data:", error); // Log any errors during fetching
             }
         };
 
-        fetchRecipe();
-    }, [params.recipeId]);
+        fetchRecipe(); // Call the fetch function
+    }, [params.recipeId]); // Dependency array ensures it runs when recipeId changes
 
+    // Handle adding a recipe to favorites
     const handleFavorite = () => {
-        window.alert("Fav !")
-    }
+        window.alert("Fav !"); // Placeholder alert for favorite action
+    };
 
+    // Handle deleting a comment (placeholder function)
     const handleDelete = () => {
-        window.alert("Delete !")
-    }
+        window.alert("Delete !"); // Placeholder alert for delete action
+    };
 
+    // Handle submitting a new comment
     const handleCommentSubmit = async (data: { text: string }) => {
-        if (!recipe || !data.text.trim()) return;
+        if (!recipe || !data.text.trim()) return; // Ensure recipe exists and text is valid
 
         try {
+            // Send a POST request to add the comment
             const response = await fetch(`/api/recipe/${params.recipeId}/comments`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -83,51 +91,50 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
             });
 
             if (response.ok) {
-                const updatedComments = await response.json();
-                setRecipe(prev => prev ? { ...prev, comments: updatedComments } : null); 
+                const updatedComments = await response.json(); // Get updated comments
+                setRecipe(prev => prev ? { ...prev, comments: updatedComments } : null); // Update recipe state with new comments
             } else {
-                console.error('Error post comment')
+                console.error('Error post comment'); // Log error if request fails
             }
         } catch (error) {
-            console.error("Error submitting comment:", error);
+            console.error("Error submitting comment:", error); // Log errors during submission
         }
-    }
+    };
 
     return (
         <>
             <div className=''>
                 {recipe ? (
                     <div id='recipe-detail'>
-                        {/* Recipe header */}
+                        {/* Recipe header component */}
                         <RecipeHeader recipe={recipe} generatePDF={() => generatePDF(recipe)} handleFavorite={handleFavorite} />    
 
                         <div className='flex gap-7 flex-col lg:flex-row'>
                             <div className='w-full lg:w-[50%]'>
-                                {/* Recipe instructions */}
+                                {/* Section for recipe instructions */}
                                 <SectionHeader icon={ListChecksIcon} title="Instructions" />
                                 <p className='font-thin'>{recipe.instructions}</p>
                             </div>
                             <div className='w-full lg:w-[50%]'>
-                                {/* Recipe ingredients */}
+                                {/* Section for recipe ingredients and tools */}
                                 <SectionHeader icon={CookingPotIcon} title="Ingredients and Tools" />
                                 <IngredientsToolsTabs compositions={recipe.compositions} toolsRecipe={recipe.toolsRecipe} />
                             </div>
                         </div>
 
-                        {/* Recipe steps */}
+                        {/* Section for recipe steps */}
                         <SectionHeader icon={WaypointsIcon} title="Steps" count={recipe.steps.length} />
                         {recipe.steps && recipe.steps.length > 0 ? (
                             <Swiper
-                                modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay, Navigation]}
+                                modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay, Navigation]} // Use Swiper modules
                                 grabCursor={true}
                                 mousewheel={true}
                                 slidesPerView={2}
                                 navigation
-                                // pagination={{clickable: true}}
                                 spaceBetween={20}
                                 breakpoints={{
                                     0: {
-                                        slidesPerView: 1
+                                        slidesPerView: 1 // Adjust slides per view based on screen size
                                     },
                                     900: {
                                         slidesPerView: 2
@@ -144,53 +151,54 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                             ))}
                             </Swiper>
                         ) : (
-                            <p className='text-xs text-slate-400'>No steps</p>
+                            <p className='text-xs text-slate-400'>No steps</p> // Message if no steps are available
                         )}
 
-                        {/* Recipe comments */}
+                        {/* Section for comments */}
                         <SectionHeader icon={MessageSquareQuoteIcon} title="Comments" count={recipe.comments.length} />
                         {recipe.comments.length > 0 ? (
                             <div className='flex flex-col gap-3'>
                                 {recipe.comments.map((comment) => (
-                                    <CommentCard key={comment.id} comment={comment} onDelete={handleDelete} />
+                                    <CommentCard key={comment.id} comment={comment} onDelete={handleDelete} /> // Render each comment
                                 ))}
                             </div>
                         ) : (
-                            <p className='text-xs text-slate-400'>No comments</p>
+                            <p className='text-xs text-slate-400'>No comments</p> // Message if no comments are available
                         )}
 
-                        {/* Add new comment */}
+                        {/* Section for adding a new comment */}
                         <SectionHeader icon={MessageSquareQuoteIcon} title="Add a Comment" />
                         {user ? (
-                            <CommentForm onSubmit={handleCommentSubmit} />
+                            <CommentForm onSubmit={handleCommentSubmit} /> // Show comment form if user is logged in
                         ) : (
                             <div className='p-6 bg-red-200 flex justify-center rounded-lg'>
-                                <p className='flex gap-2 items-center text-sm text-red-700'><OctagonAlert /> You have to sign in or sign up to comment on this recipe.</p>
+                                <p className='flex gap-2 items-center text-sm text-red-700'><OctagonAlert /> You have to sign in or sign up to comment on this recipe.</p> // Message if user is not logged in
                             </div>
                         )}
 
-                        {/* Share social networks */}
+                        {/* Section for sharing the recipe */}
                         <ShareRecipe recipeTitle={recipe.title} />
 
+                        {/* Nutritional info section */}
                         <SectionHeader icon={LeafIcon} title="Nutritional Infos" />
                         <NutritionalInfo compositions={recipe.compositions} />
 
-                        {/* Suggestions */}
+                        {/* Suggestions section */}
                         <div>
                             <SectionHeader icon={LightbulbIcon} title="Suggestions" />
                             <div className='flex flex-wrap gap-3'>
-                            {suggestions?.map((suggestion) => (
-                                <MiniRecipeCard key={suggestion.id} recipe={suggestion} />
-                            ))}
+                                {suggestions?.map((suggestion) => (
+                                    <MiniRecipeCard key={suggestion.id} recipe={suggestion} /> // Render each suggestion as a mini recipe card
+                                ))}
                             </div>
                         </div>
                     </div>
                 ) : (
-                    <p>Loading...</p>
+                    <p>Loading...</p> // Loading message while the recipe data is being fetched
                 )}
             </div>
         </>
     )
 }
 
-export default RecipePage
+export default RecipePage;
