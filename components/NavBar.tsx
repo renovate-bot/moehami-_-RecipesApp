@@ -81,7 +81,7 @@ const NavBar = () => {
 
         {/* Navigation Links with animation */}
         <div
-          className={`md:flex gap-8 absolute md:static top-[90px] h-screen left-0 w-full md:w-auto bg-slate-800/95 md:bg-transparent transition-transform duration-300 ease-in-out ${
+          className={`md:flex gap-8 absolute md:static top-[90px] h-screen sm:h-auto left-0 w-full md:w-auto bg-slate-800/95 md:bg-transparent transition-transform duration-300 ease-in-out ${
             isMenuOpen
               ? 'transform translate-x-0 opacity-100'
               : 'transform -translate-x-full opacity-0 md:opacity-100 md:translate-x-0'
@@ -90,28 +90,28 @@ const NavBar = () => {
           <div className='flex flex-col gap-4 justify-center items-center h-full md:flex-row md:gap-8 p-4 md:p-0'>
             <Link
               href='/recipe'
-              className={`block md:inline-block text-4xl font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/recipe' || pathname.startsWith('/recipe/') ? 'text-custom-orange' : 'text-white'}`}
+              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/recipe' || pathname.startsWith('/recipe/') ? 'text-custom-orange' : 'text-white'}`}
               onClick={() => handleLinkClick('/recipe')}
             >
               Recipes
             </Link>
             <Link
               href='/search'
-              className={`block md:inline-block text-4xl font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/search' ? 'text-custom-orange' : 'text-white'}`}
+              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/search' ? 'text-custom-orange' : 'text-white'}`}
               onClick={() => handleLinkClick('/search')}
             >
               Search
             </Link>
             <Link
               href='/blog'
-              className={`block md:inline-block text-4xl font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/blog' || pathname.startsWith('/blog/') ? 'text-custom-orange' : 'text-white'}`}
+              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/blog' || pathname.startsWith('/blog/') ? 'text-custom-orange' : 'text-white'}`}
               onClick={() => handleLinkClick('/blog')}
             >
               Blog
             </Link>
             <Link
               href='/favorite'
-              className={`block md:inline-block text-4xl font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/favorite' ? 'text-custom-orange' : 'text-white'}`}
+              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/favorite' ? 'text-custom-orange' : 'text-white'}`}
               onClick={() => handleLinkClick('/favorite')}
             >
               Favorites
