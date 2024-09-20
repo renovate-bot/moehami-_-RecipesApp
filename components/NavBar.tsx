@@ -87,7 +87,7 @@ const NavBar = () => {
       
 
         {/* Burger menu button (visible on small screens) */}
-        <div className='md:hidden flex items-center'>
+        <div className='md:hidden flex items-center z-[100]'>
           <button onClick={toggleMenu} className='text-white focus:outline-none'>
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -95,7 +95,7 @@ const NavBar = () => {
 
         {/* Navigation Links with animation */}
         <div
-          className={`md:flex gap-8 absolute md:static top-[90px] h-screen sm:h-auto left-0 w-full md:w-auto bg-slate-800/95 md:bg-transparent transition-transform duration-300 ease-in-out ${
+          className={`md:flex gap-8 fixed md:static top-0 h-screen sm:h-auto left-0 w-full md:w-auto bg-slate-800/95 md:bg-transparent transition-transform duration-300 ease-in-out ${
             isMenuOpen
               ? 'transform translate-x-0 opacity-100'
               : 'transform -translate-x-full opacity-0 md:opacity-100 md:translate-x-0'
