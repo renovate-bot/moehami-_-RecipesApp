@@ -162,13 +162,17 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                             <p className='text-xs text-slate-400'>No steps</p> // Message if no steps are available
                         )}
 
+                        {/* Nutritional info section */}
+                        <SectionHeader icon={LeafIcon} title="Nutritional Infos" />
+                        <NutritionalInfo compositions={recipe.compositions} />
+
                         {/* Section for comments */}
                         <SectionHeader icon={MessageSquareQuoteIcon} title="Comments" count={recipe.comments.length} />
                         {recipe.comments.length > 0 ? (
                             <div className='flex flex-col gap-3'>
                                 {recipe.comments.slice(currentPage * commentsPerPage, (currentPage + 1) * commentsPerPage).map((comment) => (
                                     <CommentCard key={comment.id} comment={comment} onDelete={handleDelete} /> // Render each comment
-                                ))}
+                                    ))}
                                 {/* Add pagination for comments */}
                                 <div className='flex justify-center py-4'>
                                     <ReactPaginate
@@ -195,14 +199,14 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                             </div>
                         ) : (
                             <p className='text-xs text-slate-400'>No comments</p> // Message if no comments are available
-                        )}
+                            )}
 
                         {/* Section for adding a new comment */}
                         <SectionHeader icon={MessageSquareQuoteIcon} title="Add a Comment" />
                         {user ? (
                             <CommentForm onSubmit={handleCommentSubmit} /> // Show comment form if user is logged in
-                        ) : (
-                            <div className='p-6 bg-red-200 flex justify-center rounded-lg'>
+                            ) : (
+                                <div className='p-6 bg-red-200 flex justify-center rounded-lg'>
                                 <p className='flex gap-2 items-center text-sm text-red-700'><OctagonAlert /> You have to sign in or sign up to comment on this recipe.</p>
                             </div>
                         )}
@@ -210,17 +214,13 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         {/* Section for sharing the recipe */}
                         <ShareRecipe recipeTitle={recipe.title} />
 
-                        {/* Nutritional info section */}
-                        <SectionHeader icon={LeafIcon} title="Nutritional Infos" />
-                        <NutritionalInfo compositions={recipe.compositions} />
-
                         {/* Suggestions section */}
                         <div>
                             <SectionHeader icon={LightbulbIcon} title="Suggestions" />
                             <div className='flex flex-wrap gap-3'>
                                 {suggestions?.map((suggestion) => (
                                     <MiniRecipeCard key={suggestion.id} recipe={suggestion} /> // Render each suggestion as a mini recipe card
-                                ))}
+                                    ))}
                             </div>
                         </div>
                     </div>
