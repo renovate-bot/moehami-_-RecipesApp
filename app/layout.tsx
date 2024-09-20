@@ -7,10 +7,6 @@ import { Suspense } from "react";
 
 import {
   ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
 } from '@clerk/nextjs'
 
 const geistSans = localFont({

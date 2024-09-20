@@ -5,7 +5,7 @@ model Comment {
     recipeId    String @db.ObjectId
     Recipe      Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
 
-    userId      String
+    userId      String?
     username    String?
 
     createdAt   DateTime @default(now())
