@@ -14,7 +14,7 @@ import CommentForm from '@/components/CommentForm'
 import IngredientsToolsTabs from '@/components/IngredientsToolsTabs'
 
 // Lucide React
-import { CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, UserCircleIcon, BookmarkCheckIcon, Trash2Icon, WaypointsIcon, DownloadIcon, HeartIcon, LeafIcon } from 'lucide-react'
+import { CookingPotIcon, LightbulbIcon, ListChecksIcon, MessageSquareQuoteIcon, WaypointsIcon, LeafIcon, OctagonAlert } from 'lucide-react'
 
 // Swiper
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -164,7 +164,9 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                         {user ? (
                             <CommentForm onSubmit={handleCommentSubmit} />
                         ) : (
-                            <p>You have to sign in or sign up to comment on this recipe.</p>
+                            <div className='p-6 bg-red-200 flex justify-center rounded-lg'>
+                                <p className='flex gap-2 items-center text-sm text-red-700'><OctagonAlert /> You have to sign in or sign up to comment on this recipe.</p>
+                            </div>
                         )}
 
                         {/* Share social networks */}

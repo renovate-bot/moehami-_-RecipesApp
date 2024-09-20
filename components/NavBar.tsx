@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import ThemeSwitcher from './ThemeSwitcher';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogIn, UserPlus } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 import { useAuth, useUser, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
@@ -95,14 +95,14 @@ const NavBar = () => {
               className="block md:inline-block text-lg font-medium text-white hover:text-custom-orange transition duration-300"
               onClick={() => handleLinkClick("/sign-in")}
             >
-              Sign In
+              <LogIn size={24} />
             </Link>
             <Link
               href="/sign-up"
               className="block md:inline-block text-lg font-medium text-white hover:text-custom-orange transition duration-300"
               onClick={() => handleLinkClick("/sign-up")}
             >
-              Sign Up
+              <UserPlus size={24} />
             </Link>
           </SignedOut>
 
