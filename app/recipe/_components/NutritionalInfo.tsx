@@ -140,7 +140,7 @@ const NutritionalInfo = ({ compositions }: NutritionalInfoProps) => {
             </div>
 
             {/* Donut Chart for Protein, Carbs, and Fats */}
-            <div className="mt-6 w-full sm:w-[70%] md:w-[50%] lg:w-[40%] xl:w-[30%]">
+            <div className="flex justify-center flex-col mt-6 w-full sm:w-[70%] md:w-[50%] lg:w-[40%] xl:w-[30%]">
                 <h3 className="text-center text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
                     Macronutrients Breakdown
                 </h3>
