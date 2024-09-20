@@ -172,8 +172,8 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                 {/* Add pagination for comments */}
                                 <div className='flex justify-center py-4'>
                                     <ReactPaginate
-                                        previousLabel={"← Previous"}
-                                        nextLabel={"Next →"}
+                                        previousLabel={"←"}
+                                        nextLabel={"→"}
                                         breakLabel={"..."}
                                         pageCount={Math.ceil(recipe.comments.length / commentsPerPage)}
                                         marginPagesDisplayed={2}
