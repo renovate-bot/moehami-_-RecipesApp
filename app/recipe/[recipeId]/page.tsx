@@ -172,7 +172,7 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                             <CommentForm onSubmit={handleCommentSubmit} /> // Show comment form if user is logged in
                         ) : (
                             <div className='p-6 bg-red-200 flex justify-center rounded-lg'>
-                                <p className='flex gap-2 items-center text-sm text-red-700'><OctagonAlert /> You have to sign in or sign up to comment on this recipe.</p> // Message if user is not logged in
+                                <p className='flex gap-2 items-center text-sm text-red-700'><OctagonAlert /> You have to sign in or sign up to comment on this recipe.</p>
                             </div>
                         )}
 
