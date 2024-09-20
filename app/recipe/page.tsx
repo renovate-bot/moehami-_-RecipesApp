@@ -49,8 +49,8 @@ const RecipesPage = () => {
     // Memoize Swiper slides to optimize performance and prevent re-renders
     const swiperSlides = useMemo(() => {
         return recipes.map((recipe) => (
-            <SwiperSlide className='' key={recipe.id}> // Create a Swiper slide for each recipe
-                <RecipeCard recipe={recipe} /> // Render RecipeCard component
+            <SwiperSlide className='' key={recipe.id}>
+                <RecipeCard recipe={recipe} />
             </SwiperSlide>
         ));
     }, [recipes]); // Recompute slides when recipes change

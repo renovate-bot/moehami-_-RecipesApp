@@ -1,4 +1,4 @@
-import { ArrowRightIcon, Clock11Icon, HeartPulseIcon, Leaf, LeafIcon, LeafyGreenIcon } from 'lucide-react';
+import { ArrowRightIcon, Clock11Icon, HeartPulseIcon, LeafIcon } from 'lucide-react';
 import StarRating from './DifficultyRating';
 import { useRouter } from 'next/navigation';
 import { RecipeType } from '@/types/types';
@@ -48,14 +48,12 @@ const RecipeCard = ({ recipe, className }: RecipeCardProps) => {
                                     {recipe.isVegan && (
                                         <div className='flex items-center' title='Vegan'>
                                             <LeafIcon strokeWidth={1} fill='#45a864c3'  className='w-6 h-6 text-black' />
-                                            {/* <LeafIcon className='w-6 h-6 text-green-700' /> */}
                                         </div>
                                     )}
 
                                     {recipe.isHealthy && (
                                         <div className='flex items-center' title='Healthy'>
                                             <HeartPulseIcon strokeWidth={1} fill='#ef074dbc'  className='w-6 h-6 text-black' />
-                                            {/* <HeartPulseIcon strokeWidth={1.5}  className='w-6 h-6 text-red-500' /> */}
                                         </div>
                                     )}
                                 </div>
