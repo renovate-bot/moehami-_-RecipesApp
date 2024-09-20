@@ -65,8 +65,27 @@ const NutritionalInfo = ({ compositions }: NutritionalInfoProps) => {
                 backgroundColor: ["#4F46E5", "#eab308", "#EF4444"], // Colors for protein, carbs, and fats
                 hoverBackgroundColor: ["#6366F1", "#FCD34D", "#F87171"],
                 borderWidth: 0,
+                
             },
         ],
+    };
+
+    const chartOptions = {
+        responsive: true,
+        cutout: "82%",
+        layout: {
+            padding: {
+                bottom: 10, // Increase the space between the doughnut chart and the legend
+            },
+        },
+        plugins: {
+            legend: {
+                position: "bottom", // Position the legend below the doughnut chart
+                labels: {
+                    padding: 20  
+                },
+            },
+        },
     };
 
     return (
@@ -144,7 +163,7 @@ const NutritionalInfo = ({ compositions }: NutritionalInfoProps) => {
                 <h3 className="text-center text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
                     Macronutrients Breakdown
                 </h3>
-                <Doughnut data={chartData} />
+                <Doughnut data={chartData} options={chartOptions} />
             </div>
         </div>
     );
