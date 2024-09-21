@@ -3,7 +3,6 @@
 import { CompositionType, NutritionalInfoType } from "@/types/types";
 import React, { useEffect, useState } from "react";
 import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels';
-import ChartDataLabelsContext from 'chartjs-plugin-datalabels';
 
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions, ChartData, Align } from "chart.js";
