@@ -2,12 +2,15 @@
 
 import { CompositionType, NutritionalInfoType } from "@/types/types";
 import React, { useEffect, useState } from "react";
+import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels';
+import ChartDataLabelsContext from 'chartjs-plugin-datalabels';
+
 import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions, ChartData, Align } from "chart.js";
 import { Apple, Drumstick, Wheat, Droplet, Candy, Citrus } from "lucide-react"; // Lucide icons
 import NutritionalCard from "./NutritionalCard";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 interface NutritionalInfoProps {
     compositions: CompositionType[];
@@ -56,7 +59,7 @@ const NutritionalInfo = ({ compositions }: NutritionalInfoProps) => {
     const carbs = totalNutrients.CHOCDF?.quantity || 0;
     const fats = totalNutrients.FAT?.quantity || 0;
 
-    const chartData = {
+    const chartData: ChartData<'doughnut'> = {
         labels: ["Protein", "Carbs", "Fats"],
         datasets: [
             {
@@ -71,11 +74,39 @@ const NutritionalInfo = ({ compositions }: NutritionalInfoProps) => {
     };
 
     const chartOptions = {
+        plugins: {
+            legend: {
+                display: false,
+            },
+            datalabels: {
+                color: '#fff',
+                font: {
+                    size: 16,
+                },
+                formatter: (value: number, context: Context) => {
+                    const label = context.chart.data.labels?.[context.dataIndex]; // Get label (Protein, Carbs, Fats)
+                    const quantity = value.toFixed(1); // Show value with one decimal
+    
+                    return `${label}\n${quantity}g`;
+                },
+                offset: 0,
+                backgroundColor: (context: Context) => {
+                    return 'rgba(0, 0, 0, 0.4)';
+                },
+                borderRadius: 4,
+                padding: 8, 
+                listeners: {
+                    enter: () => false,  // Disable labels on hover
+                    leave: () => false,    // Enable labels when not hovering
+                },
+            },
+        },
         responsive: true,
-        cutout: "82%",
+        cutout: "75%",
         layout: {
             padding: {
-                bottom: 10, // Increase the space between the doughnut chart and the legend
+                top: 10,
+                bottom: 10,
             },
         },
     };
