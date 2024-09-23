@@ -4,6 +4,28 @@ import { useAuth } from "@clerk/nextjs";
 import React, { useEffect, useState } from "react";
 import { RecipeType } from "@/types/types";
 
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import { format, parse, startOfWeek, getDay } from "date-fns";
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+
+import { enUS } from "date-fns/locale";
+import SectionHeader from "@/components/SectionHeader";
+
+import { CalendarDaysIcon, CalendarPlusIcon } from 'lucide-react';
+
+// Set up date-fns localizer for the calendar
+const locales = {
+    'en-US': enUS,
+};
+
+const localizer = dateFnsLocalizer({
+    format,
+    parse,
+    startOfWeek: () => startOfWeek(new Date(), { weekStartsOn: 1 }),
+    getDay,
+    locales,
+});
+
 interface MealPlanRecipe {
     recipe: RecipeType;
 }
@@ -19,6 +41,8 @@ const MealPlannerPage = () => {
     const [starters, setStarters] = useState<RecipeType[]>([]);
     const [mains, setMains] = useState<RecipeType[]>([]);
     const [desserts, setDesserts] = useState<RecipeType[]>([]);
+
+    const [events, setEvents] = useState<any[]>([]);
 
     useEffect(() => {
         if (!isLoaded || !userId) return;
@@ -50,6 +74,28 @@ const MealPlannerPage = () => {
         fetchRecipes();
     }, [isLoaded, userId]);
 
+    useEffect(() => {
+        if (mealPlans.length === 0) return;
+    
+        // Convert meal plans into calendar events for display
+        const events = mealPlans.map((mealPlan) => {
+            const start = new Date(mealPlan.date); // Start of the event (date)
+            const end = new Date(mealPlan.date); 
+        
+            const title = mealPlan.mealPlanRecipes
+                .map((mealPlanRecipe) => mealPlanRecipe.recipe.title)
+                .join(", ");
+        
+            return {
+                title,
+                start,
+                end,
+            };
+        });
+    
+        setEvents(events);
+    }, [mealPlans]);
+
     if (!isLoaded) {
         return <p>Loading...</p>;
     }
@@ -62,48 +108,69 @@ const MealPlannerPage = () => {
         <div className="meal-planner">
             <h1 className="text-4xl font-bold mb-5">Your Meal Planner</h1>
 
+            {/* <Calendar
+                localizer={localizer}
+                events={events}
+                defaultView="agenda"  // Set agenda view as default
+                views={['agenda']}  // Limit views to agenda only
+                style={{ height: 600, margin: "50px 0" }}
+                startAccessor="start"
+                endAccessor="end"
+                defaultDate={new Date()}
+            /> */}
+
             {/* Display Meal Plans for Logged-in User */}
             <div className="meal-plans mb-8">
-                <h2 className="text-2xl font-bold mb-4">Meal Plans</h2>
+                <SectionHeader icon={CalendarDaysIcon} title='Meal Plans' />
+                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
                 {mealPlans.length > 0 ? (
                     mealPlans.map((mealPlan, index) => (
-                        <div key={index} className="mb-4 p-4 border rounded-lg bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700">
-                            <h3 className="text-xl font-semibold">
-                                Date: {new Date(mealPlan.date).toLocaleDateString()}
-                            </h3>
-                            <div className="mt-2 flex gap-2">
-                                <h4 className="font-semibold">-- Starter : </h4>
-                                {mealPlan.mealPlanRecipes
-                                    .filter(recipe => recipe.recipe.category.name === 'Starter')
-                                    .map((mealPlanRecipe, recipeIndex) => (
-                                        <p key={recipeIndex}>{mealPlanRecipe.recipe.title}</p>
-                                    ))}
+                        <div className="rounded-lg bg-white dark:bg-slate-800 shadow-md" key={index}>
+                            <div className='flex flex-col md:flex-row justify-between bg-slate-200 dark:bg-slate-600 p-6'>
+                                <h3 className="text-xl text-slate-800 dark:text-white">
+                                    <p className='text-sm'>{new Date(mealPlan.date).toLocaleDateString('en-US', { weekday: 'long' })}</p>
+                                    <p>{new Date(mealPlan.date).toLocaleDateString()}</p>
+                                </h3>
+                                <div className='my-3'>
+                                    <button className='px-3 py-1 bg-red-500 rounded-lg text-white'>del</button>
+                                </div>
                             </div>
-                            <div className="mt-2 flex gap-2">
-                                <h4 className="font-semibold">-- Main : </h4>
-                                {mealPlan.mealPlanRecipes
-                                    .filter(recipe => recipe.recipe.category.name === 'Main')
-                                    .map((mealPlanRecipe, recipeIndex) => (
-                                        <p key={recipeIndex}>{mealPlanRecipe.recipe.title}</p>
-                                    ))}
-                            </div>
-                            <div className="mt-2 flex gap-2">
-                                <h4 className="font-semibold">-- Dessert : </h4>
-                                {mealPlan.mealPlanRecipes
-                                    .filter(recipe => recipe.recipe.category.name === 'Dessert')
-                                    .map((mealPlanRecipe, recipeIndex) => (
-                                        <p key={recipeIndex}>{mealPlanRecipe.recipe.title}</p>
-                                    ))}
+                            <div className='p-6'>
+                                <div className="">
+                                    <h4 className="font-semibold text-gray-700 dark:text-white">Starter</h4>
+                                    {mealPlan.mealPlanRecipes
+                                        .filter((recipe: MealPlanRecipe) => recipe.recipe.category.name === 'Starter')
+                                        .map((mealPlanRecipe, recipeIndex) => (
+                                            <p key={recipeIndex} className="text-gray-600 dark:text-white">{mealPlanRecipe.recipe.title}</p>
+                                        ))}
+                                </div>
+                                <div className="mt-4">
+                                    <h4 className="font-semibold text-gray-700 dark:text-white">Main</h4>
+                                    {mealPlan.mealPlanRecipes
+                                        .filter((recipe: MealPlanRecipe) => recipe.recipe.category.name === 'Main')
+                                        .map((mealPlanRecipe, recipeIndex) => (
+                                            <p key={recipeIndex} className="text-gray-600 dark:text-white">{mealPlanRecipe.recipe.title}</p>
+                                        ))}
+                                </div>
+                                <div className="mt-4">
+                                    <h4 className="font-semibold text-gray-700 dark:text-white">Dessert</h4>
+                                    {mealPlan.mealPlanRecipes
+                                        .filter((recipe: MealPlanRecipe) => recipe.recipe.category.name === 'Dessert')
+                                        .map((mealPlanRecipe, recipeIndex) => (
+                                            <p key={recipeIndex} className="text-gray-600 dark:text-white">{mealPlanRecipe.recipe.title}</p>
+                                        ))}
+                                </div>
                             </div>
                         </div>
                     ))
                 ) : (
                     <p>No meal plans found for you.</p>
                 )}
+                </div>
             </div>
 
             {/* Form for Adding New Meal Plans */}
-            <h2 className="text-2xl font-bold mb-4">Add a New Meal Plan</h2>
+            <SectionHeader icon={CalendarPlusIcon} title='Add a New Meal Plan' />
             <MealPlanForm 
                 starters={starters} 
                 mains={mains} 

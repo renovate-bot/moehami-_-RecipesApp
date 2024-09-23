@@ -135,7 +135,7 @@ const NavBar = () => {
           
             <Link
               href="/mealplanner"
-              className="block md:inline-block text-4xl sm:text-lg font-medium text-white hover:text-custom-orange transition duration-300"
+              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/mealplanner' ? 'text-custom-orange' : 'text-white'}`}
               onClick={() => handleLinkClick("/mealplanner")}
               >
                 Meal Planner
