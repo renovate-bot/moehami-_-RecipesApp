@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels';
 
 import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions, ChartData, Align } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData } from "chart.js";
 import { Apple, Drumstick, Wheat, Droplet, Candy, Citrus } from "lucide-react"; // Lucide icons
 import NutritionalCard from "./NutritionalCard";
 
@@ -95,8 +95,8 @@ const NutritionalInfo = ({ compositions }: NutritionalInfoProps) => {
                 borderRadius: 4,
                 padding: 8, 
                 listeners: {
-                    enter: () => false,  // Disable labels on hover
-                    leave: () => false,    // Enable labels when not hovering
+                    enter: () => false, 
+                    leave: () => false, 
                 },
             },
         },
