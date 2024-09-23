@@ -1,0 +1,9 @@
+model MealPlanRecipe {
+    id         String @id @default(auto()) @map("_id") @db.ObjectId
+    
+    mealPlanId String   @db.ObjectId
+    mealPlan   MealPlan @relation(fields: [mealPlanId], references: [id], onDelete: Cascade)
+    
+    recipeId   String   @db.ObjectId
+    recipe     Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+}
