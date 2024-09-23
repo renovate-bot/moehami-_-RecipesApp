@@ -1,6 +1,5 @@
 import React from 'react';
-import { Facebook, Instagram, LinkIcon } from 'lucide-react';
-import { useRouter } from 'next/router';
+import { Facebook, Instagram } from 'lucide-react';
 
 interface ShareRecipeProps {
     recipeTitle: string;

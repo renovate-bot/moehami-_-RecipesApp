@@ -1,9 +1,7 @@
-import { ArrowRightIcon, Clock11Icon } from 'lucide-react';
-import StarRating from './DifficultyRating';
+import { ArrowRightIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { RecipeType } from '@/types/types';
 import Image from 'next/image';
-import CategoryBadge from './CategoryBadge';
 
 const MiniRecipeCard = ({ recipe }: { recipe: RecipeType }) => {
 
