@@ -77,7 +77,7 @@ const NavBar = () => {
 
         {/* Show User Button and Sign Out if signed in */}
         <SignedIn>
-          <UserButton afterSignOutUrl="/" />
+          <UserButton afterSignOutUrl="/" />  
         </SignedIn>
 
         {/* Theme Switcher visible in mobile and desktop */}
@@ -130,6 +130,17 @@ const NavBar = () => {
             >
               Favorites
             </Link>
+
+            <SignedIn>
+          
+            <Link
+              href="/mealplanner"
+              className="block md:inline-block text-lg font-medium text-white hover:text-custom-orange transition duration-300"
+              onClick={() => handleLinkClick("/mealplanner")}
+              >
+                Meal Planner
+            </Link>
+          </SignedIn>
           </div>
         </div>
       </div>
