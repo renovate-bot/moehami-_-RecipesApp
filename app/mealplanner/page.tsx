@@ -26,6 +26,7 @@ const MealPlannerPage = () => {
         const fetchMealPlans = async () => {
             const res = await fetch(`/api/mealplan?userId=${userId}`);
             const data = await res.json();
+
             setMealPlans(data);
         };
 
@@ -122,6 +123,20 @@ const MealPlanForm = ({ starters, mains, desserts, userId, setMealPlans }: { sta
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        const res = await fetch(`/api/mealplan?userId=${userId}`);
+        const existingMealPlans = await res.json();
+
+        const formattedInputDate = new Date(date).toISOString().split('T')[0];
+        const mealPlanForDate = existingMealPlans.find((mealPlan: MealPlan) => {
+            const formattedMealPlanDate = new Date(mealPlan.date).toISOString().split('T')[0];
+            return formattedMealPlanDate === formattedInputDate;
+        });
+
+        if (mealPlanForDate) {
+            alert("A meal plan already exists for this date. Please select a different date.");
+            return;
+        }
 
         const newMealPlan = {
             date,
