@@ -2,7 +2,6 @@ import { db } from "@/lib/db";
 import { getAuth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from 'next/server';
 
-// GET method to fetch meal plans for a logged-in user
 export async function GET(req: NextRequest) {
     const { userId } = getAuth(req);
 
@@ -15,7 +14,15 @@ export async function GET(req: NextRequest) {
         const mealPlans = await db.mealPlan.findMany({
             where: { userId },
             include: {
-                recipes: true,
+                mealPlanRecipes: {
+                    include: {
+                        recipe: {
+                            include: {
+                                category: true
+                            }
+                        }
+                    }
+                }
             },
         });
 
@@ -36,18 +43,47 @@ export async function POST(req: NextRequest) {
 
     const { date, starterId, mainId, dessertId } = await req.json();
 
-    if (!date || !starterId || !mainId || !dessertId) {
-        return NextResponse.json({ message: "All fields are required" }, { status: 400 });
+    if (!date || (!starterId && !mainId && !dessertId)) {
+        return NextResponse.json({ message: "Date and at least one recipe ID are required" }, { status: 400 });
     }
 
     try {
         // Create a new meal plan for the logged-in user
         const newMealPlan = await db.mealPlan.create({
-        data: {
-            date: new Date(date),
-            userId,
-        },
+            data: {
+                date: new Date(date),
+                userId,
+            },
         });
+
+        // Prepare an array of MealPlanRecipe entries
+        const mealPlanRecipes = [];
+
+        if (starterId) {
+            mealPlanRecipes.push({
+                mealPlanId: newMealPlan.id,
+                recipeId: starterId,
+            });
+        }
+        if (mainId) {
+            mealPlanRecipes.push({
+                mealPlanId: newMealPlan.id,
+                recipeId: mainId,
+            });
+        }
+        if (dessertId) {
+            mealPlanRecipes.push({
+                mealPlanId: newMealPlan.id,
+                recipeId: dessertId,
+            });
+        }
+
+        // Create MealPlanRecipe entries
+        await Promise.all(mealPlanRecipes.map(recipe => {
+            return db.mealPlanRecipe.create({
+                data: recipe,
+            });
+        }));
 
         return NextResponse.json(newMealPlan, { status: 201 });
     } catch (error) {

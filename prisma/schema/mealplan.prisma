@@ -1,8 +1,8 @@
 model MealPlan {
-    id        String          @id @default(auto()) @map("_id") @db.ObjectId
-    date      DateTime
-    userId    String
-    createdAt DateTime        @default(now())
+    id                  String          @id @default(auto()) @map("_id") @db.ObjectId
+    date                DateTime
+    userId              String
+    createdAt           DateTime        @default(now())
 
-    recipes   MealPlanRecipe[] 
+    mealPlanRecipes     MealPlanRecipe[] 
 }
