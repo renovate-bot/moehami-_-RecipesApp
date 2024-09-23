@@ -8,6 +8,8 @@ import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
+import Image from "next/image";
+
 import { enUS } from "date-fns/locale";
 import SectionHeader from "@/components/SectionHeader";
 
@@ -135,29 +137,35 @@ const MealPlannerPage = () => {
                                     <button className='px-3 py-1 bg-red-500 rounded-lg text-white'>del</button>
                                 </div>
                             </div>
-                            <div className='p-6'>
-                                <div className="">
-                                    <h4 className="font-semibold text-gray-700 dark:text-white">Starter</h4>
-                                    {mealPlan.mealPlanRecipes
+                            <div className='p-6 flex flex-col gap-3'>
+                                <div className="border border-slate-200 dark:border-slate-600 rounded-md p-3 shadow-md">
+                                {mealPlan.mealPlanRecipes
                                         .filter((recipe: MealPlanRecipe) => recipe.recipe.category.name === 'Starter')
                                         .map((mealPlanRecipe, recipeIndex) => (
-                                            <p key={recipeIndex} className="text-gray-600 dark:text-white">{mealPlanRecipe.recipe.title}</p>
+                                            <div className='flex gap-6 items-center'>
+                                                <Image alt={mealPlanRecipe.recipe.title} src={mealPlanRecipe.recipe.image} width={100} height={100} className='object-cover h-[50px] w-[50px] rounded-lg' />
+                                                <p key={recipeIndex} className="text-gray-600 dark:text-white">{mealPlanRecipe.recipe.title}</p>
+                                            </div>
                                         ))}
                                 </div>
-                                <div className="mt-4">
-                                    <h4 className="font-semibold text-gray-700 dark:text-white">Main</h4>
-                                    {mealPlan.mealPlanRecipes
+                                <div className="border border-slate-200 dark:border-slate-600 rounded-md p-3 shadow-md">
+                                {mealPlan.mealPlanRecipes
                                         .filter((recipe: MealPlanRecipe) => recipe.recipe.category.name === 'Main')
                                         .map((mealPlanRecipe, recipeIndex) => (
-                                            <p key={recipeIndex} className="text-gray-600 dark:text-white">{mealPlanRecipe.recipe.title}</p>
+                                            <div className='flex gap-6 items-center'>
+                                            <Image alt={mealPlanRecipe.recipe.title} src={mealPlanRecipe.recipe.image} width={100} height={100} className='object-cover h-[50px] w-[50px] rounded-lg' />
+                                                <p key={recipeIndex} className="text-gray-600 dark:text-white">{mealPlanRecipe.recipe.title}</p>
+                                            </div>
                                         ))}
                                 </div>
-                                <div className="mt-4">
-                                    <h4 className="font-semibold text-gray-700 dark:text-white">Dessert</h4>
+                                <div className="border border-slate-200 dark:border-slate-600 rounded-md p-3 shadow-md">
                                     {mealPlan.mealPlanRecipes
                                         .filter((recipe: MealPlanRecipe) => recipe.recipe.category.name === 'Dessert')
                                         .map((mealPlanRecipe, recipeIndex) => (
-                                            <p key={recipeIndex} className="text-gray-600 dark:text-white">{mealPlanRecipe.recipe.title}</p>
+                                            <div className='flex gap-6 items-center'>
+                                            <Image alt={mealPlanRecipe.recipe.title} src={mealPlanRecipe.recipe.image} width={100} height={100} className='object-cover h-[50px] w-[50px] rounded-lg' />
+                                                <p key={recipeIndex} className="text-gray-600 dark:text-white">{mealPlanRecipe.recipe.title}</p>
+                                            </div>
                                         ))}
                                 </div>
                             </div>
@@ -245,7 +253,7 @@ const MealPlanForm = ({ starters, mains, desserts, userId, setMealPlans }: { sta
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className="w-full border p-2 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
+                    className="w-full border p-4 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
                     required
                 />
             </label>
@@ -255,7 +263,7 @@ const MealPlanForm = ({ starters, mains, desserts, userId, setMealPlans }: { sta
                 <select
                     value={starter}
                     onChange={(e) => setStarter(e.target.value)}
-                    className="w-full border p-2 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
+                    className="w-full border p-4 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
                 >
                     <option value="">Select Starter</option>
                     {starters.map((recipe) => (
@@ -271,7 +279,7 @@ const MealPlanForm = ({ starters, mains, desserts, userId, setMealPlans }: { sta
                 <select
                     value={main}
                     onChange={(e) => setMain(e.target.value)}
-                    className="w-full border p-2 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
+                    className="w-full border p-4 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
                 >
                     <option value="">Select Main</option>
                     {mains.map((recipe) => (
@@ -287,7 +295,7 @@ const MealPlanForm = ({ starters, mains, desserts, userId, setMealPlans }: { sta
                 <select
                     value={dessert}
                     onChange={(e) => setDessert(e.target.value)}
-                    className="w-full border p-2 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
+                    className="w-full border p-4 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
                 >
                     <option value="">Select Dessert</option>
                     {desserts.map((recipe) => (
