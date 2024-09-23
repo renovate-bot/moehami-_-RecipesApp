@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ArticleWithTagsAndComments } from '@/types/types'
 import ArticleCard from '@/components/ArticleCard'
 
