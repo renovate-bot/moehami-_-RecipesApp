@@ -1,3 +1,4 @@
+import { db } from "@/lib/db";
 import { getAuth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -11,13 +12,11 @@ export async function GET(req: NextRequest) {
 
     try {
         // Fetch meal plans for the logged-in user
-        const mealPlans = await prisma.mealPlan.findMany({
-        where: { userId },
-        include: {
-            starter: true,
-            main: true,
-            dessert: true,
-        },
+        const mealPlans = await db.mealPlan.findMany({
+            where: { userId },
+            include: {
+                recipes: true,
+            },
         });
 
         return NextResponse.json(mealPlans, { status: 200 });
@@ -43,12 +42,9 @@ export async function POST(req: NextRequest) {
 
     try {
         // Create a new meal plan for the logged-in user
-        const newMealPlan = await prisma.mealPlan.create({
+        const newMealPlan = await db.mealPlan.create({
         data: {
             date: new Date(date),
-            starterId,
-            mainId,
-            dessertId,
             userId,
         },
         });
