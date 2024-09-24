@@ -12,7 +12,7 @@ import MiniRecipeCard from '@/components/MiniRecipeCard';
 import CommentCard from '@/components/CommentCard'; 
 import RecipeHeader from '@/app/recipe/_components/RecipeHeader'; 
 import CommentForm from '@/components/CommentForm'; 
-import IngredientsToolsTabs from '@/components/IngredientsToolsTabs'; 
+import IngredientsToolsTabs from '@/app/recipe/_components/IngredientsToolsTabs'; 
 import NutritionalInfo from '@/app/recipe/_components/NutritionalInfo';
 import ShareRecipe from '@/components/ShareRecipe'; 
 
