@@ -6,4 +6,7 @@ model MealPlanRecipe {
     
     recipeId   String   @db.ObjectId
     recipe     Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+    mealType   String
+    order      Int
 }
