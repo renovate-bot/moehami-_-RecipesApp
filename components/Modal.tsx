@@ -15,13 +15,19 @@ export const Modal = ({ onSubmit, onClose }: ModalProps) => {
         // Fetch all available recipes from the API
         fetch('/api/recipe')
             .then((response) => response.json())
-            .then((data) => setRecipes(data));
+            .then((data: RecipeType[]) => {
+                // Sort the recipes by name before setting the state
+                const sortedData = data.sort((a: RecipeType, b: RecipeType) => {
+                    return a.title.localeCompare(b.title); // Alphabetical order by name
+                });
+                setRecipes(sortedData);
+            });
     }, []);
 
     return (
-        <div className="modal fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-6 rounded-lg">
-                <h3 className="text-lg font-semibold mb-4">Add Recipe</h3>
+        <div className="modal p-12 fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+            <div className="bg-white/90 p-6 rounded-lg w-full">
+                <h3 className="text-slate-800 text-lg font-semibold mb-4">Add Recipe</h3>
                 <ul>
                     {recipes.map((recipe) => (
                         <li key={recipe.id} className="mb-2">
