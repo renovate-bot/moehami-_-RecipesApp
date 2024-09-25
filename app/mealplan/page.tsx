@@ -2,7 +2,7 @@
 
 import { MealPlan, RecipeType } from '@/types/types';
 import { useAuth } from '@clerk/nextjs';
-import { CroissantIcon, EggFriedIcon, HamIcon } from 'lucide-react';
+import { CroissantIcon, EggFriedIcon, HamIcon, Trash2Icon } from 'lucide-react'; // Trash icon for delete
 import React, { useEffect, useState } from 'react';
 
 const MealPlanPage = () => {
@@ -35,6 +35,19 @@ const MealPlanPage = () => {
         }
     };
 
+    // Function to handle deletion of meal plans
+    const handleDelete = async (mealPlanId: string) => {
+        
+        try {
+            await fetch(`/api/mealplan?mealPlanId=${mealPlanId}`, {
+                method: 'DELETE',
+            });
+            setMealPlans((prev) => prev.filter((mealPlan) => mealPlan.id !== mealPlanId)); // Update state
+        } catch (error) {
+            console.error('Error deleting meal plan:', error);
+        }
+    };
+
     return (
         <section className="min-h-screen bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-all duration-300">
             <div className="container mx-auto p-0">
@@ -53,7 +66,16 @@ const MealPlanPage = () => {
                         });
 
                         return (
-                            <div key={mealPlan.id} className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                            <div key={mealPlan.id} className="relative bg-white dark:bg-slate-800 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                                {/* Delete Button */}
+                                <button
+                                    onClick={() => handleDelete(mealPlan.id)}
+                                    className="absolute top-3 right-3 p-1 text-red-500 hover:text-red-700 rounded-full"
+                                    aria-label="Delete meal plan"
+                                >
+                                    <Trash2Icon className="w-5 h-5" />
+                                </button>
+
                                 <h2 className="text-2xl font-semibold mb-6">
                                     {new Date(mealPlan.date).toLocaleDateString()}
                                 </h2>
