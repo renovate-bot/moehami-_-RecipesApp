@@ -66,7 +66,7 @@ const MealPlanner = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-6  dark:bg-gray-800">
+        <div className="mx-auto p-6 dark:bg-gray-800">
             <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
                 Meal Planner
             </h1>
@@ -97,7 +97,7 @@ const MealPlanner = () => {
 
             <button
                 onClick={validateMealPlan}
-                className="mt-4 px-4 py-2 bg-green-500 text-white rounded"
+                className="mt-4 px-4 py-2 bg-green-700 hover:bg-green-800 transition duration-300 text-white rounded"
             >
                 Validate Meal Plan
             </button>
