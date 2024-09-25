@@ -4,6 +4,7 @@ import { MealPlan, RecipeType } from '@/types/types';
 import { useAuth } from '@clerk/nextjs';
 import { CroissantIcon, EggFriedIcon, HamIcon, Trash2Icon } from 'lucide-react'; // Trash icon for delete
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 const MealPlanPage = () => {
     const [mealPlans, setMealPlans] = useState<MealPlan[]>([]);
@@ -49,7 +50,7 @@ const MealPlanPage = () => {
     };
 
     return (
-        <section className="min-h-screen bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-all duration-300">
+        <section className="min-h-screen dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-all duration-300">
             <div className="container mx-auto p-0">
                 <h1 className="text-3xl font-bold mb-6">Your Meal Plans</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
@@ -70,7 +71,7 @@ const MealPlanPage = () => {
                                 {/* Delete Button */}
                                 <button
                                     onClick={() => handleDelete(mealPlan.id)}
-                                    className="absolute top-3 right-3 p-1 text-red-500 hover:text-red-700 rounded-full"
+                                    className="absolute top-0 right-0 p-3 bg-slate-700 text-red-500 hover:text-red-600 rounded-tr-lg"
                                     aria-label="Delete meal plan"
                                 >
                                     <Trash2Icon className="w-5 h-5" />
@@ -87,11 +88,16 @@ const MealPlanPage = () => {
                                         </h3>
                                         <ul className="space-y-2">
                                             {groupedRecipes[mealType].map((recipe) => (
-                                                <li key={recipe.id} className="bg-slate-200 dark:bg-slate-700 rounded-md p-3">
-                                                    <p className="font-medium">{recipe.title}</p>
-                                                    <p className="text-sm text-slate-500 dark:text-slate-400">
-                                                        Preparation Time: {recipe.preparationTime} mins
-                                                    </p>
+                                                <li key={recipe.id} className="flex items-center justify-between bg-slate-200 dark:bg-slate-700 rounded-md p-3">
+                                                    <div>
+                                                        <p className="font-medium">{recipe.title}</p>
+                                                        <p className="text-sm text-slate-500 dark:text-slate-400">
+                                                            Preparation Time: {recipe.preparationTime} mins
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <Image src={recipe.image} width={100} height={100} alt={recipe.title} className='h-[50px] w-[50px] rounded-lg object-cover' />
+                                                    </div>
                                                 </li>
                                             ))}
                                         </ul>
