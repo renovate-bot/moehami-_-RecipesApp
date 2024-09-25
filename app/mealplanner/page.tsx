@@ -2,6 +2,7 @@
 
 import MealSection from '@/components/MealSection';
 import { useAuth } from '@clerk/nextjs';
+import Link from 'next/link';
 import React, { useState, useCallback } from 'react';
 
 const MealPlanner = () => {
@@ -70,6 +71,15 @@ const MealPlanner = () => {
             <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
                 Meal Planner
             </h1>
+
+            <div className="my-5">
+                <Link
+                    href="/mealplan"
+                    className="inline-block px-6 py-3 bg-custom-orange text-white font-semibold rounded-lg shadow-md hover:bg-custom-orange/90 transition-all duration-300 ease-in-out"
+                >
+                    My Meal Plans
+                </Link>
+            </div>
 
             <div className="mb-4">
                 <label htmlFor="date" className="block text-lg font-medium text-gray-700 dark:text-gray-300">
