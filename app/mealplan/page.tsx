@@ -2,7 +2,7 @@
 
 import { MealPlan, RecipeType } from '@/types/types';
 import { useAuth } from '@clerk/nextjs';
-import { CroissantIcon, EggFriedIcon, HamIcon, Trash2Icon } from 'lucide-react'; // Trash icon for delete
+import { Clock10Icon, CroissantIcon, EggFriedIcon, HamIcon, Trash2Icon } from 'lucide-react'; // Trash icon for delete
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 
@@ -71,7 +71,7 @@ const MealPlanPage = () => {
                                 {/* Delete Button */}
                                 <button
                                     onClick={() => handleDelete(mealPlan.id)}
-                                    className="absolute top-0 right-0 p-3 bg-slate-700 text-red-500 hover:text-red-600 rounded-tr-lg"
+                                    className="absolute top-0 right-0 p-3 dark:bg-slate-700 text-red-500 hover:text-red-600 rounded-tr-lg"
                                     aria-label="Delete meal plan"
                                 >
                                     <Trash2Icon className="w-5 h-5" />
@@ -91,8 +91,8 @@ const MealPlanPage = () => {
                                                 <li key={recipe.id} className="flex items-center justify-between bg-slate-200 dark:bg-slate-700 rounded-md p-3">
                                                     <div>
                                                         <p className="font-medium">{recipe.title}</p>
-                                                        <p className="text-sm text-slate-500 dark:text-slate-400">
-                                                            Preparation Time: {recipe.preparationTime} mins
+                                                        <p className="flex gap-2 items-center text-sm text-slate-500 dark:text-slate-400">
+                                                            <Clock10Icon className='w-4 h-4' /> <span>{recipe.preparationTime} mins</span>
                                                         </p>
                                                     </div>
                                                     <div>
