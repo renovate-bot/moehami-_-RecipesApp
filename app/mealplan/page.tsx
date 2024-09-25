@@ -2,6 +2,7 @@
 
 import { MealPlan, RecipeType } from '@/types/types';
 import { useAuth } from '@clerk/nextjs';
+import { CroissantIcon, EggFriedIcon, HamIcon } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
 const MealPlanPage = () => {
@@ -19,6 +20,20 @@ const MealPlanPage = () => {
             fetchMealPlans();
         }
     }, [userId]);
+
+    // Helper function to return the appropriate icon based on meal type
+    const getMealTypeIcon = (mealType: string) => {
+        switch (mealType.toLowerCase()) {
+        case "breakfast":
+            return <CroissantIcon className="w-6 h-6 text-custom_orange inline-block mr-2" />;
+        case "lunch":
+            return <HamIcon className="w-6 h-6 text-custom_orange inline-block mr-2" />;
+        case "dinner":
+            return <EggFriedIcon className="w-6 h-6 text-custom_orange inline-block mr-2" />;
+        default:
+            return null; // No icon for unknown meal types
+        }
+    };
 
     return (
         <section className="min-h-screen bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-all duration-300">
@@ -44,8 +59,9 @@ const MealPlanPage = () => {
                                 </h2>
                                 {Object.keys(groupedRecipes).map((mealType) => (
                                     <div key={mealType} className="mb-5">
-                                        <h3 className="text-xl font-bold text-custom_orange mb-3">
-                                            {mealType}
+                                        <h3 className="text-xl flex items-center gap-2 font-bold text-custom_orange mb-3">
+                                            {getMealTypeIcon(mealType)}
+                                            <span>{mealType}</span>
                                         </h3>
                                         <ul className="space-y-2">
                                             {groupedRecipes[mealType].map((recipe) => (
