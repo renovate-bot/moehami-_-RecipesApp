@@ -12,6 +12,7 @@ interface ModalProps {
 export const Modal = ({ onSubmit, onClose }: ModalProps) => {
     const [recipes, setRecipes] = useState<RecipeType[]>([]);
     const [selectedRecipes, setSelectedRecipes] = useState<RecipeType[]>([]);
+    const [isVisible, setIsVisible] = useState(false); // State to handle animation
 
     useEffect(() => {
         // Fetch all available recipes from the API
@@ -23,6 +24,8 @@ export const Modal = ({ onSubmit, onClose }: ModalProps) => {
             );
             setRecipes(sortedData);
         });
+
+        setIsVisible(true);
     }, []);
 
     const toggleSelection = (recipe: RecipeType) => {
@@ -37,12 +40,21 @@ export const Modal = ({ onSubmit, onClose }: ModalProps) => {
 
     const handleSubmit = () => {
         onSubmit(selectedRecipes); // Pass selected recipes to parent component
-        onClose(); // Close the modal
+        setIsVisible(false);
+        setTimeout(onClose, 300); 
+    };
+
+    const handleClose = () => {
+        setIsVisible(false); // Hide modal before closing
+        setTimeout(onClose, 300); // Delay the actual close for animation
     };
 
     return (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-60 flex justify-center items-center p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg w-full max-w-lg p-6 shadow-lg">
+            <div
+                className={`bg-white dark:bg-gray-800 rounded-lg w-full max-w-lg p-6 shadow-lg transform transition-all duration-300 ease-out
+                ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+            >
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                     Select Recipes
                 </h3>
@@ -74,7 +86,7 @@ export const Modal = ({ onSubmit, onClose }: ModalProps) => {
                 {/* Action buttons */}
                 <div className="mt-6 flex justify-end space-x-3">
                     <button
-                        onClick={onClose}
+                        onClick={handleClose}
                         className="px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-300"
                     >
                         Cancel
