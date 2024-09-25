@@ -16,7 +16,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { Modal } from './Modal';
 import { useAuth } from '@clerk/nextjs';
-import { Plus, Trash2 } from 'lucide-react'; // Importing icons from Lucide React
+import { GripVerticalIcon, Plus, Trash2 } from 'lucide-react'; // Importing icons from Lucide React
 
 interface Recipe {
     id: string;
@@ -43,9 +43,12 @@ const SortableRecipeItem = ({ id, title, onDelete }: { id: string; title: string
             style={style} 
             {...attributes} 
             {...listeners}
-            className="bg-white shadow-md p-4 rounded-md flex justify-between items-center mb-3 transition-transform duration-150 ease-in-out"
+            className="bg-white dark:bg-slate-700 shadow-md p-4 rounded-md flex justify-between items-center mb-3 transition-transform duration-150 ease-in-out"
         >
-            <span className="text-gray-800">{title}</span>
+            <div className='flex gap-3'>
+                <GripVerticalIcon className='text-slate-500' />
+                <span className="text-gray-800 dark:text-white">{title}</span>
+            </div>
             <button 
                 onClick={(e) => {
                     e.stopPropagation();
@@ -53,7 +56,7 @@ const SortableRecipeItem = ({ id, title, onDelete }: { id: string; title: string
                 }} 
                 className="text-red-500 hover:text-red-700 transition-colors"
             >
-                <Trash2 className="w-5 h-5" /> {/* Lucide Trash Icon */}
+                <Trash2 className="w-5 h-5" />
             </button>
         </div>
     );
@@ -105,7 +108,7 @@ const MealSection = ({ mealType, onRecipesUpdate }: MealSectionProps) => {
                     onClick={() => setModalOpen(true)} 
                     className="flex items-center space-x-2 px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
-                    <Plus className="w-5 h-5" /> {/* Lucide Plus Icon */}
+                    <Plus className="w-5 h-5" />
                 </button>
             </div>
 
