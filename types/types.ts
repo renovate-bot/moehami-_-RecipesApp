@@ -112,7 +112,7 @@ export interface ArticleWithTagsAndComments {
 
 export interface MealPlan {
     id: string;
-    createdAt: Date;
+    date: Date;
     mealPlanRecipes: MealPlanRecipe[];
 }
 

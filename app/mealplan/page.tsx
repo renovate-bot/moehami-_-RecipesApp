@@ -1,40 +1,72 @@
-"use client"
+"use client";
 
 import { MealPlan, RecipeType } from '@/types/types';
 import { useAuth } from '@clerk/nextjs';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 const MealPlanPage = () => {
-    
     const [mealPlans, setMealPlans] = useState<MealPlan[]>([]);
     const { userId } = useAuth();
 
     useEffect(() => {
-
         const fetchMealPlans = async () => {
-            const response = await fetch(`/api/mealplan?userId=${userId}`)
-            const data: MealPlan[] = await response.json(); 
+            const response = await fetch(`/api/mealplan?userId=${userId}`);
+            const data: MealPlan[] = await response.json();
             setMealPlans(data);
         };
 
-        fetchMealPlans()
-    }, [])
-    
-    return (
-        <div>
-            {mealPlans.map((mealPlan) => (
-                <div key={mealPlan.id}>
-                    <h1 className='font-bold text-xl my-5'>{new Date(mealPlan.createdAt).toLocaleDateString()}</h1>
-                    {mealPlan.mealPlanRecipes.map((mealPlanRecipe) => (
-                        <p key={mealPlanRecipe.id}>
-                            <p className='font-semi-bold my-2'>{mealPlanRecipe.mealType}</p>
-                            {mealPlanRecipe.recipe.title}
-                        </p>
-                    ))}
-                </div>
-            ))}
-        </div>
-    )
-}
+        if (userId) {
+            fetchMealPlans();
+        }
+    }, [userId]);
 
-export default MealPlanPage
+    return (
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-all duration-300">
+            <div className="container mx-auto p-6">
+                
+                <h1 className="text-3xl font-bold mb-6 text-center">Your Meal Plans</h1>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {mealPlans.map((mealPlan) => {
+                        // Group recipes by meal type
+                        const groupedRecipes: { [mealType: string]: RecipeType[] } = {};
+
+                        mealPlan.mealPlanRecipes.forEach((mealPlanRecipe) => {
+                            const { mealType, recipe } = mealPlanRecipe;
+                            if (!groupedRecipes[mealType]) {
+                                groupedRecipes[mealType] = [];
+                            }
+                            groupedRecipes[mealType].push(recipe);
+                        });
+
+                        return (
+                            <div key={mealPlan.id} className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                                <h2 className="text-xl font-semibold mb-4">
+                                    Meal Plan - {new Date(mealPlan.date).toLocaleDateString()}
+                                </h2>
+                                {Object.keys(groupedRecipes).map((mealType) => (
+                                    <div key={mealType} className="mb-5">
+                                        <h3 className="text-xl font-bold text-custom-orange mb-3">
+                                            {mealType}
+                                        </h3>
+                                        <ul className="space-y-2">
+                                            {groupedRecipes[mealType].map((recipe) => (
+                                                <li key={recipe.id} className="bg-gray-50 dark:bg-gray-700 rounded-md p-3">
+                                                    <p className="font-medium">{recipe.title}</p>
+                                                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                        Preparation Time: {recipe.preparationTime} mins
+                                                    </p>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default MealPlanPage;
