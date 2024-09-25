@@ -59,7 +59,7 @@ export const Modal = ({ onSubmit, onClose }: ModalProps) => {
                             className={`flex items-center mb-3 p-2 cursor-pointer transition-all rounded-lg 
                             ${
                                 selectedRecipes.some((r) => r.id === recipe.id)
-                                ? "bg-blue-100 dark:bg-blue-700 border border-blue-500"
+                                ? "bg-blue-100 dark:bg-custom-orange border border-custom-orange/90"
                                 : "hover:bg-gray-100 dark:hover:bg-gray-700"
                             }`}
                             >
