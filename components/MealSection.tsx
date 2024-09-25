@@ -77,12 +77,8 @@ const MealSection = ({ mealType, onRecipesUpdate }: MealSectionProps) => {
         }
     };
 
-    const addRecipe = (recipe: Recipe) => {
-        const newRecipe: Recipe = {
-            id: recipe.id,
-            title: recipe.title,
-        };
-        setRecipes((prev) => [...prev, newRecipe]);
+    const addRecipes = (selectedRecipes: Recipe[]) => {
+        setRecipes((prev) => [...prev, ...selectedRecipes]); // Add the selected recipes to the existing list
         setModalOpen(false); 
     };
 
@@ -116,7 +112,7 @@ const MealSection = ({ mealType, onRecipesUpdate }: MealSectionProps) => {
             </DndContext>
 
             {isModalOpen && (
-                <Modal onSubmit={addRecipe} onClose={() => setModalOpen(false)} />
+                <Modal onSubmit={addRecipes} onClose={() => setModalOpen(false)} />
             )}
         </div>
     );
