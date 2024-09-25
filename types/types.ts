@@ -80,6 +80,7 @@ export interface RecipeType {
     steps: StepType[];
     toolsRecipe: ToolRecipeType[];
     nutritionalInfo?: NutritionalInfoType;
+    mealPlanRecipes?: { id: string; recipe: RecipeType; mealType: string};
 }
 
 export interface TagType {
@@ -107,4 +108,16 @@ export interface ArticleWithTagsAndComments {
     createdAt: Date;
     tags: TagArticleType[];
     comments: ArticleCommentType[];
+}
+
+export interface MealPlan {
+    id: string;
+    createdAt: Date;
+    mealPlanRecipes: MealPlanRecipe[];
+}
+
+export interface MealPlanRecipe {
+    id: string;
+    mealType: string;
+    recipe: RecipeType;
 }
