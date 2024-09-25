@@ -111,13 +111,15 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
 
     return (
         <>
-            <div className=''>
+            <article className=''>
                 {recipe ? (
                     <div id='recipe-detail'>
-                        {/* Recipe header component */}
-                        <RecipeHeader recipe={recipe} generatePDF={() => generatePDF(recipe)} handleFavorite={handleFavorite} />    
+                        <section>
+                            {/* Recipe header component */}
+                            <RecipeHeader recipe={recipe} generatePDF={() => generatePDF(recipe)} handleFavorite={handleFavorite} />    
+                        </section>
 
-                        <div className='flex gap-7 flex-col lg:flex-row'>
+                        <section className='flex gap-7 flex-col lg:flex-row'>
                             <div className='w-full lg:w-[50%]'>
                                 {/* Section for recipe instructions */}
                                 <SectionHeader icon={ListChecksIcon} title="Instructions" />
@@ -128,106 +130,116 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
                                 <SectionHeader icon={CookingPotIcon} title="Ingredients and Tools" />
                                 <IngredientsToolsTabs compositions={recipe.compositions} toolsRecipe={recipe.toolsRecipe} />
                             </div>
-                        </div>
+                        </section>
 
-                        {/* Section for recipe steps */}
-                        <SectionHeader icon={WaypointsIcon} title="Steps" count={recipe.steps.length} />
-                        {recipe.steps && recipe.steps.length > 0 ? (
-                            <Swiper
-                                modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay, Navigation]} // Use Swiper modules
-                                grabCursor={true}
-                                mousewheel={true}
-                                slidesPerView={2}
-                                navigation
-                                spaceBetween={20}
-                                breakpoints={{
-                                    0: {
-                                        slidesPerView: 1 // Adjust slides per view based on screen size
-                                    },
-                                    900: {
-                                        slidesPerView: 2
-                                    },
-                                }}
-                            >
-                            {recipe.steps.map((step) => (
-                                <SwiperSlide key={step.id}>
-                                    <div className='px-8 py-10 flex flex-col items-center justify-center w-full h-[450px] sm:h-[350px] rounded-md text-center bg-slate-100 dark:bg-slate-800 dark:border-slate-800'>
-                                        <h3 className='font-bold text-4xl mb-3 text-custom-orange'>{step.number}</h3>
-                                        <p className='font-thin'>{step.description}</p>
-                                    </div>
-                                </SwiperSlide>
-                            ))}
-                            </Swiper>
-                        ) : (
-                            <p className='text-xs text-slate-400'>No steps</p> // Message if no steps are available
-                        )}
-
-                        {/* Nutritional info section */}
-                        <SectionHeader icon={LeafIcon} title="Nutritional Infos" />
-                        <NutritionalInfo compositions={recipe.compositions} />
-
-                        {/* Section for comments */}
-                        <SectionHeader icon={MessageSquareQuoteIcon} title="Comments" count={recipe.comments.length} />
-                        {recipe.comments.length > 0 ? (
-                            <div className='flex flex-col gap-3'>
-                                {recipe.comments.slice(currentPage * commentsPerPage, (currentPage + 1) * commentsPerPage).map((comment) => (
-                                    <CommentCard key={comment.id} comment={comment} onDelete={handleDelete} /> // Render each comment
-                                    ))}
-                                {/* Add pagination for comments */}
-                                <div className='flex justify-center py-4'>
-                                    <ReactPaginate
-                                        previousLabel={"←"}
-                                        nextLabel={"→"}
-                                        breakLabel={"..."}
-                                        pageCount={Math.ceil(recipe.comments.length / commentsPerPage)}
-                                        marginPagesDisplayed={2}
-                                        pageRangeDisplayed={3}
-                                        onPageChange={handlePageClick}
-                                        containerClassName={"flex justify-center items-center gap-2 mt-5"}
-                                        pageClassName={"pagination-item"}
-                                        pageLinkClassName={"pagination-link"}
-                                        previousClassName={`pagination-item ${currentPage === 0 ? 'opacity-50 cursor-not-allowed' : ''}`} // Opacity if no previous
-                                        previousLinkClassName={"pagination-link"}
-                                        nextClassName={`pagination-item ${currentPage === Math.ceil(recipe.comments.length / commentsPerPage) - 1 ? 'opacity-50 cursor-not-allowed' : ''}`} // Opacity if no next
-                                        nextLinkClassName={"pagination-link"}
-                                        breakClassName={"pagination-item"}
-                                        breakLinkClassName={"pagination-link"}
-                                        activeClassName={"pagination-active"} // Class for active page
-                                        disabledClassName={"pagination-disabled"} // Class for disabled buttons
-                                    />
-                                </div>
-                            </div>
-                        ) : (
-                            <p className='text-xs text-slate-400'>No comments</p> // Message if no comments are available
-                            )}
-
-                        {/* Section for adding a new comment */}
-                        <SectionHeader icon={MessageSquareQuoteIcon} title="Add a Comment" />
-                        {user ? (
-                            <CommentForm onSubmit={handleCommentSubmit} /> // Show comment form if user is logged in
+                        <section>
+                            {/* Section for recipe steps */}
+                            <SectionHeader icon={WaypointsIcon} title="Steps" count={recipe.steps.length} />
+                            {recipe.steps && recipe.steps.length > 0 ? (
+                                <Swiper
+                                    modules={[EffectCoverflow, Mousewheel, Pagination, Autoplay, Navigation]} // Use Swiper modules
+                                    grabCursor={true}
+                                    mousewheel={true}
+                                    slidesPerView={2}
+                                    navigation
+                                    spaceBetween={20}
+                                    breakpoints={{
+                                        0: {
+                                            slidesPerView: 1 // Adjust slides per view based on screen size
+                                        },
+                                        900: {
+                                            slidesPerView: 2
+                                        },
+                                    }}
+                                >
+                                {recipe.steps.map((step) => (
+                                    <SwiperSlide key={step.id}>
+                                        <div className='px-8 py-10 flex flex-col items-center justify-center w-full h-[450px] sm:h-[350px] rounded-md text-center bg-slate-100 dark:bg-slate-800 dark:border-slate-800'>
+                                            <h3 className='font-bold text-4xl mb-3 text-custom-orange'>{step.number}</h3>
+                                            <p className='font-thin'>{step.description}</p>
+                                        </div>
+                                    </SwiperSlide>
+                                ))}
+                                </Swiper>
                             ) : (
-                                <div className='p-6 bg-red-200 flex justify-center rounded-lg'>
-                                <p className='flex gap-2 items-center text-sm text-red-700'><OctagonAlert /> You have to sign in or sign up to comment on this recipe.</p>
-                            </div>
-                        )}
+                                <p className='text-xs text-slate-400'>No steps</p> // Message if no steps are available
+                            )}
+                        </section>
 
-                        {/* Section for sharing the recipe */}
-                        <ShareRecipe recipeTitle={recipe.title} />
+                        <section>
+                            {/* Nutritional info section */}
+                            <SectionHeader icon={LeafIcon} title="Nutritional Infos" />
+                            <NutritionalInfo compositions={recipe.compositions} />
+                        </section>
+
+                        <section>
+                            {/* Section for comments */}
+                            <SectionHeader icon={MessageSquareQuoteIcon} title="Comments" count={recipe.comments.length} />
+                            {recipe.comments.length > 0 ? (
+                                <div className='flex flex-col gap-3'>
+                                    {recipe.comments.slice(currentPage * commentsPerPage, (currentPage + 1) * commentsPerPage).map((comment) => (
+                                        <CommentCard key={comment.id} comment={comment} onDelete={handleDelete} /> // Render each comment
+                                        ))}
+                                    {/* Add pagination for comments */}
+                                    <div className='flex justify-center py-4'>
+                                        <ReactPaginate
+                                            previousLabel={"←"}
+                                            nextLabel={"→"}
+                                            breakLabel={"..."}
+                                            pageCount={Math.ceil(recipe.comments.length / commentsPerPage)}
+                                            marginPagesDisplayed={2}
+                                            pageRangeDisplayed={3}
+                                            onPageChange={handlePageClick}
+                                            containerClassName={"flex justify-center items-center gap-2 mt-5"}
+                                            pageClassName={"pagination-item"}
+                                            pageLinkClassName={"pagination-link"}
+                                            previousClassName={`pagination-item ${currentPage === 0 ? 'opacity-50 cursor-not-allowed' : ''}`} // Opacity if no previous
+                                            previousLinkClassName={"pagination-link"}
+                                            nextClassName={`pagination-item ${currentPage === Math.ceil(recipe.comments.length / commentsPerPage) - 1 ? 'opacity-50 cursor-not-allowed' : ''}`} // Opacity if no next
+                                            nextLinkClassName={"pagination-link"}
+                                            breakClassName={"pagination-item"}
+                                            breakLinkClassName={"pagination-link"}
+                                            activeClassName={"pagination-active"} // Class for active page
+                                            disabledClassName={"pagination-disabled"} // Class for disabled buttons
+                                            />
+                                    </div>
+                                </div>
+                            ) : (
+                                <p className='text-xs text-slate-400'>No comments</p> // Message if no comments are available
+                            )}
+                        </section>
+
+                        <section>
+                            {/* Section for adding a new comment */}
+                            <SectionHeader icon={MessageSquareQuoteIcon} title="Add a Comment" />
+                            {user ? (
+                                <CommentForm onSubmit={handleCommentSubmit} /> // Show comment form if user is logged in
+                                ) : (
+                                    <div className='p-6 bg-red-200 flex justify-center rounded-lg'>
+                                    <p className='flex gap-2 items-center text-sm text-red-700'><OctagonAlert /> You have to sign in or sign up to comment on this recipe.</p>
+                                </div>
+                            )}
+                        </section>
+
+                        <section>
+                            {/* Section for sharing the recipe */}
+                            <ShareRecipe recipeTitle={recipe.title} />
+                        </section>
 
                         {/* Suggestions section */}
-                        <div>
+                        <section>
                             <SectionHeader icon={LightbulbIcon} title="Suggestions" />
                             <div className='flex flex-wrap gap-3'>
                                 {suggestions?.map((suggestion) => (
                                     <MiniRecipeCard key={suggestion.id} recipe={suggestion} /> // Render each suggestion as a mini recipe card
                                     ))}
                             </div>
-                        </div>
+                        </section>
                     </div>
                 ) : (
                     <p>Loading...</p> // Loading message while the recipe data is being fetched
                 )}
-            </div>
+            </article>
         </>
     )
 }

@@ -21,7 +21,7 @@ const MealPlanPage = () => {
     }, [userId]);
 
     return (
-        <div className="min-h-screen bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-all duration-300">
+        <section className="min-h-screen bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-all duration-300">
             <div className="container mx-auto p-0">
                 <h1 className="text-3xl font-bold mb-6">Your Meal Plans</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
@@ -64,7 +64,7 @@ const MealPlanPage = () => {
                     })}
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 

@@ -52,7 +52,7 @@ const SearchPage = () => {
     };
 
     return (
-        <div>
+        <section>
             <SearchBar onSearch={handleSearch} />
 
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
@@ -64,7 +64,7 @@ const SearchPage = () => {
                     <p>No recipes found !</p>
                 )}
             </div>
-        </div>
+        </section>
     )
 }
 

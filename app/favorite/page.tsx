@@ -31,7 +31,7 @@ const FavoritePage = () => {
     }
 
     return (
-        <div>
+        <section>
             <h1 className='text-4xl font-bold mb-5'>Favorite Recipes</h1>
             {favoriteRecipes.length > 0 ? (
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5'>
@@ -42,7 +42,7 @@ const FavoritePage = () => {
             ) : (
                 <p>You haven't saved any favorite recipes yet.</p>
             )}
-        </div>
+        </section>
     )
 }
 

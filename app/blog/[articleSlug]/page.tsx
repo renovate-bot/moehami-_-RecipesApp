@@ -30,7 +30,7 @@ const ArticlePage = ({ params } : { params: { articleSlug: string }}) => {
     }
 
     return (
-        <div>
+        <section>
         {article ? (
         <>
             <div className='flex flex-col justify-center items-center p-6 h-[350px] w-full  relative rounded-md overflow-hidden bg-slate-300 dark:bg-transparent'>
@@ -92,7 +92,7 @@ const ArticlePage = ({ params } : { params: { articleSlug: string }}) => {
             <p>Loading...</p>
         )}
 
-        </div>
+        </section>
     )
 }
 

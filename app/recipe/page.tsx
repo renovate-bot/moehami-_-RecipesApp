@@ -59,10 +59,10 @@ const RecipesPage = () => {
     const shouldEnableLoop = recipes.length > 1; 
 
     return (
-        <div className='pb-5'>
+        <article className='pb-5'>
             <h1 className='text-4xl font-bold mb-5'>Latest Recipes</h1>
 
-            <div className='swiper-container'> 
+            <section className='swiper-container'> 
                 {loading ? ( 
                     <div className='min-h-screen flex justify-center items-center'>
                         <p>Loading...</p> 
@@ -107,22 +107,24 @@ const RecipesPage = () => {
                         <p>Loading...</p> 
                     </div>
                 )}
-            </div>
+            </section>
 
-            <h1 className='text-4xl font-bold mb-5 mt-10'>Latest Articles</h1> 
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3'> 
-                {/* Check if there are articles */}
-                {articles.length > 0 ? ( 
-                    // Display the first three articles
-                    articles.slice(0, 3).map((article) => ( 
-                        <ArticleCard key={article.id} article={article} />
-                    ))
-                ) : (
-                    // Message if no articles are available
-                    <p>No articles</p> 
-                )}
-            </div>
-        </div>
+            <section>
+                <h1 className='text-4xl font-bold mb-5 mt-10'>Latest Articles</h1> 
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3'> 
+                    {/* Check if there are articles */}
+                    {articles.length > 0 ? ( 
+                        // Display the first three articles
+                        articles.slice(0, 3).map((article) => ( 
+                            <ArticleCard key={article.id} article={article} />
+                        ))
+                    ) : (
+                        // Message if no articles are available
+                        <p>No articles</p> 
+                    )}
+                </div>
+            </section>
+        </article>
     );
 }
 

@@ -1,6 +1,6 @@
 "use client"
 
-import MealSection from '@/components/MealSection';
+import MealSection from '@/app/mealplanner/_components/MealSection';
 import { useAuth } from '@clerk/nextjs';
 import Link from 'next/link';
 import React, { useState, useCallback } from 'react';
@@ -67,7 +67,7 @@ const MealPlanner = () => {
     };
 
     return (
-        <div className="mx-auto p-6">
+        <section className="mx-auto p-6">
             <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
                 Meal Planner
             </h1>
@@ -111,7 +111,7 @@ const MealPlanner = () => {
             >
                 Validate Meal Plan
             </button>
-        </div>
+        </section>
     );
 };
 
