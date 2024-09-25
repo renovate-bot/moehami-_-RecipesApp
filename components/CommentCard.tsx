@@ -66,7 +66,7 @@ const CommentCard = ({ comment, onDelete }: CommentCardProps) => {
                 {avatarUrl ? (
                     <Image width={100} height={100} src={avatarUrl} alt="User Avatar" className="h-8 w-8 rounded-full object-cover" />
                 ) : (
-                    <UserCircleIcon className="h-8 w-8 text-custom-orange/60" />
+                    <UserCircleIcon className="h-8 w-8 text-custom_orange/60" />
                 )}
                     <p className="font-semibold text-sm">{comment?.username}</p>
                 </div>

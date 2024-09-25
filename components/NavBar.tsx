@@ -47,10 +47,10 @@ const NavBar = () => {
   return (
     <nav className='flex z-50 justify-between items-center py-6 px-6 md:px-[50px] lg:px-[100px] bg-slate-950 w-full shadow-lg relative'>
       {/* Logo/Branding */}
-      <div className='text-2xl font-bold text-custom-orange'>
+      <div className='text-2xl font-bold text-custom_orange'>
         <Link 
           href='/' 
-          className='hover:text-custom-orange transition duration-300' 
+          className='hover:text-custom_orange transition duration-300' 
           onClick={() => handleLinkClick('/')}
         >
           MyRecipes
@@ -61,14 +61,14 @@ const NavBar = () => {
         <SignedOut>
           <Link
             href="/sign-in"
-            className="block md:inline-block text-lg font-medium text-white hover:text-custom-orange transition duration-300"
+            className="block md:inline-block text-lg font-medium text-white hover:text-custom_orange transition duration-300"
             onClick={() => handleLinkClick("/sign-in")}
           >
             <LogIn size={24} />
           </Link>
           <Link
             href="/sign-up"
-            className="block md:inline-block text-lg font-medium text-white hover:text-custom-orange transition duration-300"
+            className="block md:inline-block text-lg font-medium text-white hover:text-custom_orange transition duration-300"
             onClick={() => handleLinkClick("/sign-up")}
             >
             <UserPlus size={24} />
@@ -104,28 +104,28 @@ const NavBar = () => {
           <div className='flex flex-col gap-4 justify-center items-center h-full md:flex-row md:gap-8 p-4 md:p-0'>
             <Link
               href='/recipe'
-              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/recipe' || pathname.startsWith('/recipe/') ? 'text-custom-orange' : 'text-white'}`}
+              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom_orange transition duration-300 ${activeLink === '/recipe' || pathname.startsWith('/recipe/') ? 'text-custom_orange' : 'text-white'}`}
               onClick={() => handleLinkClick('/recipe')}
             >
               Recipes
             </Link>
             <Link
               href='/search'
-              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/search' ? 'text-custom-orange' : 'text-white'}`}
+              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom_orange transition duration-300 ${activeLink === '/search' ? 'text-custom_orange' : 'text-white'}`}
               onClick={() => handleLinkClick('/search')}
             >
               Search
             </Link>
             <Link
               href='/blog'
-              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/blog' || pathname.startsWith('/blog/') ? 'text-custom-orange' : 'text-white'}`}
+              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom_orange transition duration-300 ${activeLink === '/blog' || pathname.startsWith('/blog/') ? 'text-custom_orange' : 'text-white'}`}
               onClick={() => handleLinkClick('/blog')}
             >
               Blog
             </Link>
             <Link
               href='/favorite'
-              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/favorite' ? 'text-custom-orange' : 'text-white'}`}
+              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom_orange transition duration-300 ${activeLink === '/favorite' ? 'text-custom_orange' : 'text-white'}`}
               onClick={() => handleLinkClick('/favorite')}
             >
               Favorites
@@ -135,7 +135,7 @@ const NavBar = () => {
           
             <Link
               href="/mealplanner"
-              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom-orange transition duration-300 ${activeLink === '/mealplanner' ? 'text-custom-orange' : 'text-white'}`}
+              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom_orange transition duration-300 ${activeLink === '/mealplanner' ? 'text-custom_orange' : 'text-white'}`}
               onClick={() => handleLinkClick("/mealplanner")}
               >
                 Meal Planner

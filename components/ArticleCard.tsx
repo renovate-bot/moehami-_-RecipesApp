@@ -26,7 +26,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
                         {article.tags.map((tagArticle) => (
                             <span
                                 key={tagArticle.tag.name}
-                                className='px-3 py-2 bg-custom-orange text-[0.7rem] text-white rounded-full'
+                                className='px-3 py-2 bg-custom_orange text-[0.7rem] text-white rounded-full'
                             >
                                 {tagArticle.tag.name}
                             </span>
@@ -39,7 +39,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
 
                 {/* Read more link */}
                 <div className='mt-4'>
-                    <Link className='block my-4 text-custom-orange' href={`/blog/${article.slug}`}>
+                    <Link className='block my-4 text-custom_orange' href={`/blog/${article.slug}`}>
                         Read more...
                     </Link>
                 </div>

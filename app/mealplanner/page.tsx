@@ -75,7 +75,7 @@ const MealPlanner = () => {
             <div className="my-5">
                 <Link
                     href="/mealplan"
-                    className="inline-block px-6 py-3 bg-custom-orange text-white font-semibold rounded-lg shadow-md hover:bg-custom-orange/90 transition-all duration-300 ease-in-out"
+                    className="inline-block px-6 py-3 bg-custom_orange text-white font-semibold rounded-lg shadow-md hover:bg-custom_orange/90 transition-all duration-300 ease-in-out"
                 >
                     My Meal Plans
                 </Link>

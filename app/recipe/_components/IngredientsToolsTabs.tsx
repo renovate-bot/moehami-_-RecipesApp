@@ -41,7 +41,7 @@ const IngredientsToolsTabs = ({ compositions, toolsRecipe }: IngredientsToolsTab
                 <Tab
                     className={({ selected }) =>
                         `w-full sm:w-auto px-4 py-2 rounded-lg ${
-                        selected ? "bg-gradient-to-r from-custom-orange to-[#f78b6d] text-white focus:outline-none" : ""
+                        selected ? "bg-gradient-to-r from-custom_orange to-[#f78b6d] text-white focus:outline-none" : ""
                         }`
                     }
                 >
@@ -50,7 +50,7 @@ const IngredientsToolsTabs = ({ compositions, toolsRecipe }: IngredientsToolsTab
                 <Tab
                     className={({ selected }) =>
                         `w-full sm:w-auto px-4 py-2 rounded-lg ${
-                        selected ? "bg-gradient-to-r from-custom-orange to-[#f78b6d] text-white focus:outline-none" : ""
+                        selected ? "bg-gradient-to-r from-custom_orange to-[#f78b6d] text-white focus:outline-none" : ""
                         }`
                     }
                 >

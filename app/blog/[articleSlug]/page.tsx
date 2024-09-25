@@ -50,7 +50,7 @@ const ArticlePage = ({ params } : { params: { articleSlug: string }}) => {
                     <div className='flex justify-center flex-wrap my-6 gap-2'>
                         {article?.tags.map((tagArticle) => (
                             <span 
-                                className='px-3 py-2 bg-custom-orange text-[0.7rem] text-white rounded-full'
+                                className='px-3 py-2 bg-custom_orange text-[0.7rem] text-white rounded-full'
                                 key={tagArticle.tag.name}
                             >
                                 {tagArticle.tag.name}

@@ -44,7 +44,7 @@ const MealPlanPage = () => {
                                 </h2>
                                 {Object.keys(groupedRecipes).map((mealType) => (
                                     <div key={mealType} className="mb-5">
-                                        <h3 className="text-xl font-bold text-custom-orange mb-3">
+                                        <h3 className="text-xl font-bold text-custom_orange mb-3">
                                             {mealType}
                                         </h3>
                                         <ul className="space-y-2">
