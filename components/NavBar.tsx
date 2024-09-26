@@ -12,7 +12,7 @@ const NavBar = () => {
 
   const pathname = usePathname();
   const { isLoaded, isSignedIn } = useAuth(); // Hook to check authentication status
-  const { user } = useUser(); // Get user data if signed in
+  const { user } = useUser(); 
 
   const [activeLink, setActiveLink] = useState<string>('/');
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
