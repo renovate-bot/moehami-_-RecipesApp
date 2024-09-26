@@ -10,7 +10,7 @@ const CLOUDINARY_CLOUD_NAME = "your_cloud_name";
 
 const AddRecipeForm = () => {
     const { register, handleSubmit } = useForm();
-    const [steps, setSteps] = useState<StepType[]>([]);
+    const [steps, setSteps] = useState([{ id: '', number: 1, description: '', duration: 0, image: '' }]);
     const [image, setImage] = useState<File | null>(null);
     const [imageUrl, setImageUrl] = useState<string>("https://res.cloudinary.com/dr3qz5dk3/image/upload/v1726047897/recette-gateau-chocolat-hersheys-super-chocolate_afh12s.webp"); // To store the uploaded image URL
     const [categories, setCategories] = useState<CategoryType[]>([]);
