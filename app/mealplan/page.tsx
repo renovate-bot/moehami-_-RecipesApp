@@ -67,7 +67,7 @@ const MealPlanPage = () => {
                         });
 
                         return (
-                            <div key={mealPlan.id} className="relative bg-white dark:bg-slate-800 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                            <div key={mealPlan.id} className="relative border border-slate-300 dark:border-none bg-white dark:bg-slate-800 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
                                 {/* Delete Button */}
                                 <button
                                     onClick={() => handleDelete(mealPlan.id)}
