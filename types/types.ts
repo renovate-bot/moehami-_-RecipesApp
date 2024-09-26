@@ -50,6 +50,8 @@ export interface StepType {
     id: string;
     number: number;
     description: string;
+    duration?: number;
+    image?: string;
 }
 
 export interface ToolType {

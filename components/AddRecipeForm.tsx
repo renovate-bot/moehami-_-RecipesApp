@@ -1,39 +1,46 @@
-"use client";
+"use client"
 
-import { useEffect, useState, FormEvent } from "react";
-import { useRouter } from "next/navigation";
-import { Upload, PlusCircle, Trash2 } from "lucide-react"; // Importing Lucide icons
-import { CategoryType } from "@/types/types";
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { CategoryType, IngredientType, RecipeType, ToolType, StepType } from "@/types/types"; 
+import { Upload, PlusCircle, Trash2 } from "lucide-react"; 
 
-// Cloudinary upload preset and cloud name (replace with your values)
 const CLOUDINARY_UPLOAD_PRESET = "your_upload_preset";
 const CLOUDINARY_CLOUD_NAME = "your_cloud_name";
 
 const AddRecipeForm = () => {
-    const router = useRouter();
+    const { register, handleSubmit } = useForm();
+    const [steps, setSteps] = useState<StepType[]>([]);
+    const [image, setImage] = useState<File | null>(null);
+    const [imageUrl, setImageUrl] = useState<string>("https://res.cloudinary.com/dr3qz5dk3/image/upload/v1726047897/recette-gateau-chocolat-hersheys-super-chocolate_afh12s.webp"); // To store the uploaded image URL
     const [categories, setCategories] = useState<CategoryType[]>([]);
-    const [formData, setFormData] = useState({
-        title: "",
-        preparationTime: 0,
-        difficulty: 1,
-        instructions: "",
-        isHealthy: false,
-        isVegan: false,
-        categoryId: "",
-        recipeImage: "",
-        steps: [{ number: 1, description: "", duration: 0 }],
-        tools: [{ name: "", quantity: 1, image: "" }],
-        ingredients: [{ name: "", quantity: 0, measureUnity: "", image: "" }],
-    });
+    const [ingredients, setIngredients] = useState<IngredientType[]>([]);
+    const [tools, setTools] = useState<ToolType[]>([]);
+    const [selectedIngredients, setSelectedIngredients] = useState([{ ingredientId: '', quantity: '', measureUnity: '' }]);
+    const [selectedTools, setSelectedTools] = useState([{ toolId: '', quantity: '' }]);
 
     useEffect(() => {
-        // Fetch categories from the API
         const fetchCategories = async () => {
-            const response = await fetch("/api/categorie");
+            const response = await fetch("/api/category");
             const data: CategoryType[] = await response.json();
             setCategories(data);
         };
+
+        const fetchIngredients = async () => {
+            const response = await fetch("/api/ingredient");
+            const data: IngredientType[] = await response.json();
+            setIngredients(data);
+        };
+
+        const fetchTools = async () => {
+            const response = await fetch("/api/tool");
+            const data: ToolType[] = await response.json();
+            setTools(data);
+        };
+
         fetchCategories();
+        fetchIngredients();
+        fetchTools();
     }, []);
 
     const handleImageUpload = async (file: File): Promise<string> => {
@@ -45,332 +52,306 @@ const AddRecipeForm = () => {
             method: "POST",
             body: formData,
         });
+
+        if (!res.ok) {
+            throw new Error('Image upload failed'); // Handle any errors
+        }
+
         const data = await res.json();
         return data.secure_url;
     };
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const response = await fetch("/api/recipes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-        });
+    const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0]; // Safely access the first file
+        if (file) {
+            setImage(file); // Set the selected file to state
 
-        if (response.ok) {
-            router.push("/recipes");
+            try {
+                const uploadedImageUrl = await handleImageUpload(file); // Upload the image
+                setImageUrl(uploadedImageUrl); // Store the uploaded image URL
+            } catch (error) {
+                console.error("Image upload failed:", error);
+            }
         } else {
-            alert("Error adding recipe.");
+            setImage(null); // Reset state to null if no file was selected
+            setImageUrl("https://res.cloudinary.com/dr3qz5dk3/image/upload/v1726047897/recette-gateau-chocolat-hersheys-super-chocolate_afh12s.webp"); // Reset the image URL if no file was selected
         }
     };
 
     const addStep = () => {
-        setFormData((prev) => ({
-            ...prev,
-            steps: [...prev.steps, { number: prev.steps.length + 1, description: "", duration: 0 }],
-        }));
+        setSteps([...steps, { id: '', number: steps.length + 1, description: '', duration: 0, image: ''  }]);
     };
 
+    const removeStep = (index: number) => {
+        setSteps(steps.filter((_, i) => i !== index));
+    };
+
+    // Ingredients handling
     const addIngredient = () => {
-        setFormData((prev) => ({
-            ...prev,
-            ingredients: [...prev.ingredients, { name: "", quantity: 0, measureUnity: "", image: "" }],
-        }));
+        setSelectedIngredients([...selectedIngredients, { ingredientId: '', quantity: '', measureUnity: '' }]);
     };
 
-    const addTool = () => {
-        setFormData((prev) => ({
-            ...prev,
-            tools: [...prev.tools, { name: "", quantity: 1, image: "" }],
-        }));
+    const removeIngredient = (index: number) => {
+        setSelectedIngredients(selectedIngredients.filter((_, i) => i !== index));
     };
 
-    const deleteStep = (index: number) => {
-        const updatedSteps = formData.steps.filter((_, i) => i !== index);
-        setFormData((prev) => ({
-            ...prev,
-            steps: updatedSteps,
-        }));
-    };
-
-    const deleteIngredient = (index: number) => {
-        const updatedIngredients = formData.ingredients.filter((_, i) => i !== index);
-        setFormData((prev) => ({
-            ...prev,
-            ingredients: updatedIngredients,
-        }));
-    };
-
-    const deleteTool = (index: number) => {
-        const updatedTools = formData.tools.filter((_, i) => i !== index);
-        setFormData((prev) => ({
-            ...prev,
-            tools: updatedTools,
-        }));
-    };
-
-    const handleUploadImage = async (
-        file: File,
-        type: 'ingredient' | 'tool' | 'recipe',
-        index?: number // index is optional here but must be handled appropriately
+    const handleIngredientChange = (
+        index: number, 
+        field: 'ingredientId' | 'quantity' | 'measureUnity', 
+        value: string
     ) => {
-        const imageUrl = await handleImageUpload(file);
-    
-        if (type === 'ingredient' && index !== undefined) {
-            const ingredients = [...formData.ingredients];
-            ingredients[index].image = imageUrl; // Use index safely
-            setFormData({ ...formData, ingredients });
-        } else if (type === 'tool' && index !== undefined) {
-            const tools = [...formData.tools];
-            tools[index].image = imageUrl; // Use index safely
-            setFormData({ ...formData, tools });
-        } else if (type === 'recipe') {
-            setFormData({ ...formData, recipeImage: imageUrl });
-        } else {
-            console.error('Index must be provided for ingredient and tool types');
+        const newIngredients = [...selectedIngredients];
+        newIngredients[index][field] = value;
+        setSelectedIngredients(newIngredients);
+    };
+
+    // Tools handling
+    const addTool = () => {
+        setSelectedTools([...selectedTools, { toolId: '', quantity: '' }]);
+    };
+
+    const removeTool = (index: number) => {
+        setSelectedTools(selectedTools.filter((_, i) => i !== index));
+    };
+
+    const handleToolChange = (
+        index: number, 
+        field: 'toolId' | 'quantity', 
+        value: string
+    ) => {
+        const newTools = [...selectedTools];
+        newTools[index][field] = value;
+        setSelectedTools(newTools);
+    };
+
+    const handleStepChange = (index: number, value: string) => {
+        const newSteps = [...steps];
+        newSteps[index].description = value;
+        setSteps(newSteps);
+    };
+
+    const onSubmit = async (data: any) => {
+        
+        const recipe = {
+            title: data.title,
+            category: data.category,
+            preparationTime: data.preparationTime,
+            difficulty: data.difficulty,
+            instructions: data.instructions,
+            image: imageUrl, // Use the uploaded image URL
+            steps: steps.map((step, index) => ({
+                id: step.id || `step-${index + 1}`, // Use a generated ID if not present
+                number: step.number,
+                description: step.description,
+                duration: step.duration,
+                image: step.image || "", // Assuming step.image can be optional
+            })),
+            // compositions: selectedIngredients.map(ingredient => ({
+            //     ingredient: ingredient.ingredientId,
+            //     quantity: ingredient.quantity,
+            //     measureUnity: ingredient.measureUnity,
+            // })),
+            // tools: selectedTools.map(tool => ({
+            //     toolId: tool.toolId,
+            //     quantity: tool.quantity,
+            // })),
+        };
+
+
+        // Send the recipe object to your API
+        try {
+            const response = await fetch("/api/recipe", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(recipe),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to create recipe');
+            }
+
+            // Optionally handle successful creation (e.g., reset form or redirect)
+            alert('Recipe created successfully!');
+        } catch (error) {
+            console.error("Error creating recipe:", error);
+            alert('Failed to create recipe');
         }
     };
 
     return (
-        <div className="min-h-screen dark:text-white">
-            <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto p-8 shadow-md rounded-lg dark:bg-gray-900">
-                <h2 className="text-2xl font-semibold">Add New Recipe</h2>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 p-8 rounded-lg shadow-lg bg-white dark:bg-gray-800">
+            <h1 className="text-3xl font-semibold text-gray-700 dark:text-gray-200">Add New Recipe</h1>
 
-                {/* Recipe Title */}
-                <div>
-                    <label className="block font-medium">Recipe Title</label>
+            <div>
+                <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">Title</label>
+                <input
+                    type="text"
+                    {...register('title')}
+                    className="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300"
+                    placeholder="Enter recipe title"
+                    required
+                />
+            </div>
+
+            <div>
+                <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">Upload Image</label>
+                <label className="flex w-full mt-2">
                     <input
-                        type="text"
-                        required
-                        value={formData.title}
-                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                        className="p-3 mt-1 block w-full h-12 rounded-md dark:bg-gray-700 border border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        type="file"
+                        onChange={handleImageChange}
+                        className="hidden" // Hide the default file input
                     />
-                </div>
-
-                {/* Category Selection */}
-                <div>
-                    <label className="block font-medium">Category</label>
-                    <select
-                        value={formData.categoryId}
-                        onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-                        className="p-3 mt-1 block w-full h-12 rounded-md dark:bg-gray-700 border border-gray-600 shadow-sm"
-                    >
-                        <option value="" disabled>Select a category</option>
-                        {categories.map((category) => (
-                            <option key={category.id} value={category.id}>{category.name}</option>
-                        ))}
-                    </select>
-                </div>
-
-                {/* Recipe Image Upload */}
-                <div>
-                    <label className="block font-medium">Recipe Image</label>
-                    <label className="mt-1 w-full h-12 rounded-md cursor-pointer bg-custom_orange border border-gray-600 shadow-sm flex items-center justify-center text-white">
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                                const file = e.target.files?.[0]; // Use optional chaining to safely access the first file
-                                if (file) {
-                                    handleUploadImage(file, 'recipe');
-                                }
-                            }}
-                            className="hidden"
-                        />
-                        <Upload className="mr-2" /> Upload Image
-                    </label>
-                </div>
-
-                {/* Preparation Time & Difficulty */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label className="block font-medium">Preparation Time (minutes)</label>
-                        <input
-                            type="number"
-                            value={formData.preparationTime}
-                            onChange={(e) => setFormData({ ...formData, preparationTime: +e.target.value })}
-                            className="p-3 mt-1 block w-full h-12 rounded-md dark:bg-gray-700 border border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block font-medium">Difficulty</label>
-                        <input
-                            type="number"
-                            value={formData.difficulty}
-                            onChange={(e) => setFormData({ ...formData, difficulty: +e.target.value })}
-                            min="1" max="5"
-                            className="p-3 mt-1 block w-full h-12 rounded-md dark:bg-gray-700 border border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                        />
-                    </div>
-                </div>
-
-                {/* Instructions */}
-                <div>
-                    <label className="block font-medium">Instructions</label>
-                    <textarea
-                        value={formData.instructions}
-                        onChange={(e) => setFormData({ ...formData, instructions: e.target.value })}
-                        rows={4}
-                        className="p-3 mt-1 block w-full h-24 rounded-md dark:bg-gray-700 border border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    />
-                </div>
-
-                {/* Steps */}
-                <div>
-                    <label className="block font-medium">Steps</label>
-                    {formData.steps.map((step, index) => (
-                        <div key={index} className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-                            <input
-                                type="text"
-                                placeholder="Step description"
-                                value={step.description}
-                                onChange={(e) => {
-                                    const updatedSteps = [...formData.steps];
-                                    updatedSteps[index].description = e.target.value;
-                                    setFormData({ ...formData, steps: updatedSteps });
-                                }}
-                                className="p-3 block w-full h-12 rounded-md dark:bg-gray-700 border border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            />
-                            <input
-                                type="number"
-                                placeholder="Duration (min)"
-                                value={step.duration}
-                                onChange={(e) => {
-                                    const updatedSteps = [...formData.steps];
-                                    updatedSteps[index].duration = +e.target.value;
-                                    setFormData({ ...formData, steps: updatedSteps });
-                                }}
-                                className="p-3 block w-full h-12 rounded-md dark:bg-gray-700 border border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            />
-                            <button type="button" onClick={() => deleteStep(index)} className="text-red-500">
-                                <Trash2 className="inline" /> Delete
-                            </button>
-                        </div>
-                    ))}
-                    <button type="button" onClick={addStep} className="mt-2 flex items-center text-blue-500">
-                        <PlusCircle className="mr-1" /> Add Step
-                    </button>
-                </div>
-
-                {/* Ingredients */}
-                <div>
-                    <label className="block font-medium">Ingredients</label>
-                    {formData.ingredients.map((ingredient, index) => (
-                        <div key={index} className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-                            <input
-                                type="text"
-                                placeholder="Ingredient name"
-                                value={ingredient.name}
-                                onChange={(e) => {
-                                    const updatedIngredients = [...formData.ingredients];
-                                    updatedIngredients[index].name = e.target.value;
-                                    setFormData({ ...formData, ingredients: updatedIngredients });
-                                }}
-                                className="p-3 block w-full h-12 rounded-md dark:bg-gray-700 border border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            />
-                            <input
-                                type="number"
-                                placeholder="Quantity"
-                                value={ingredient.quantity}
-                                onChange={(e) => {
-                                    const updatedIngredients = [...formData.ingredients];
-                                    updatedIngredients[index].quantity = +e.target.value;
-                                    setFormData({ ...formData, ingredients: updatedIngredients });
-                                }}
-                                className="p-3 block w-full h-12 rounded-md dark:bg-gray-700 border border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            />
-                            {/* Image Upload for Ingredient */}
-                            <label className="w-full h-12 rounded-md cursor-pointer bg-custom_orange border border-gray-600 shadow-sm flex items-center justify-center text-white">
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={(e) => {
-                                        const file = e.target.files?.[0]; // Use optional chaining to safely access the first file
-                                        if (file) {
-                                            handleUploadImage(file, 'ingredient', index);
-                                        }
-                                    }}
-                                    className="hidden"
-                                />
-                                <Upload className="mr-2" /> Upload Image
-                            </label>
-                            <button type="button" onClick={() => deleteIngredient(index)} className="text-red-500">
-                                <Trash2 className="inline" /> Delete
-                            </button>
-                        </div>
-                    ))}
-                    <button type="button" onClick={addIngredient} className="mt-2 flex items-center text-blue-500">
-                        <PlusCircle className="mr-1" /> Add Ingredient
-                    </button>
-                </div>
-
-                {/* Tools */}
-                <div>
-                    <label className="block font-medium">Tools</label>
-                    {formData.tools.map((tool, index) => (
-                        <div key={index} className="mt-2 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-                            <input
-                                type="text"
-                                placeholder="Tool name"
-                                value={tool.name}
-                                onChange={(e) => {
-                                    const updatedTools = [...formData.tools];
-                                    updatedTools[index].name = e.target.value;
-                                    setFormData({ ...formData, tools: updatedTools });
-                                }}
-                                className="p-3 block w-full h-12 rounded-md dark:bg-gray-700 border border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            />
-                            <input
-                                type="number"
-                                placeholder="Quantity"
-                                value={tool.quantity}
-                                onChange={(e) => {
-                                    const updatedTools = [...formData.tools];
-                                    updatedTools[index].quantity = +e.target.value;
-                                    setFormData({ ...formData, tools: updatedTools });
-                                }}
-                                className="p-3 block w-full h-12 rounded-md dark:bg-gray-700 border border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            />
-                            {/* Image Upload for Tool */}
-                            <label className="w-full h-12 rounded-md cursor-pointer bg-custom_orange border border-gray-600 shadow-sm flex items-center justify-center text-white">
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={(e) => {
-                                        const file = e.target.files?.[0]; // Use optional chaining to safely access the first file
-                                        if (file) {
-                                            handleUploadImage(file, 'tool', index);
-                                        }
-                                    }}
-                                    className="hidden"
-                                />
-                                <Upload className="mr-2" /> Upload Image
-                            </label>
-                            <button type="button" onClick={() => deleteTool(index)} className="text-red-500">
-                                <Trash2 className="inline" /> Delete
-                            </button>
-                        </div>
-                    ))}
-                    <button type="button" onClick={addTool} className="mt-2 flex items-center text-blue-500">
-                        <PlusCircle className="mr-1" /> Add Tool
-                    </button>
-                </div>
-
-                {/* Submission Button */}
-                <div>
                     <button
-                        type="submit"
-                        className="w-full h-12 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-150"
+                        type="button"
+                        className="flex items-center bg-custom_orange text-white px-4 py-2 rounded-md hover:bg-custom_orange/90 transition duration-200"
                     >
-                        Add Recipe
+                        <Upload className="mr-2" /> {/* Lucide Icon */}
+                        Upload Image
                     </button>
-                </div>
-            </form>
-        </div>
+                </label>
+            </div>
+
+            <div>
+                <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">Category</label>
+                <select {...register('categoryId')} className="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300" required>
+                    <option value="" disabled>Select a category</option>
+                    {categories.map((category) => (
+                        <option key={category.id} value={category.id}>{category.name}</option>
+                    ))}
+                </select>
+            </div>
+
+            <div>
+                <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">Preparation Time (min)</label>
+                <input
+                    type="number"
+                    min={1}
+                    {...register('preparationTime', { min: 1 })}
+                    className="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300"
+                    placeholder="Enter preparation time"
+                    required
+                />
+            </div>
+
+            <div>
+                <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">Difficulty (1 to 5)</label>
+                <input
+                    type="number"
+                    min={1}
+                    max={5}
+                    {...register('difficulty', { min: 1, max: 5 })}
+                    className="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300"
+                    placeholder="Enter difficulty level"
+                    required
+                />
+            </div>
+
+            <div>
+                <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">Instructions</label>
+                <textarea
+                    {...register('instructions')}
+                    className="mt-1 block w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300"
+                    placeholder="Enter instructions"
+                    required
+                />
+            </div>
+
+            <div>
+                <h2 className="text-lg font-medium text-gray-700 dark:text-gray-300">Steps</h2>
+                {steps.map((step, index) => (
+                    <div key={index} className="flex items-center space-x-4 mb-2">
+                        <input
+                            type="number"
+                            value={step.number}
+                            readOnly
+                            className="w-12 p-2 border border-gray-300 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-200"
+                        />
+                        <textarea
+                            value={step.description}
+                            onChange={(e) => handleStepChange(index, e.target.value)}
+                            placeholder="Step description"
+                            className="flex-grow p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300"
+                        />
+                        <button type="button" onClick={() => removeStep(index)} className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition duration-200">
+                            <Trash2 className="w-5 h-5" /> {/* Trash icon for removal */}
+                        </button>
+                    </div>
+                ))}
+                <button type="button" onClick={addStep} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-200">Add Step</button>
+            </div>
+
+            <div>
+                <h2 className="text-lg font-medium text-gray-700 dark:text-gray-300">Ingredients</h2>
+                {selectedIngredients.map((ingredient, index) => (
+                    <div key={index} className="flex items-center space-x-4 mt-2">
+                        <select
+                            value={ingredient.ingredientId}
+                            onChange={(e) => handleIngredientChange(index, 'ingredientId', e.target.value)}
+                            className="block w-full p-3 border border-gray-300 rounded-md dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300"
+                        >
+                            <option value="" disabled>Select ingredient</option>
+                            {ingredients.map((ingredient) => (
+                                <option key={ingredient.id} value={ingredient.id}>{ingredient.name}</option>
+                            ))}
+                        </select>
+                        <input
+                            type="number"
+                            value={ingredient.quantity}
+                            onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
+                            className="block w-full p-3 border border-gray-300 rounded-md dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300"
+                            placeholder="Quantity"
+                            required
+                        />
+                        <input
+                            type="text"
+                            value={ingredient.measureUnity}
+                            onChange={(e) => handleIngredientChange(index, 'measureUnity', e.target.value)}
+                            className="block w-full p-3 border border-gray-300 rounded-md dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300"
+                            placeholder="Measure unity"
+                            required
+                        />
+                        <button type="button" onClick={() => removeIngredient(index)} className="bg-red-500 text-white px-4 py-2 rounded-md">
+                            <Trash2 className="w-5 h-5" />
+                        </button>
+                    </div>
+                ))}
+                <button type="button" onClick={addIngredient} className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md">Add Ingredient</button>
+            </div>
+
+            <div>
+                <h2 className="text-lg font-medium text-gray-700 dark:text-gray-300">Tools</h2>
+                {selectedTools.map((tool, index) => (
+                    <div key={index} className="flex items-center space-x-4 mt-2">
+                        <select
+                            value={tool.toolId}
+                            onChange={(e) => handleToolChange(index, 'toolId', e.target.value)}
+                            className="block w-full p-3 border border-gray-300 rounded-md dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300"
+                        >
+                            <option value="" disabled>Select tool</option>
+                            {tools.map((tool) => (
+                                <option key={tool.id} value={tool.id}>{tool.name}</option>
+                            ))}
+                        </select>
+                        <input
+                            type="number"
+                            value={tool.quantity}
+                            onChange={(e) => handleToolChange(index, 'quantity', e.target.value)}
+                            className="block w-full p-3 border border-gray-300 rounded-md dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300"
+                            placeholder="Quantity"
+                            required
+                        />
+                        <button type="button" onClick={() => removeTool(index)} className="bg-red-500 text-white px-4 py-2 rounded-md">
+                            <Trash2 className="w-5 h-5" />
+                        </button>
+                    </div>
+                ))}
+                <button type="button" onClick={addTool} className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md">Add Tool</button>
+            </div>
+
+            <button type="submit" className="w-full bg-green-500 text-white px-4 py-2 rounded-md">Submit Recipe</button>
+        </form>
     );
 };
 
