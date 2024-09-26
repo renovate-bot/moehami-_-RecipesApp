@@ -47,6 +47,9 @@ export async function GET(req: NextRequest) {
                         recipe: true
                     }
                 }
+            },
+            orderBy: {
+                date: 'asc'
             }
         });
 
