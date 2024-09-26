@@ -85,7 +85,9 @@ const NavBar = () => {
           <UserButton afterSignOutUrl="/" />
           {isAdmin && (
             <Link href="/admin" className="text-white hover:text-custom_orange transition duration-300">
-              <button className='px-3 py-2 bg-custom_orange rounded-md text-white hover:bg-custom_orange/90'>Admin Panel</button>
+              <button className='px-3 py-2 bg-custom_orange rounded-md text-white hover:bg-custom_orange/90'>
+                Admin
+              </button>
             </Link>
           )} 
         </SignedIn>
