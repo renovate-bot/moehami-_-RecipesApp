@@ -14,6 +14,11 @@ const NavBar = () => {
   const { isLoaded, isSignedIn } = useAuth(); // Hook to check authentication status
   const { user } = useUser(); 
 
+  let isAdmin = false;
+  if (isLoaded && user) {
+    isAdmin = user.publicMetadata?.role === 'admin'; // Optional chaining to prevent errors
+  }
+
   const [activeLink, setActiveLink] = useState<string>('/');
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
@@ -77,7 +82,12 @@ const NavBar = () => {
 
         {/* Show User Button and Sign Out if signed in */}
         <SignedIn>
-          <UserButton afterSignOutUrl="/" />  
+          <UserButton afterSignOutUrl="/" />
+          {isAdmin && (
+            <Link href="/admin" className="text-white hover:text-custom_orange transition duration-300">
+              <button className='px-3 py-2 bg-custom_orange rounded-md text-white hover:bg-custom_orange/90'>Admin Panel</button>
+            </Link>
+          )} 
         </SignedIn>
 
         {/* Theme Switcher visible in mobile and desktop */}
