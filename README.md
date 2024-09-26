@@ -9,6 +9,12 @@
 
 ---
 
+![Homepage](git_images/homepage.png)
+![Recipe details](git_images/recipe_details.png)
+![Blog](git_images/blog.png)
+![Mealplanner](git_images/mealplanner.png)
+![Mealplans](git_images/mealplans.png)
+
 ## Core Functionalities
 
 ### 1. User Authentication & Account Management
