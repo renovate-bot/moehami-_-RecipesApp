@@ -83,6 +83,11 @@ export interface RecipeType {
     mealPlanRecipes?: { id: string; recipe: RecipeType; mealType: string};
 }
 
+export interface CategoryType {
+    id: string;
+    name: string;
+}
+
 export interface TagType {
     id: string;
     name: string;
