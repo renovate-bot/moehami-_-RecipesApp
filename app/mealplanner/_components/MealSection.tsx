@@ -41,12 +41,10 @@ const SortableRecipeItem = ({ id, title, onDelete }: { id: string; title: string
         <div 
             ref={setNodeRef} 
             style={style} 
-            {...attributes} 
-            {...listeners}
             className="bg-white dark:bg-slate-700 shadow-md p-4 rounded-md flex justify-between items-center mb-3 transition-transform duration-150 ease-in-out"
         >
             <div className='flex gap-3'>
-                <GripVerticalIcon className='text-slate-500' />
+                <GripVerticalIcon className='text-slate-500' {...listeners} {...attributes} />
                 <span className="text-gray-800 dark:text-white">{title}</span>
             </div>
             <button 
@@ -55,6 +53,7 @@ const SortableRecipeItem = ({ id, title, onDelete }: { id: string; title: string
                     onDelete();
                 }} 
                 className="text-red-500 hover:text-red-700 transition-colors"
+                data-drag-handle="false"
             >
                 <Trash2 className="w-5 h-5" />
             </button>
@@ -90,7 +89,7 @@ const MealSection = ({ mealType, onRecipesUpdate }: MealSectionProps) => {
 
     // Delete Recipe from List
     const deleteRecipe = (id: string) => {
-        setRecipes((prev) => prev.filter(recipe => recipe.id !== id)); 
+        setRecipes((prev) => prev.filter((recipe) => recipe.id !== id)); 
     };
 
     // Update Parent Component with Recipes
