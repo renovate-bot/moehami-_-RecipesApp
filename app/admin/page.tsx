@@ -1,7 +1,7 @@
 "use client";
 
 import { RecipeType } from '@/types/types';
-import { CookingPotIcon, HomeIcon, LogOutIcon, Menu, SettingsIcon, UsersIcon, X } from 'lucide-react';
+import { CookingPotIcon, HomeIcon, LogOutIcon, Menu, SettingsIcon, UsersIcon, HamIcon, CalendarIcon, X } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
@@ -157,7 +157,7 @@ const Settings = () => (
 
 const AdminDashboardPage = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [activeTab, setActiveTab] = useState<'dashboard' | 'users' | 'settings' | 'recipes'>('dashboard');
+    const [activeTab, setActiveTab] = useState<'dashboard' | 'users' | 'recipes' | 'ingredients' | 'settings'>('dashboard');
     const [users, setUsers] = useState<User[]>([]);
     const [recipes, setRecipes] = useState<RecipeType[]>([]); 
     const [loading, setLoading] = useState(true);
@@ -259,18 +259,20 @@ const AdminDashboardPage = () => {
                 </div>
 
                 <nav className="flex-1 p-4 space-y-4">
-                    {['dashboard', 'users', 'settings', 'recipes'].map(tab => (
+                    {['dashboard', 'users', 'recipes', 'ingredients', 'mealplans', 'settings'].map(tab => (
                         <button
                             key={tab}
-                            onClick={() => setActiveTab(tab as 'dashboard' | 'users' | 'settings')}
+                            onClick={() => setActiveTab(tab as 'dashboard' | 'users' | 'settings' | 'recipes')}
                             className={`flex items-center space-x-2 p-2 hover:bg-custom_orange rounded-lg w-full ${
                                 activeTab === tab ? 'bg-custom_orange text-white' : ''
                             }`}
                         >
                             {tab === 'dashboard' && <HomeIcon className="w-6 h-6" />}
                             {tab === 'users' && <UsersIcon className="w-6 h-6" />}
-                            {tab === 'settings' && <SettingsIcon className="w-6 h-6" />}
                             {tab === 'recipes' && <CookingPotIcon className="w-6 h-6" />}
+                            {tab === 'ingredients' && <HamIcon className="w-6 h-6" />}
+                            {tab === 'mealplans' && <CalendarIcon className="w-6 h-6" />}
+                            {tab === 'settings' && <SettingsIcon className="w-6 h-6" />}
                             <span className={`${!isSidebarOpen && "hidden"}`}>{tab.charAt(0).toUpperCase() + tab.slice(1)}</span>
                         </button>
                     ))}

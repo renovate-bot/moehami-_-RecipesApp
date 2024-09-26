@@ -1,4 +1,4 @@
-import AddRecipeForm from '@/components/AddRecipeForm'
+import AddRecipeForm from '@/app/admin/_components/AddRecipeForm'
 import React from 'react'
 
 const AddRecipePage = () => {
