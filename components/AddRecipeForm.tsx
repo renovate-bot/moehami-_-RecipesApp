@@ -268,22 +268,27 @@ const AddRecipeForm = () => {
             <div>
                 <h2 className="text-lg font-medium text-gray-700 dark:text-gray-300">Steps</h2>
                 {steps.map((step, index) => (
-                    <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-3 my-8">
-                        <input
-                            type="number"
-                            value={step.number}
-                            readOnly
-                            className="w-full p-2 border border-gray-300 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-200"
-                        />
-                        <textarea
-                            value={step.description}
-                            onChange={(e) => handleStepChange(index, e.target.value)}
-                            placeholder="Step description"
-                            className="flex-grow p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300"
-                        />
-                        <button type="button" onClick={() => removeStep(index)} className="flex justify-center items-center h-full bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition duration-200">
-                            <Trash2 className="w-5 h-5" /> {/* Trash icon for removal */}
-                        </button>
+                    <div className="my-8">
+                        <div key={index} className="flex items-center gap-3">
+                            <input
+                                type="number"
+                                value={step.number}
+                                readOnly
+                                className="w-full p-2 border border-gray-300 rounded-md bg-gray-200 dark:bg-gray-600 dark:text-gray-200"
+                            />
+                            <button type="button" onClick={() => removeStep(index)} className="flex justify-center items-center h-full bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition duration-200">
+                                <Trash2 className="w-5 min-h-full" /> {/* Trash icon for removal */}
+                            </button>
+                        </div>
+                        <div className="flex w-full mt-3">
+                            <textarea
+                                rows={6}
+                                value={step.description}
+                                onChange={(e) => handleStepChange(index, e.target.value)}
+                                placeholder="Step description"
+                                className="flex-grow p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-400 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300"
+                            />
+                        </div>    
                     </div>
                 ))}
                 <button type="button" onClick={addStep} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-200">Add Step</button>
@@ -293,7 +298,7 @@ const AddRecipeForm = () => {
             <div>
                 <h2 className="text-lg font-medium text-gray-700 dark:text-gray-300">Ingredients</h2>
                 {selectedIngredients.map((ingredient, index) => (
-                    <div key={index} className="grid grid-cols-1 md:grid-cols-4 gap-3 items-center my-8">
+                    <div key={index} className="flex flex-col md:flex-row gap-3 items-center my-8">
                         <select
                             value={ingredient.ingredientId}
                             onChange={(e) => handleIngredientChange(index, 'ingredientId', e.target.value)}
@@ -320,7 +325,7 @@ const AddRecipeForm = () => {
                             placeholder="Measure unity"
                             required
                         />
-                        <button type="button" onClick={() => removeIngredient(index)} className="flex justify-center items-center h-full bg-red-500 text-white px-4 py-2 rounded-md">
+                        <button type="button" onClick={() => removeIngredient(index)} className="flex justify-center items-center h-full w-full md:w-auto bg-red-500 text-white px-4 py-2 rounded-md">
                             <Trash2 className="w-5 h-5" />
                         </button>
                     </div>
@@ -332,7 +337,7 @@ const AddRecipeForm = () => {
             <div>
                 <h2 className="text-lg font-medium text-gray-700 dark:text-gray-300">Tools</h2>
                 {selectedTools.map((tool, index) => (
-                    <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-3 my-8">
+                    <div key={index} className="flex flex-col md:flex-row items-center gap-3 my-8">
                         <select
                             value={tool.toolId}
                             onChange={(e) => handleToolChange(index, 'toolId', e.target.value)}
