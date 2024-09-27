@@ -199,20 +199,25 @@ const AddRecipeForm = () => {
             {/* Upload image section */}
             <div>
                 <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">Upload Image</label>
-                <label className="flex w-full mt-2">
+                <label className="flex mt-2 items-center cursor-pointer">
                     <input
                         type="file"
+                        className=""
                         onChange={handleImageChange}
-                        className="hidden" // Hide the default file input
                     />
                     <button
                         type="button"
                         className="flex items-center bg-custom_orange text-white px-4 py-2 rounded-md hover:bg-custom_orange/90 transition duration-200"
                     >
-                        <Upload className="mr-2" /> {/* Lucide Icon */}
+                        <Upload className="mr-2" /> 
                         Upload Image
                     </button>
                 </label>
+                {imageUrl && (
+                    <div className="mt-3">
+                        <img src={imageUrl} alt="Uploaded recipe" className="h-32 w-32 object-cover rounded-md" />
+                    </div>
+                )}
             </div>
 
             {/* Category section */}
