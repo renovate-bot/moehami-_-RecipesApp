@@ -84,7 +84,7 @@ const NavBar = () => {
         <SignedIn>
           <UserButton afterSignOutUrl="/" />
           {isAdmin && (
-            <Link href="/admin" className="text-white hover:text-custom_orange transition duration-300">
+            <Link href="/admin" className="hidden sm:block text-white hover:text-custom_orange transition duration-300">
               <button className='px-3 py-2 bg-custom_orange rounded-md text-white hover:bg-custom_orange/90'>
                 Admin
               </button>
@@ -135,13 +135,6 @@ const NavBar = () => {
             >
               Blog
             </Link>
-            <Link
-              href='/favorite'
-              className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom_orange transition duration-300 ${activeLink === '/favorite' ? 'text-custom_orange' : 'text-white'}`}
-              onClick={() => handleLinkClick('/favorite')}
-            >
-              Favorites
-            </Link>
 
             <SignedIn>
           
@@ -150,7 +143,7 @@ const NavBar = () => {
               className={`block md:inline-block text-4xl sm:text-lg font-medium hover:text-custom_orange transition duration-300 ${activeLink === '/mealplanner' ? 'text-custom_orange' : 'text-white'}`}
               onClick={() => handleLinkClick("/mealplanner")}
               >
-                Meal Planner
+                Planner
             </Link>
           </SignedIn>
           </div>
