@@ -294,7 +294,7 @@ const AdminDashboardPage = () => {
                     isSidebarOpen ? "w-64" : "w-20"
                 } bg-slate-200 dark:bg-gray-800 transition-all duration-300 dark:text-gray-100 md:flex flex-col min-h-screen`}
             >
-                <div className="flex items-center justify-between p-4 dark:text-white bg-slate-300 dark:bg-gray-700">
+                <div className="flex items-center justify-between p-6 dark:text-white bg-slate-300 dark:bg-gray-700">
                     <span className={`text-2xl font-bold ${!isSidebarOpen && "hidden"}`}>
                         Admin
                     </span>
