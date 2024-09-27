@@ -336,7 +336,7 @@ const AdminDashboardPage = () => {
                     <h1 className="text-sm sm:text-2xl font-bold dark:text-gray-100">Admin Dashboard</h1>
                 </header>
 
-                <main className="flex-1 py-3 pl-3 sm:py-6 sm:pl-6 bg-gray-100 dark:bg-gray-900">
+                <main className="flex-1 pt-3 pl-3 sm:pt-6 sm:pl-6 bg-gray-100 dark:bg-gray-900">
                     {renderContent()}
                 </main>
             </div>
