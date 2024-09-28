@@ -32,7 +32,7 @@ export async function GET(req: NextRequest, { params }: { params: { categoryId: 
 
         // Fetch the random suggestions
         const suggestions = await db.recipe.findMany({
-            take: numberOfRecipesToFetch, // Adjust based on available recipes
+            take: numberOfRecipesToFetch, 
             skip: skipValue,
             where: {
                 categoryId: categoryId,
@@ -42,9 +42,6 @@ export async function GET(req: NextRequest, { params }: { params: { categoryId: 
                 category: true,
             },
         });
-
-        // Return JSON response with the sorted list of recipes
-        return NextResponse.json(suggestions);
 
         // Return JSON response with the sorted list of recipes
         return NextResponse.json(suggestions);
