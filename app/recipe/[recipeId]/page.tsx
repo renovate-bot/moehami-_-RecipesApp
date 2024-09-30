@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from "react-paginate";
 
+import { motion } from 'framer-motion';
+
 import { RecipeType } from '@/types/types'; // Import the RecipeType for type safety
 import { generatePDF } from '@/lib/functions'; // Import a utility function to generate PDFs
 
@@ -109,15 +111,25 @@ const RecipePage = ({ params }: { params: { recipeId: string }}) => {
         setCurrentPage(event.selected);
     };
 
+    const sectionVariants = {
+        hidden: { opacity: 0, y: 50 }, // Start with the section slightly below and invisible
+        visible: { opacity: 1, y: 0 }, // Animate to be fully visible and in the correct position
+    };
+
     return (
         <>
             <article className=''>
                 {recipe ? (
                     <div id='recipe-detail'>
-                        <section>
-                            {/* Recipe header component */}
-                            <RecipeHeader recipe={recipe} generatePDF={() => generatePDF(recipe)} handleFavorite={handleFavorite} />    
-                        </section>
+                        <motion.section
+                            initial="hidden"
+                            animate="visible"
+                            exit="hidden"
+                            variants={sectionVariants}
+                            transition={{ duration: 0.6 }}
+                            >
+                            <RecipeHeader recipe={recipe} generatePDF={() => generatePDF(recipe)} handleFavorite={handleFavorite} />
+                        </motion.section>
 
                         <section className='flex gap-7 flex-col lg:flex-row'>
                             <div className='w-full lg:w-[50%]'>

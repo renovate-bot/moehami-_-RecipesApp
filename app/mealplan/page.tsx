@@ -6,9 +6,17 @@ import { Clock10Icon, CroissantIcon, EggFriedIcon, HamIcon, Trash2Icon } from 'l
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 
+import { motion } from 'framer-motion';
+
 const MealPlanPage = () => {
     const [mealPlans, setMealPlans] = useState<MealPlan[]>([]);
     const { userId } = useAuth();
+
+    const cardVariants = {
+        hidden: { opacity: 0, y: 50 },  // Start off-screen and transparent
+        visible: { opacity: 1, y: 0 },  // Fade in and slide up
+        exit: { opacity: 0, y: 50 },    // Fade out and slide down when removed
+    };
 
     useEffect(() => {
         const fetchMealPlans = async () => {
@@ -54,61 +62,71 @@ const MealPlanPage = () => {
             <div className="container mx-auto p-0">
                 <h1 className="text-3xl font-bold mb-6">Your Meal Plans</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-                    {mealPlans.map((mealPlan) => {
-                        // Group recipes by meal type
-                        const groupedRecipes: { [mealType: string]: RecipeType[] } = {};
+                {mealPlans.map((mealPlan, index) => {
+                    const groupedRecipes: { [mealType: string]: RecipeType[] } = {};
 
-                        mealPlan.mealPlanRecipes.forEach((mealPlanRecipe) => {
-                            const { mealType, recipe } = mealPlanRecipe;
-                            if (!groupedRecipes[mealType]) {
-                                groupedRecipes[mealType] = [];
-                            }
-                            groupedRecipes[mealType].push(recipe);
-                        });
+                    mealPlan.mealPlanRecipes.forEach((mealPlanRecipe) => {
+                        const { mealType, recipe } = mealPlanRecipe;
+                        if (!groupedRecipes[mealType]) {
+                            groupedRecipes[mealType] = [];
+                        }
+                        groupedRecipes[mealType].push(recipe);
+                    });
 
-                        return (
-                            <div key={mealPlan.id} className="relative border border-slate-300 dark:border-none bg-white dark:bg-slate-800 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
-                                {/* Delete Button */}
-                                <button
-                                    onClick={() => handleDelete(mealPlan.id)}
-                                    className="absolute top-0 right-0 p-3 dark:bg-slate-700 text-red-500 hover:text-red-600 rounded-tr-lg"
-                                    aria-label="Delete meal plan"
-                                >
-                                    <Trash2Icon className="w-5 h-5" />
-                                </button>
+                    return (
+                    // Use motion.div for animated appearance of each meal plan
+                    <motion.div
+                        key={mealPlan.id}
+                        className="relative border border-slate-300 dark:border-none bg-white dark:bg-slate-800 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300"
+                        variants={cardVariants} // Apply the defined animation variants
+                        initial="hidden"        // Starting state
+                        animate="visible"        // State when visible
+                        exit="exit"              // State when removed
+                        transition={{ duration: 0.5, delay: index * 0.2 }}  // Delay to stagger the appearance
+                    >
+                        {/* Delete Button */}
+                        <button
+                            onClick={() => handleDelete(mealPlan.id)}
+                            className="absolute top-0 right-0 p-3 dark:bg-slate-700 text-red-500 hover:text-red-600 rounded-tr-lg"
+                            aria-label="Delete meal plan"
+                        >
+                            <Trash2Icon className="w-5 h-5" />
+                        </button>
 
-                                <h2 className="text-2xl font-semibold mb-6">
-                                    {new Date(mealPlan.date).toLocaleDateString()}
-                                </h2>
-                                {Object.keys(groupedRecipes).map((mealType) => (
-                                    <div key={mealType} className="mb-5">
-                                        <h3 className="text-xl flex items-center gap-2 font-bold text-custom_orange mb-3">
-                                            {getMealTypeIcon(mealType)}
-                                            <span>{mealType}</span>
-                                        </h3>
-                                        <ul className="space-y-2">
-                                            {groupedRecipes[mealType].map((recipe) => (
-                                                <li key={recipe.id} className="flex items-center justify-between bg-slate-200 dark:bg-slate-700 rounded-md p-3">
-                                                    <div>
-                                                        <p className="font-medium">{recipe.title}</p>
-                                                        <p className="flex gap-2 items-center text-sm text-slate-500 dark:text-slate-400">
-                                                            <Clock10Icon className='w-4 h-4' /> <span>{recipe.preparationTime} mins</span>
-                                                        </p>
-                                                    </div>
-                                                    <div>
-                                                        <Image src={recipe.image} width={100} height={100} alt={recipe.title} className='h-[50px] w-[50px] rounded-lg object-cover' />
-                                                    </div>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))}
-                            </div>
-                        );
-                    })}
+                        <h2 className="text-2xl font-semibold mb-6">
+                            {new Date(mealPlan.date).toLocaleDateString()}
+                        </h2>
+
+                        {Object.keys(groupedRecipes).map((mealType) => (
+                        <div key={mealType} className="mb-5">
+                            <h3 className="text-xl flex items-center gap-2 font-bold text-custom_orange mb-3">
+                                {getMealTypeIcon(mealType)}
+                                <span>{mealType}</span>
+                            </h3>
+                            <ul className="space-y-2">
+                            {groupedRecipes[mealType].map((recipe) => (
+                                <li key={recipe.id} className="flex items-center justify-between bg-slate-200 dark:bg-slate-700 rounded-md p-3">
+                                <div>
+                                    <p className="font-medium">{recipe.title}</p>
+                                    <p className="flex gap-2 items-center text-sm text-slate-500 dark:text-slate-400">
+                                    <Clock10Icon className='w-4 h-4' /> <span>{recipe.preparationTime} mins</span>
+                                    </p>
+                                </div>
+                                <div>
+                                    <Image src={recipe.image} width={100} height={100} alt={recipe.title} className='h-[50px] w-[50px] rounded-lg object-cover' />
+                                </div>
+                                </li>
+                            ))}
+                            </ul>
+                        </div>
+                        ))}
+                    </motion.div>
+                    );
+                })}
                 </div>
             </div>
         </section>
+
     );
 };
 
