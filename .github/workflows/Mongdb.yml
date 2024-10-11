@@ -1,0 +1,14 @@
+            - name: Mongodump & Mongorestore action
+  # You may pin to the exact commit or the version.
+  # uses: zahornyak/mongodump-action@b3a7a0fc89aec9a3710fbf689b60085137fd92dc
+  uses: zahornyak/mongodump-action@v1.4.1
+  with:
+    # The connection string to the MongoDB database
+    connection-string: 
+    # Compress the output file
+    compress: # optional, default is false
+    # Additional arguments to pass to mongodump/mongorestore command
+    additional-args: # optional
+    # The mongodump/mongorestore command to run
+    mongo-command: # optional, default is mongodump
+          
